@@ -4,3 +4,8 @@ export const FORM_CONTROL_MIN_WIDTH = 120;
 export const LOGO_SIZE = '48px';
 export const DEFAULT_HEADER_VISIBLE = true;
 export const MAXIMUM_Z_INDEX = 999999;
+
+export const CHARGE_RADIUS = 10;
+export const CHARGE_COLOR = 'red';
+export const BACKGROUND_COLOR = 'lightgrey';
+export const STROKE_COLOR = 'black';
