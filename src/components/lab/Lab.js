@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Stage, Layer, Circle, Line } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
+import { Spring, animated, config } from 'react-spring/konva';
 import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
@@ -36,6 +37,7 @@ class Lab extends Component {
       x: 0,
       y: 0,
     },
+    oscillate: false,
   };
 
   componentDidMount() {
@@ -79,7 +81,19 @@ class Lab extends Component {
   // element position should consider header height
   render() {
     const { classes } = this.props;
-    const { stageWidth, stageHeight, charge } = this.state;
+    const { stageWidth, stageHeight, charge, oscillate } = this.state;
+
+    // oscillation
+    const chargeOscillation = 100;
+
+    // undisturbed lines
+    const l1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const l2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    // todo: calculate these
+    // observed lines
+    const l1Observed = [0, 0, 10, -50, -10, -100, 10, -150, -10, -200, 0, -500];
+    const l2Observed = [0, 0, 10, 50, 10, 100, 100, 150, 100, 200, 500, 500];
 
     return (
       <div
@@ -94,28 +108,77 @@ class Lab extends Component {
           height={stageHeight}
         >
           <Layer>
-            <Line
-              x={charge.x}
-              y={charge.y}
-              points={[0, 0, 500, 500]}
-              tension={0.5}
-              stroke={STROKE_COLOR}
-            />
-            <Line
-              x={charge.x}
-              y={charge.y}
-              points={[0, 0, 0, -500]}
-              tension={0.5}
-              stroke={STROKE_COLOR}
-            />
-            <Circle
-              x={charge.x}
-              y={charge.y}
-              radius={CHARGE_RADIUS}
-              fill={CHARGE_COLOR}
-              draggable
-              onDragMove={this.onChargeDragMove}
-            />
+            <Spring
+              from={{
+                points: l1,
+                y: charge.y,
+              }}
+              to={{
+                points: l1Observed,
+                y: charge.y + chargeOscillation,
+              }}
+              config={config.molasses}
+              loop
+              // only disable y animation
+              immediate={(key) => key === 'y' && !oscillate}
+            >
+              {(props) => {
+                return (
+                  <animated.Line
+                    x={charge.x}
+                    y={props.y}
+                    points={props.points}
+                    tension={0.5}
+                    stroke={STROKE_COLOR}
+                  />
+                );
+              }}
+            </Spring>
+            <Spring
+              from={{
+                points: l2,
+                y: charge.y,
+              }}
+              to={{
+                points: l2Observed,
+                y: charge.y + chargeOscillation,
+              }}
+              config={config.molasses}
+              loop
+              // only disable y animation
+              immediate={(key) => key === 'y' && !oscillate}
+            >
+              {(props) => {
+                return (
+                  <animated.Line
+                    x={charge.x}
+                    y={props.y}
+                    points={props.points}
+                    tension={0.5}
+                    stroke={STROKE_COLOR}
+                  />
+                );
+              }}
+            </Spring>
+            <Spring
+              from={{ y: charge.y }}
+              to={{ y: charge.y + 100 }}
+              config={config.molasses}
+              loop
+              // only disable y animation
+              immediate={(key) => key === 'y' && !oscillate}
+            >
+              {(props) => (
+                <animated.Circle
+                  x={charge.x}
+                  y={props.y}
+                  radius={CHARGE_RADIUS}
+                  fill={CHARGE_COLOR}
+                  // draggable
+                  onDragMove={this.onChargeDragMove}
+                />
+              )}
+            </Spring>
           </Layer>
         </Stage>
       </div>
