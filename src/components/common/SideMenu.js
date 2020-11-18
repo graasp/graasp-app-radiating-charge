@@ -11,6 +11,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { toggleSideMenu } from '../../actions';
 import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
+import StopButton from './StopButton';
+import AmplitudeSlider from './AmplitudeSlider';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -94,6 +96,8 @@ class SideMenu extends React.Component {
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
             {this.renderDescription()}
+            <StopButton />
+            <AmplitudeSlider />
           </div>
         </Drawer>
       </>

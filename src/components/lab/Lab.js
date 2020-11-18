@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Stage, Layer, Circle, Line } from 'react-konva';
+import { Stage, Layer, Circle } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
+import EmittedLine from './EmittedLine';
 import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
   CHARGE_RADIUS,
+  DELTA_VALUE,
   STROKE_COLOR,
 } from '../../config/constants';
 
@@ -27,6 +30,8 @@ class Lab extends Component {
       container: PropTypes.string.isRequired,
       stage: PropTypes.string.isRequired,
     }).isRequired,
+    stop: PropTypes.bool.isRequired,
+    amplitude: PropTypes.number.isRequired,
   };
 
   state = {
@@ -36,17 +41,42 @@ class Lab extends Component {
       x: 0,
       y: 0,
     },
+    angle: 0,
+    delta: 0.7,
+    chargeOscillation: { x: 0, y: 0 },
   };
 
   componentDidMount() {
-    const { classes } = this.props;
     this.checkSize();
     // here we should add listener for "container" resize
     // take a look here https://developers.google.com/web/updates/2016/10/resizeobserver
     const ro = new ResizeObserver(() => {
       this.checkSize();
     });
-    ro.observe(document.querySelector(`.${classes.container}`));
+    ro.observe(document.querySelector(`#container`));
+
+    // animation
+    setInterval(() => {
+      const { stop, amplitude } = this.props;
+      const { angle, delta } = this.state;
+
+      // next x and y position of charge
+      const x = Math.cos(angle) * amplitude;
+      const y = 0;
+
+      // delta used to update the angle
+      let newDelta = delta;
+      let newAngle = angle;
+      if (!stop) {
+        newAngle += delta;
+        newDelta = delta >= DELTA_VALUE ? DELTA_VALUE : -DELTA_VALUE;
+      }
+      this.setState({
+        angle: newAngle,
+        delta: newDelta,
+        chargeOscillation: { x, y },
+      });
+    }, 50);
   }
 
   checkSize = () => {
@@ -79,10 +109,11 @@ class Lab extends Component {
   // element position should consider header height
   render() {
     const { classes } = this.props;
-    const { stageWidth, stageHeight, charge } = this.state;
+    const { stageWidth, stageHeight, charge, chargeOscillation } = this.state;
 
     return (
       <div
+        id="container"
         className={classes.container}
         ref={(node) => {
           this.container = node;
@@ -94,23 +125,23 @@ class Lab extends Component {
           height={stageHeight}
         >
           <Layer>
-            <Line
-              x={charge.x}
-              y={charge.y}
-              points={[0, 0, 500, 500]}
-              tension={0.5}
+            <EmittedLine
+              chargeX={charge.x}
+              chargeY={charge.y}
               stroke={STROKE_COLOR}
+              chargeOscillation={chargeOscillation}
+              direction={[0, 5]}
             />
-            <Line
-              x={charge.x}
-              y={charge.y}
-              points={[0, 0, 0, -500]}
-              tension={0.5}
+            <EmittedLine
+              chargeX={charge.x}
+              chargeY={charge.y}
               stroke={STROKE_COLOR}
+              chargeOscillation={chargeOscillation}
+              direction={[0, -5]}
             />
             <Circle
-              x={charge.x}
-              y={charge.y}
+              x={charge.x + chargeOscillation.x}
+              y={charge.y + chargeOscillation.y}
               radius={CHARGE_RADIUS}
               fill={CHARGE_COLOR}
               draggable
@@ -123,4 +154,15 @@ class Lab extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Lab);
+const mapStateToProps = ({ layout }) => ({
+  stop: layout.lab.stop,
+  amplitude: layout.lab.amplitude,
+});
+
+const ConnectedComponent = connect(mapStateToProps, null)(Lab);
+
+const StyledComponent = withStyles(styles, { withTheme: true })(
+  ConnectedComponent,
+);
+
+export default StyledComponent;

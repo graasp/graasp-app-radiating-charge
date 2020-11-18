@@ -9,3 +9,8 @@ export const CHARGE_RADIUS = 10;
 export const CHARGE_COLOR = 'red';
 export const BACKGROUND_COLOR = 'lightgrey';
 export const STROKE_COLOR = 'black';
+
+export const MAX_POINTS_FOR_LINES = 300;
+export const DELTA_VALUE = 0.3;
+export const DEFAULT_AMPLITUDE_VALUE = 20;
+export const MAX_AMPLITUDE_VALUE = 50;
