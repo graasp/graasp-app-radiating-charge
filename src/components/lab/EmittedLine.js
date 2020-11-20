@@ -37,16 +37,12 @@ export default class EmittedLine extends Component {
   }
 
   render() {
-    const { chargeX, chargeY } = this.props;
+    const {
+      charge: { x, y },
+    } = this.props;
     const { points } = this.state;
     return (
-      <Line
-        x={chargeX}
-        y={chargeY}
-        points={points}
-        tension={0.5}
-        stroke={STROKE_COLOR}
-      />
+      <Line x={x} y={y} points={points} tension={0.5} stroke={STROKE_COLOR} />
     );
   }
 }

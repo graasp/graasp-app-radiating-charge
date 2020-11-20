@@ -9,7 +9,6 @@ import {
   CHARGE_COLOR,
   CHARGE_RADIUS,
   DELTA_VALUE,
-  STROKE_COLOR,
 } from '../../config/constants';
 
 const styles = () => ({
@@ -23,6 +22,8 @@ const styles = () => ({
     position: 'absolute',
   },
 });
+
+const DIRECTION_VALUE = 4;
 
 class Lab extends Component {
   static propTypes = {
@@ -126,18 +127,44 @@ class Lab extends Component {
         >
           <Layer>
             <EmittedLine
-              chargeX={charge.x}
-              chargeY={charge.y}
-              stroke={STROKE_COLOR}
+              charge={charge}
               chargeOscillation={chargeOscillation}
-              direction={[0, 5]}
+              direction={[0, DIRECTION_VALUE]}
             />
             <EmittedLine
-              chargeX={charge.x}
-              chargeY={charge.y}
-              stroke={STROKE_COLOR}
+              charge={charge}
               chargeOscillation={chargeOscillation}
-              direction={[0, -5]}
+              direction={[0, -DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[-DIRECTION_VALUE, 0]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[DIRECTION_VALUE, 0]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[DIRECTION_VALUE, -DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[-DIRECTION_VALUE, DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[-DIRECTION_VALUE, -DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[DIRECTION_VALUE, DIRECTION_VALUE]}
             />
             <Circle
               x={charge.x + chargeOscillation.x}
