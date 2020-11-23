@@ -3,7 +3,7 @@ import {
   TOGGLE_LOADING_SCREEN,
   TOGGLE_SIDE_MENU,
   SET_AMPLITUDE,
-  TOGGLE_STOP,
+  TOGGLE_OSCILLATION,
 } from '../types';
 
 const toggleSettings = (showSettings) => (dispatch) =>
@@ -24,9 +24,9 @@ const toggleSideMenu = (showSideMenu) => (dispatch) =>
     payload: showSideMenu,
   });
 
-const toggleStop = (payload) => (dispatch) => {
+const toggleOscillation = (payload) => (dispatch) => {
   dispatch({
-    type: TOGGLE_STOP,
+    type: TOGGLE_OSCILLATION,
     payload,
   });
 };
@@ -42,6 +42,6 @@ export {
   toggleSettings,
   toggleLoadingScreen,
   toggleSideMenu,
-  toggleStop,
+  toggleOscillation,
   setAmplitude,
 };

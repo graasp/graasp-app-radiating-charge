@@ -3,7 +3,7 @@ import {
   TOGGLE_SETTINGS,
   TOGGLE_LOADING_SCREEN,
   TOGGLE_SIDE_MENU,
-  TOGGLE_STOP,
+  TOGGLE_OSCILLATION,
   SET_AMPLITUDE,
 } from '../types';
 
@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   showLoader: true,
   showSideMenu: true,
   lab: {
-    stop: false,
+    oscillation: true,
     amplitude: DEFAULT_AMPLITUDE_VALUE,
   },
 };
@@ -39,12 +39,12 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         showSideMenu: payload,
       };
-    case TOGGLE_STOP:
+    case TOGGLE_OSCILLATION:
       return {
         ...state,
         lab: {
           ...state.lab,
-          stop: payload,
+          oscillation: payload,
         },
       };
     case SET_AMPLITUDE:

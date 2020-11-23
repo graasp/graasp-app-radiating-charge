@@ -11,7 +11,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { toggleSideMenu } from '../../actions';
 import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
-import StopButton from './StopButton';
+import OscillateSwitch from './OscillateSwitch';
 import AmplitudeSlider from './AmplitudeSlider';
 
 const styles = (theme) => ({
@@ -43,6 +43,7 @@ class SideMenu extends React.Component {
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
+    shouldOscillate: PropTypes.bool.isRequired,
   };
 
   handleToggleSideMenu = (open) => () => {
@@ -74,13 +75,15 @@ class SideMenu extends React.Component {
     return (
       <>
         <Typography variant="h6">{t('Description')}</Typography>
-        {t('Welcome to the Graasp App Starter Lab Kit')}
+        <Typography variant="subtitle1">
+          {t('Welcome to the Graasp App Starter Lab Kit')}
+        </Typography>
       </>
     );
   };
 
   render() {
-    const { classes, showSideMenu } = this.props;
+    const { classes, showSideMenu, shouldOscillate } = this.props;
 
     return (
       <>
@@ -96,8 +99,8 @@ class SideMenu extends React.Component {
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
             {this.renderDescription()}
-            <StopButton />
-            <AmplitudeSlider />
+            <OscillateSwitch />
+            <AmplitudeSlider disabled={!shouldOscillate} />
           </div>
         </Drawer>
       </>
@@ -107,6 +110,7 @@ class SideMenu extends React.Component {
 
 const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
+  shouldOscillate: layout.lab.oscillation,
 });
 
 const mapDispatchToProps = {

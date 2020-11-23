@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
 import { withTranslation } from 'react-i18next';
-import { Typography, withStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 import { setAmplitude } from '../../actions';
 import {
   DEFAULT_AMPLITUDE_VALUE,
@@ -44,15 +45,12 @@ class AmplitudeSlider extends Component {
       container: PropTypes.string.isRequired,
       slider: PropTypes.string.isRequired,
     }).isRequired,
+    disabled: PropTypes.bool.isRequired,
   };
 
   amplitude = () => {
     const { amplitude, dispatchSetAmplitude } = this.props;
     dispatchSetAmplitude(!amplitude);
-  };
-
-  valuetext = (value) => {
-    return `${value}°C`;
   };
 
   onChange = (event, newValue) => {
@@ -61,7 +59,7 @@ class AmplitudeSlider extends Component {
   };
 
   render() {
-    const { t, classes } = this.props;
+    const { t, classes, disabled } = this.props;
 
     return (
       <Grid container className={classes.container}>
@@ -70,10 +68,10 @@ class AmplitudeSlider extends Component {
         </Grid>
         <Grid item xs={9}>
           <Slider
+            disabled={disabled}
             onChange={this.onChange}
             className={classes.slider}
             defaultValue={20}
-            getAriaValueText={this.valueText}
             valueLabelDisplay="auto"
             marks={marks}
             max={MAX_AMPLITUDE_VALUE}

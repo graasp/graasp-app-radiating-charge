@@ -4,7 +4,12 @@
 import React, { Component } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { Line } from 'react-konva';
-import { MAX_POINTS_FOR_LINES, STROKE_COLOR } from '../../config/constants';
+import {
+  DEFAULT_TENSION,
+  MAX_POINTS_FOR_LINES,
+  SET_INTERVAL_TIME,
+  STROKE_COLOR,
+} from '../../config/constants';
 
 export default class EmittedLine extends Component {
   state = {
@@ -33,7 +38,7 @@ export default class EmittedLine extends Component {
       this.setState({
         points: newPoints,
       });
-    }, 50);
+    }, SET_INTERVAL_TIME);
   }
 
   render() {
@@ -42,7 +47,13 @@ export default class EmittedLine extends Component {
     } = this.props;
     const { points } = this.state;
     return (
-      <Line x={x} y={y} points={points} tension={0.5} stroke={STROKE_COLOR} />
+      <Line
+        x={x}
+        y={y}
+        points={points}
+        tension={DEFAULT_TENSION}
+        stroke={STROKE_COLOR}
+      />
     );
   }
 }

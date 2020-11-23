@@ -31,7 +31,7 @@ class Lab extends Component {
       container: PropTypes.string.isRequired,
       stage: PropTypes.string.isRequired,
     }).isRequired,
-    stop: PropTypes.bool.isRequired,
+    shouldOscillate: PropTypes.bool.isRequired,
     amplitude: PropTypes.number.isRequired,
   };
 
@@ -43,7 +43,7 @@ class Lab extends Component {
       y: 0,
     },
     angle: 0,
-    delta: 0.7,
+    delta: DELTA_VALUE,
     chargeOscillation: { x: 0, y: 0 },
   };
 
@@ -58,7 +58,7 @@ class Lab extends Component {
 
     // animation
     setInterval(() => {
-      const { stop, amplitude } = this.props;
+      const { shouldOscillate, amplitude } = this.props;
       const { angle, delta } = this.state;
 
       // next x and y position of charge
@@ -68,7 +68,7 @@ class Lab extends Component {
       // delta used to update the angle
       let newDelta = delta;
       let newAngle = angle;
-      if (!stop) {
+      if (shouldOscillate) {
         newAngle += delta;
         newDelta = delta >= DELTA_VALUE ? DELTA_VALUE : -DELTA_VALUE;
       }
@@ -182,7 +182,7 @@ class Lab extends Component {
 }
 
 const mapStateToProps = ({ layout }) => ({
-  stop: layout.lab.stop,
+  shouldOscillate: layout.lab.oscillation,
   amplitude: layout.lab.amplitude,
 });
 
