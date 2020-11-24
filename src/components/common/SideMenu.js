@@ -76,7 +76,7 @@ class SideMenu extends React.Component {
       <>
         <Typography variant="h6">{t('Description')}</Typography>
         <Typography variant="subtitle1">
-          {t('Welcome to the Graasp App Starter Lab Kit')}
+          {t('This application renders a radiating charge.')}
         </Typography>
       </>
     );

@@ -71,7 +71,7 @@ class AmplitudeSlider extends Component {
             disabled={disabled}
             onChange={this.onChange}
             className={classes.slider}
-            defaultValue={20}
+            defaultValue={DEFAULT_AMPLITUDE_VALUE}
             valueLabelDisplay="auto"
             marks={marks}
             max={MAX_AMPLITUDE_VALUE}

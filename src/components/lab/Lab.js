@@ -23,6 +23,8 @@ const styles = () => ({
   },
 });
 
+// Lines moves towards a set direction
+// this value set the speed/amount over time for each step
 const DIRECTION_VALUE = 4;
 
 class Lab extends Component {
