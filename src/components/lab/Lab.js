@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Stage, Layer, Circle, Line } from 'react-konva';
+import { Stage, Layer, Circle } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
+import EmittedLine from './EmittedLine';
 import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
   CHARGE_RADIUS,
-  STROKE_COLOR,
+  DELTA_VALUE,
 } from '../../config/constants';
 
 const styles = () => ({
@@ -21,12 +23,18 @@ const styles = () => ({
   },
 });
 
+// Lines moves towards a set direction
+// this value set the speed/amount over time for each step
+const DIRECTION_VALUE = 4;
+
 class Lab extends Component {
   static propTypes = {
     classes: PropTypes.shape({
       container: PropTypes.string.isRequired,
       stage: PropTypes.string.isRequired,
     }).isRequired,
+    shouldOscillate: PropTypes.bool.isRequired,
+    amplitude: PropTypes.number.isRequired,
   };
 
   state = {
@@ -36,17 +44,42 @@ class Lab extends Component {
       x: 0,
       y: 0,
     },
+    angle: 0,
+    delta: DELTA_VALUE,
+    chargeOscillation: { x: 0, y: 0 },
   };
 
   componentDidMount() {
-    const { classes } = this.props;
     this.checkSize();
     // here we should add listener for "container" resize
     // take a look here https://developers.google.com/web/updates/2016/10/resizeobserver
     const ro = new ResizeObserver(() => {
       this.checkSize();
     });
-    ro.observe(document.querySelector(`.${classes.container}`));
+    ro.observe(document.querySelector(`#container`));
+
+    // animation
+    setInterval(() => {
+      const { shouldOscillate, amplitude } = this.props;
+      const { angle, delta } = this.state;
+
+      // next x and y position of charge
+      const x = Math.cos(angle) * amplitude;
+      const y = 0;
+
+      // delta used to update the angle
+      let newDelta = delta;
+      let newAngle = angle;
+      if (shouldOscillate) {
+        newAngle += delta;
+        newDelta = delta >= DELTA_VALUE ? DELTA_VALUE : -DELTA_VALUE;
+      }
+      this.setState({
+        angle: newAngle,
+        delta: newDelta,
+        chargeOscillation: { x, y },
+      });
+    }, 50);
   }
 
   checkSize = () => {
@@ -79,10 +112,11 @@ class Lab extends Component {
   // element position should consider header height
   render() {
     const { classes } = this.props;
-    const { stageWidth, stageHeight, charge } = this.state;
+    const { stageWidth, stageHeight, charge, chargeOscillation } = this.state;
 
     return (
       <div
+        id="container"
         className={classes.container}
         ref={(node) => {
           this.container = node;
@@ -94,23 +128,49 @@ class Lab extends Component {
           height={stageHeight}
         >
           <Layer>
-            <Line
-              x={charge.x}
-              y={charge.y}
-              points={[0, 0, 500, 500]}
-              tension={0.5}
-              stroke={STROKE_COLOR}
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[0, DIRECTION_VALUE]}
             />
-            <Line
-              x={charge.x}
-              y={charge.y}
-              points={[0, 0, 0, -500]}
-              tension={0.5}
-              stroke={STROKE_COLOR}
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[0, -DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[-DIRECTION_VALUE, 0]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[DIRECTION_VALUE, 0]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[DIRECTION_VALUE, -DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[-DIRECTION_VALUE, DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[-DIRECTION_VALUE, -DIRECTION_VALUE]}
+            />
+            <EmittedLine
+              charge={charge}
+              chargeOscillation={chargeOscillation}
+              direction={[DIRECTION_VALUE, DIRECTION_VALUE]}
             />
             <Circle
-              x={charge.x}
-              y={charge.y}
+              x={charge.x + chargeOscillation.x}
+              y={charge.y + chargeOscillation.y}
               radius={CHARGE_RADIUS}
               fill={CHARGE_COLOR}
               draggable
@@ -123,4 +183,15 @@ class Lab extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Lab);
+const mapStateToProps = ({ layout }) => ({
+  shouldOscillate: layout.lab.oscillation,
+  amplitude: layout.lab.amplitude,
+});
+
+const ConnectedComponent = connect(mapStateToProps, null)(Lab);
+
+const StyledComponent = withStyles(styles, { withTheme: true })(
+  ConnectedComponent,
+);
+
+export default StyledComponent;
