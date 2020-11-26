@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   showLoader: true,
   showSideMenu: true,
   lab: {
-    oscillation: true,
+    oscillation: false,
     amplitude: DEFAULT_AMPLITUDE_VALUE,
   },
 };

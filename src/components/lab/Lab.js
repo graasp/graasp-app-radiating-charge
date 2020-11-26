@@ -5,10 +5,14 @@ import { Stage, Layer, Circle } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
 import {
+  ANGLES,
   BACKGROUND_COLOR,
   CHARGE_COLOR,
   CHARGE_RADIUS,
-  DELTA_VALUE,
+  UPWARDS_DIRECTION,
+  LINE_STEP_SIZE,
+  DOWNWARDS_DIRECTION,
+  SET_INTERVAL_TIME,
 } from '../../config/constants';
 
 const styles = () => ({
@@ -23,10 +27,6 @@ const styles = () => ({
   },
 });
 
-// Lines moves towards a set direction
-// this value set the speed/amount over time for each step
-const DIRECTION_VALUE = 4;
-
 class Lab extends Component {
   static propTypes = {
     classes: PropTypes.shape({
@@ -40,12 +40,13 @@ class Lab extends Component {
   state = {
     stageWidth: 0,
     stageHeight: 0,
+    // starting position of the charge
     charge: {
       x: 0,
       y: 0,
     },
-    angle: 0,
-    delta: DELTA_VALUE,
+    // direction charge is moving
+    direction: DOWNWARDS_DIRECTION,
     chargeOscillation: { x: 0, y: 0 },
   };
 
@@ -61,25 +62,54 @@ class Lab extends Component {
     // animation
     setInterval(() => {
       const { shouldOscillate, amplitude } = this.props;
-      const { angle, delta } = this.state;
 
-      // next x and y position of charge
-      const x = Math.cos(angle) * amplitude;
-      const y = 0;
+      const {
+        chargeOscillation: { y },
+        direction,
+      } = this.state;
 
-      // delta used to update the angle
-      let newDelta = delta;
-      let newAngle = angle;
+      const x = 0;
+      let newY = y;
+      let newDirection = direction;
+
       if (shouldOscillate) {
-        newAngle += delta;
-        newDelta = delta >= DELTA_VALUE ? DELTA_VALUE : -DELTA_VALUE;
+        // flip directions as soon as charge passes amplitude threshold
+        if (direction === DOWNWARDS_DIRECTION && y >= amplitude) {
+          newDirection = UPWARDS_DIRECTION;
+        } else if (direction === UPWARDS_DIRECTION && y <= -amplitude) {
+          newDirection = DOWNWARDS_DIRECTION;
+        }
+
+        // if the charge moves slower than the lines are drawn,
+        // then you can see a better effect of the field
+        const CHARGE_STEP_SIZE = LINE_STEP_SIZE / 2;
+
+        // minimum step of charge moving to avoid slow acceleration models
+        const MIN_STEP_SIZE = 0.5;
+
+        // acceleration function (faster closer to the origin)
+        const delta =
+          CHARGE_STEP_SIZE *
+          Math.max(
+            -Math.log(Math.max(Math.min(Math.abs(y) / amplitude, 1), 0.01)),
+            MIN_STEP_SIZE,
+          );
+        switch (direction) {
+          case DOWNWARDS_DIRECTION:
+            newY += delta;
+            break;
+          case UPWARDS_DIRECTION:
+            newY -= delta;
+            break;
+          default:
+          // do nothing
+        }
       }
       this.setState({
-        angle: newAngle,
-        delta: newDelta,
-        chargeOscillation: { x, y },
+        chargeOscillation: { y: newY, x },
+        direction: newDirection,
       });
-    }, 50);
+    }, SET_INTERVAL_TIME);
   }
 
   checkSize = () => {
@@ -128,46 +158,13 @@ class Lab extends Component {
           height={stageHeight}
         >
           <Layer>
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[0, DIRECTION_VALUE]}
-            />
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[0, -DIRECTION_VALUE]}
-            />
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[-DIRECTION_VALUE, 0]}
-            />
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[DIRECTION_VALUE, 0]}
-            />
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[DIRECTION_VALUE, -DIRECTION_VALUE]}
-            />
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[-DIRECTION_VALUE, DIRECTION_VALUE]}
-            />
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[-DIRECTION_VALUE, -DIRECTION_VALUE]}
-            />
-            <EmittedLine
-              charge={charge}
-              chargeOscillation={chargeOscillation}
-              direction={[DIRECTION_VALUE, DIRECTION_VALUE]}
-            />
+            {ANGLES.map((angle) => [
+              <EmittedLine
+                charge={charge}
+                chargeOscillation={chargeOscillation}
+                angle={angle}
+              />,
+            ])}
             <Circle
               x={charge.x + chargeOscillation.x}
               y={charge.y + chargeOscillation.y}

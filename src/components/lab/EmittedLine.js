@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { Line } from 'react-konva';
 import {
   DEFAULT_TENSION,
+  LINE_STEP_SIZE,
   MAX_POINTS_FOR_LINES,
   SET_INTERVAL_TIME,
   STROKE_COLOR,
@@ -21,18 +22,20 @@ export default class EmittedLine extends Component {
       const { points } = this.state;
       const {
         chargeOscillation: { x, y },
-        direction,
+        angle,
       } = this.props;
 
-      // move points to direction
+      // add points in respective direction
       let newPoints = points
         .slice(2)
         .map((value, i) =>
-          i % 2 === 0 ? value + direction[0] : value + direction[1],
+          i % 2 === 0
+            ? value + Math.cos(angle) * LINE_STEP_SIZE
+            : value + Math.sin(angle) * LINE_STEP_SIZE,
         );
 
       // the first point is where the charge is
-      // add second point where the oscillation should be
+      // add second point where the new point should be
       // keeps only MAX_POINTS_FOR_LINES first points
       newPoints = [0, 0, x, y, ...newPoints].slice(0, MAX_POINTS_FOR_LINES);
       this.setState({
