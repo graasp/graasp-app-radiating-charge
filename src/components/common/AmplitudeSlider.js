@@ -37,8 +37,8 @@ const styles = (theme) => ({
 });
 
 class AmplitudeSlider extends Component {
-  propTypes = {
-    amplitude: PropTypes.bool.isRequired,
+  static propTypes = {
+    amplitude: PropTypes.number.isRequired,
     dispatchSetAmplitude: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     classes: PropTypes.shape({

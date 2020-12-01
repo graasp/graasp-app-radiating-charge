@@ -7,13 +7,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { withTranslation } from 'react-i18next';
 import { toggleOscillation } from '../../actions';
 
-const styles = () => ({
+const styles = (theme) => ({
   wrapper: {
-    marginLeft: 0,
+    margin: theme.spacing(2, 0),
   },
 });
 class OscillateSwitch extends Component {
-  propTypes = {
+  static propTypes = {
     oscillation: PropTypes.bool.isRequired,
     dispatchToggleOscillation: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,

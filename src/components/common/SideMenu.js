@@ -13,6 +13,8 @@ import { toggleSideMenu } from '../../actions';
 import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
 import OscillateSwitch from './OscillateSwitch';
 import AmplitudeSlider from './AmplitudeSlider';
+import LineSelector from './LineSelector';
+import FrequencyAdjuster from './FrequencyAdjuster';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -99,8 +101,10 @@ class SideMenu extends React.Component {
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
             {this.renderDescription()}
+            <LineSelector />
             <OscillateSwitch />
             <AmplitudeSlider disabled={!shouldOscillate} />
+            <FrequencyAdjuster />
           </div>
         </Drawer>
       </>
