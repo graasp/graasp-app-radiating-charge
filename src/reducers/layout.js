@@ -1,10 +1,16 @@
-import { DEFAULT_AMPLITUDE_VALUE } from '../config/constants';
+import {
+  DEFAULT_AMPLITUDE_VALUE,
+  DEFAULT_NUMBER_OF_LINES,
+  FREQUENCY_ADJUSTMENT_FACTOR_DEFAULT,
+} from '../config/constants';
 import {
   TOGGLE_SETTINGS,
   TOGGLE_LOADING_SCREEN,
   TOGGLE_SIDE_MENU,
   TOGGLE_OSCILLATION,
   SET_AMPLITUDE,
+  SET_NUMBER_OF_LINES,
+  ADJUST_FREQUENCY,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -14,8 +20,10 @@ const INITIAL_STATE = {
   showLoader: true,
   showSideMenu: true,
   lab: {
-    oscillation: true,
+    oscillation: false,
     amplitude: DEFAULT_AMPLITUDE_VALUE,
+    numberOfLines: DEFAULT_NUMBER_OF_LINES,
+    frequencyAdjustmentFactor: FREQUENCY_ADJUSTMENT_FACTOR_DEFAULT,
   },
 };
 
@@ -55,6 +63,23 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           amplitude: payload,
         },
       };
+    case SET_NUMBER_OF_LINES:
+      return {
+        ...state,
+        lab: {
+          ...state.lab,
+          numberOfLines: payload,
+        },
+      };
+    case ADJUST_FREQUENCY: {
+      return {
+        ...state,
+        lab: {
+          ...state.lab,
+          frequencyAdjustmentFactor: payload,
+        },
+      };
+    }
     default:
       return state;
   }

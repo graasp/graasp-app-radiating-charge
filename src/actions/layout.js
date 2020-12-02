@@ -4,6 +4,8 @@ import {
   TOGGLE_SIDE_MENU,
   SET_AMPLITUDE,
   TOGGLE_OSCILLATION,
+  SET_NUMBER_OF_LINES,
+  ADJUST_FREQUENCY,
 } from '../types';
 
 const toggleSettings = (showSettings) => (dispatch) =>
@@ -38,10 +40,26 @@ const setAmplitude = (payload) => (dispatch) => {
   });
 };
 
+const setNumberOfLines = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_NUMBER_OF_LINES,
+    payload,
+  });
+};
+
+const adjustFrequency = (payload) => (dispatch) => {
+  dispatch({
+    type: ADJUST_FREQUENCY,
+    payload,
+  });
+};
+
 export {
   toggleSettings,
   toggleLoadingScreen,
   toggleSideMenu,
   toggleOscillation,
   setAmplitude,
+  setNumberOfLines,
+  adjustFrequency,
 };
