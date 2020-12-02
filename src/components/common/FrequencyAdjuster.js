@@ -14,6 +14,7 @@ import {
   FREQUENCY_ADJUSTMENT_FACTOR_MIN,
   FREQUENCY_ADJUSTMENT_FACTOR_MAX,
   FREQUENCY_ADJUSTMENT_FACTOR_STEP,
+  FREQUENCY_RESIDUAL_ERROR_FACTOR,
 } from '../../config/constants';
 
 const styles = (theme) => ({
@@ -77,10 +78,10 @@ class FrequencyAdjuster extends Component {
         (prevState) => {
           const newState =
             prevState.sliderValue - FREQUENCY_ADJUSTMENT_FACTOR_STEP <=
-            // the '+ 0.001' part is to handle JS floating point errors
+            // the '+ FREQUENCY_RESIDUAL_ERROR_FACTOR' part is to handle JS floating point errors
             // e.g. you can get 0.05 - 0.05 = 0.0000001
-            // therefore, check if the new state <= 0.001 (if so, set it to 0)
-            FREQUENCY_ADJUSTMENT_FACTOR_MIN + 0.001
+            // therefore, check if the new state <= supplied minimum + some epsilon (if so, set it to minimum)
+            FREQUENCY_ADJUSTMENT_FACTOR_MIN + FREQUENCY_RESIDUAL_ERROR_FACTOR
               ? FREQUENCY_ADJUSTMENT_FACTOR_MIN
               : prevState.sliderValue - FREQUENCY_ADJUSTMENT_FACTOR_STEP;
           return {

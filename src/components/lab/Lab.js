@@ -165,7 +165,7 @@ class Lab extends Component {
           height={stageHeight}
         >
           <Layer>
-            {generateAngles(parseInt(numberOfLines, 10)).map((angle) => (
+            {generateAngles(numberOfLines).map((angle) => (
               <EmittedLine
                 charge={charge}
                 chargeOscillation={chargeOscillation}
@@ -199,7 +199,7 @@ class Lab extends Component {
 const mapStateToProps = ({ layout }) => ({
   shouldOscillate: layout.lab.oscillation,
   amplitude: layout.lab.amplitude,
-  numberOfLines: layout.lab.numberOfLines,
+  numberOfLines: parseInt(layout.lab.numberOfLines, 10),
   frequencyAdjustmentFactor: layout.lab.frequencyAdjustmentFactor,
 });
 
