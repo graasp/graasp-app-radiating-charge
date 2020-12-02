@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.0...v0.1.1) (2020-12-02)
+
+### Bug Fixes
+
+- do not get actions in standalone mode ([02aadb2](https://github.com/graasp/graasp-app-radiating-charge/commit/02aadb292ac9c4dec8493a91c447d6c86f14b536)), closes [#16](https://github.com/graasp/graasp-app-radiating-charge/issues/16)
+
+### Build System
+
+- reset cdn on deploy ([34677bf](https://github.com/graasp/graasp-app-radiating-charge/commit/34677bf1737a4df0557972c71c27f3a9d034f870)), closes [#15](https://github.com/graasp/graasp-app-radiating-charge/issues/15)
+
 ## 0.1.0 (2020-12-02)
 
 ### Features
