@@ -9,12 +9,22 @@ import { Divider, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { toggleSideMenu } from '../../actions';
-import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
+import { toggleSideMenu, setAmplitude, setFrequency } from '../../actions';
 import OscillateSwitch from './OscillateSwitch';
-import AmplitudeSlider from './AmplitudeSlider';
 import LineSelector from './LineSelector';
-import FrequencyAdjuster from './FrequencyAdjuster';
+import CustomSlider from './CustomSlider';
+import {
+  DRAWER_WIDTH,
+  DEFAULT_THEME_DIRECTION,
+  DEFAULT_AMPLITUDE,
+  MIN_AMPLITUDE,
+  MAX_AMPLITUDE,
+  AMPLITUDE_STEP,
+  DEFAULT_FREQUENCY,
+  MIN_FREQUENCY,
+  MAX_FREQUENCY,
+  FREQUENCY_STEP,
+} from '../../config/constants';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -45,7 +55,8 @@ class SideMenu extends React.Component {
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
-    shouldOscillate: PropTypes.bool.isRequired,
+    dispatchSetAmplitude: PropTypes.func.isRequired,
+    dispatchSetFrequency: PropTypes.func.isRequired,
   };
 
   handleToggleSideMenu = (open) => () => {
@@ -85,7 +96,13 @@ class SideMenu extends React.Component {
   };
 
   render() {
-    const { classes, showSideMenu, shouldOscillate } = this.props;
+    const {
+      classes,
+      showSideMenu,
+      dispatchSetAmplitude,
+      dispatchSetFrequency,
+      t,
+    } = this.props;
 
     return (
       <>
@@ -103,8 +120,23 @@ class SideMenu extends React.Component {
             {this.renderDescription()}
             <LineSelector />
             <OscillateSwitch />
-            <AmplitudeSlider disabled={!shouldOscillate} />
-            <FrequencyAdjuster />
+            <CustomSlider
+              sliderLabel={t('Amplitude')}
+              sliderDefault={DEFAULT_AMPLITUDE}
+              sliderMin={MIN_AMPLITUDE}
+              sliderMax={MAX_AMPLITUDE}
+              sliderStep={AMPLITUDE_STEP}
+              dispatchSliderValue={dispatchSetAmplitude}
+            />
+            <CustomSlider
+              sliderLabel={t('Frequency (Hz)')}
+              sliderDefault={DEFAULT_FREQUENCY}
+              sliderMin={MIN_FREQUENCY}
+              sliderMax={MAX_FREQUENCY}
+              sliderStep={FREQUENCY_STEP}
+              dispatchSliderValue={dispatchSetFrequency}
+              valueLabelDisplay
+            />
           </div>
         </Drawer>
       </>
@@ -114,11 +146,12 @@ class SideMenu extends React.Component {
 
 const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
-  shouldOscillate: layout.lab.oscillation,
 });
 
 const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
+  dispatchSetFrequency: setFrequency,
+  dispatchSetAmplitude: setAmplitude,
 };
 
 const ConnectedComponent = connect(

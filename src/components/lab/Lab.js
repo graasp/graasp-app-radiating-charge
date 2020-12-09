@@ -11,12 +11,11 @@ import {
   CHARGE_SYMBOL,
   CHARGE_SYMBOL_FONT_SIZE,
   CHARGE_SYMBOL_COLOR,
-  UPWARDS_DIRECTION,
-  DOWNWARDS_DIRECTION,
-  LINE_STEP_SIZE,
   SET_INTERVAL_TIME,
+  LINE_STEP_SIZE,
   generateAngles,
 } from '../../config/constants';
+import { calculateYpositionHarmonically } from '../../utils/physics';
 
 const styles = () => ({
   container: {
@@ -39,7 +38,7 @@ class Lab extends Component {
     shouldOscillate: PropTypes.bool.isRequired,
     amplitude: PropTypes.number.isRequired,
     numberOfLines: PropTypes.number.isRequired,
-    frequencyAdjustmentFactor: PropTypes.number.isRequired,
+    frequency: PropTypes.number.isRequired,
   };
 
   state = {
@@ -50,11 +49,10 @@ class Lab extends Component {
       x: 0,
       y: 0,
     },
-    // direction charge is moving
-    direction: DOWNWARDS_DIRECTION,
     chargeOscillation: { x: 0, y: 0 },
-    renderCount: 0,
     emittedLineStepSize: LINE_STEP_SIZE,
+    timerCount: 1,
+    elapsedTime: 0,
   };
 
   componentDidMount() {
@@ -68,51 +66,21 @@ class Lab extends Component {
 
     // animation
     setInterval(() => {
-      const {
-        shouldOscillate,
-        amplitude,
-        frequencyAdjustmentFactor,
-      } = this.props;
-      const {
-        chargeOscillation: { y },
-        direction,
-        renderCount,
-      } = this.state;
-
-      const x = 0;
-      let newY = y;
-      let newDirection = direction;
-      let renderCountIncrement = 1;
+      const { shouldOscillate, frequency, amplitude } = this.props;
+      const { elapsedTime, timerCount } = this.state;
 
       if (shouldOscillate) {
-        // acceleration
-        const delta = frequencyAdjustmentFactor * renderCount;
-
-        switch (direction) {
-          case DOWNWARDS_DIRECTION:
-            newY += delta;
-            break;
-          case UPWARDS_DIRECTION:
-            newY -= delta;
-            break;
-          default:
-          // do nothing
-        }
-
-        // flip directions as soon as charge passes amplitude threshold
-        if (direction === DOWNWARDS_DIRECTION && newY >= amplitude) {
-          newDirection = UPWARDS_DIRECTION;
-          renderCountIncrement = -1 * renderCount;
-        } else if (direction === UPWARDS_DIRECTION && newY <= -amplitude) {
-          newDirection = DOWNWARDS_DIRECTION;
-          renderCountIncrement = -1 * renderCount;
-        }
-
         this.setState({
-          chargeOscillation: { y: newY, x },
-          direction: newDirection,
-          renderCount: renderCount + renderCountIncrement,
-          emittedLineStepSize: LINE_STEP_SIZE + delta,
+          chargeOscillation: {
+            y: calculateYpositionHarmonically(
+              frequency,
+              amplitude,
+              elapsedTime,
+            ),
+            x: 0,
+          },
+          elapsedTime: SET_INTERVAL_TIME * timerCount,
+          timerCount: timerCount + 1,
         });
       }
     }, SET_INTERVAL_TIME);
@@ -200,7 +168,7 @@ const mapStateToProps = ({ layout }) => ({
   shouldOscillate: layout.lab.oscillation,
   amplitude: layout.lab.amplitude,
   numberOfLines: parseInt(layout.lab.numberOfLines, 10),
-  frequencyAdjustmentFactor: layout.lab.frequencyAdjustmentFactor,
+  frequency: layout.lab.frequency,
 });
 
 const ConnectedComponent = connect(mapStateToProps, null)(Lab);

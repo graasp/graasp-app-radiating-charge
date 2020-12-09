@@ -1,7 +1,7 @@
 import {
-  DEFAULT_AMPLITUDE_VALUE,
+  DEFAULT_AMPLITUDE,
   DEFAULT_NUMBER_OF_LINES,
-  FREQUENCY_ADJUSTMENT_FACTOR_DEFAULT,
+  DEFAULT_FREQUENCY,
 } from '../config/constants';
 import {
   TOGGLE_SETTINGS,
@@ -21,9 +21,9 @@ const INITIAL_STATE = {
   showSideMenu: true,
   lab: {
     oscillation: false,
-    amplitude: DEFAULT_AMPLITUDE_VALUE,
+    amplitude: DEFAULT_AMPLITUDE,
     numberOfLines: DEFAULT_NUMBER_OF_LINES,
-    frequencyAdjustmentFactor: FREQUENCY_ADJUSTMENT_FACTOR_DEFAULT,
+    frequency: DEFAULT_FREQUENCY,
   },
 };
 
@@ -76,7 +76,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         lab: {
           ...state.lab,
-          frequencyAdjustmentFactor: payload,
+          frequency: payload,
         },
       };
     }

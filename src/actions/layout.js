@@ -47,7 +47,7 @@ const setNumberOfLines = (payload) => (dispatch) => {
   });
 };
 
-const adjustFrequency = (payload) => (dispatch) => {
+const setFrequency = (payload) => (dispatch) => {
   dispatch({
     type: ADJUST_FREQUENCY,
     payload,
@@ -61,5 +61,5 @@ export {
   toggleOscillation,
   setAmplitude,
   setNumberOfLines,
-  adjustFrequency,
+  setFrequency,
 };
