@@ -9,9 +9,15 @@ import { Divider, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { toggleSideMenu, setAmplitude, setFrequency } from '../../actions';
-import OscillateSwitch from './OscillateSwitch';
+import {
+  toggleSideMenu,
+  toggleOscillation,
+  toggleGridLines,
+  setAmplitude,
+  setFrequency,
+} from '../../actions';
 import LineSelector from './LineSelector';
+import CustomSwitch from './CustomSwitch';
 import CustomSlider from './CustomSlider';
 import {
   DRAWER_WIDTH,
@@ -54,6 +60,10 @@ class SideMenu extends React.Component {
     }).isRequired,
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
+    oscillation: PropTypes.bool.isRequired,
+    gridLines: PropTypes.bool.isRequired,
+    dispatchToggleGridLines: PropTypes.func.isRequired,
+    dispatchToggleOscillation: PropTypes.func.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
     dispatchSetAmplitude: PropTypes.func.isRequired,
     dispatchSetFrequency: PropTypes.func.isRequired,
@@ -99,6 +109,10 @@ class SideMenu extends React.Component {
     const {
       classes,
       showSideMenu,
+      oscillation,
+      gridLines,
+      dispatchToggleOscillation,
+      dispatchToggleGridLines,
       dispatchSetAmplitude,
       dispatchSetFrequency,
       t,
@@ -119,7 +133,16 @@ class SideMenu extends React.Component {
           <div className={classes.contentWrapper}>
             {this.renderDescription()}
             <LineSelector />
-            <OscillateSwitch />
+            <CustomSwitch
+              switchLabel={t('Oscillation')}
+              switchStatus={oscillation}
+              switchDispatch={dispatchToggleOscillation}
+            />
+            <CustomSwitch
+              switchLabel={t('Show grid')}
+              switchStatus={gridLines}
+              switchDispatch={dispatchToggleGridLines}
+            />
             <CustomSlider
               sliderLabel={t('Amplitude')}
               sliderDefault={DEFAULT_AMPLITUDE}
@@ -146,10 +169,14 @@ class SideMenu extends React.Component {
 
 const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
+  oscillation: layout.lab.oscillation,
+  gridLines: layout.lab.gridLines,
 });
 
 const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
+  dispatchToggleGridLines: toggleGridLines,
+  dispatchToggleOscillation: toggleOscillation,
   dispatchSetFrequency: setFrequency,
   dispatchSetAmplitude: setAmplitude,
 };

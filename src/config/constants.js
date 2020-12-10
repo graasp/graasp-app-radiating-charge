@@ -32,6 +32,11 @@ export const MAX_FREQUENCY = 1;
 export const FREQUENCY_STEP = 0.1;
 export const FREQUENCY_RESIDUAL_ERROR_FACTOR = 0.01;
 
+// grid constants
+export const NUM_OF_X_AXIS_TICKS = 20;
+export const GRID_AXES_COLOR = '#000';
+export const GRID_AXES_STROKE_WIDTH = 0.5;
+
 // numOfLines should be >= 2
 export const generateAngles = (numOfLines) => {
   const firstQuadrantAngles = new Array(numOfLines / 2)

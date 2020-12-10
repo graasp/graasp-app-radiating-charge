@@ -3,6 +3,7 @@ import {
   TOGGLE_LOADING_SCREEN,
   TOGGLE_SIDE_MENU,
   SET_AMPLITUDE,
+  TOGGLE_GRID_LINES,
   TOGGLE_OSCILLATION,
   SET_NUMBER_OF_LINES,
   ADJUST_FREQUENCY,
@@ -25,6 +26,13 @@ const toggleSideMenu = (showSideMenu) => (dispatch) =>
     type: TOGGLE_SIDE_MENU,
     payload: showSideMenu,
   });
+
+const toggleGridLines = (payload) => (dispatch) => {
+  dispatch({
+    type: TOGGLE_GRID_LINES,
+    payload,
+  });
+};
 
 const toggleOscillation = (payload) => (dispatch) => {
   dispatch({
@@ -58,6 +66,7 @@ export {
   toggleSettings,
   toggleLoadingScreen,
   toggleSideMenu,
+  toggleGridLines,
   toggleOscillation,
   setAmplitude,
   setNumberOfLines,

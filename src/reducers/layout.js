@@ -7,6 +7,7 @@ import {
   TOGGLE_SETTINGS,
   TOGGLE_LOADING_SCREEN,
   TOGGLE_SIDE_MENU,
+  TOGGLE_GRID_LINES,
   TOGGLE_OSCILLATION,
   SET_AMPLITUDE,
   SET_NUMBER_OF_LINES,
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
   showSideMenu: true,
   lab: {
     oscillation: false,
+    gridLines: true,
     amplitude: DEFAULT_AMPLITUDE,
     numberOfLines: DEFAULT_NUMBER_OF_LINES,
     frequency: DEFAULT_FREQUENCY,
@@ -46,6 +48,14 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         showSideMenu: payload,
+      };
+    case TOGGLE_GRID_LINES:
+      return {
+        ...state,
+        lab: {
+          ...state.lab,
+          gridLines: payload,
+        },
       };
     case TOGGLE_OSCILLATION:
       return {

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Stage, Layer, Circle, Text } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
+import Grid from './Grid';
 import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
@@ -13,6 +14,7 @@ import {
   CHARGE_SYMBOL_COLOR,
   SET_INTERVAL_TIME,
   LINE_STEP_SIZE,
+  NUM_OF_X_AXIS_TICKS,
   generateAngles,
 } from '../../config/constants';
 import { calculateYpositionHarmonically } from '../../utils/physics';
@@ -35,6 +37,7 @@ class Lab extends Component {
       container: PropTypes.string.isRequired,
       stage: PropTypes.string.isRequired,
     }).isRequired,
+    gridLines: PropTypes.bool.isRequired,
     shouldOscillate: PropTypes.bool.isRequired,
     amplitude: PropTypes.number.isRequired,
     numberOfLines: PropTypes.number.isRequired,
@@ -93,10 +96,7 @@ class Lab extends Component {
       stageHeight,
       stageWidth,
     });
-    this.updateChargePosition(
-      stageWidth / 2 - CHARGE_RADIUS,
-      stageHeight / 2 - CHARGE_RADIUS,
-    );
+    this.updateChargePosition(stageWidth / 2, stageHeight / 2);
   };
 
   updateChargePosition = (x, y) => {
@@ -110,7 +110,7 @@ class Lab extends Component {
 
   // element position should consider header height
   render() {
-    const { numberOfLines, classes } = this.props;
+    const { gridLines, numberOfLines, classes } = this.props;
     const {
       stageWidth,
       stageHeight,
@@ -147,7 +147,6 @@ class Lab extends Component {
               y={charge.y + chargeOscillation.y}
               radius={CHARGE_RADIUS}
               fill={CHARGE_COLOR}
-              draggable
             />
             <Text
               // x and y coordinates adjusted manually to approximately center the + in the Circle given its fontSize
@@ -157,6 +156,13 @@ class Lab extends Component {
               fontSize={CHARGE_SYMBOL_FONT_SIZE}
               fill={CHARGE_SYMBOL_COLOR}
             />
+            {gridLines && (
+              <Grid
+                gridWidth={stageWidth}
+                gridHeight={stageHeight}
+                numOfxAxisTicks={NUM_OF_X_AXIS_TICKS}
+              />
+            )}
           </Layer>
         </Stage>
       </div>
@@ -165,6 +171,7 @@ class Lab extends Component {
 }
 
 const mapStateToProps = ({ layout }) => ({
+  gridLines: layout.lab.gridLines,
   shouldOscillate: layout.lab.oscillation,
   amplitude: layout.lab.amplitude,
   numberOfLines: parseInt(layout.lab.numberOfLines, 10),
