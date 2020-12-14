@@ -7,7 +7,12 @@ import {
   TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
   SET_NUMBER_OF_LINES,
-  ADJUST_FREQUENCY,
+  SET_FREQUENCY,
+  SET_STAGE_DIMENSIONS,
+  SET_CHARGE_ORIGIN,
+  SET_CHARGE_OSCILLATION,
+  SET_TIMER_COUNT,
+  SET_ELAPSED_TIME,
 } from '../types';
 
 const toggleSettings = (showSettings) => (dispatch) =>
@@ -65,7 +70,42 @@ const setNumberOfLines = (payload) => (dispatch) => {
 
 const setFrequency = (payload) => (dispatch) => {
   dispatch({
-    type: ADJUST_FREQUENCY,
+    type: SET_FREQUENCY,
+    payload,
+  });
+};
+
+const setStageDimensions = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_STAGE_DIMENSIONS,
+    payload,
+  });
+};
+
+const setChargeOrigin = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_CHARGE_ORIGIN,
+    payload,
+  });
+};
+
+const setChargeOscillation = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_CHARGE_OSCILLATION,
+    payload,
+  });
+};
+
+const setTimerCount = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_TIMER_COUNT,
+    payload,
+  });
+};
+
+const setElapsedTime = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_ELAPSED_TIME,
     payload,
   });
 };
@@ -80,4 +120,9 @@ export {
   setAmplitude,
   setNumberOfLines,
   setFrequency,
+  setStageDimensions,
+  setChargeOrigin,
+  setChargeOscillation,
+  setTimerCount,
+  setElapsedTime,
 };

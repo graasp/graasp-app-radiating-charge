@@ -32,6 +32,13 @@ export const MAX_FREQUENCY = 1;
 export const FREQUENCY_STEP = 0.1;
 export const FREQUENCY_RESIDUAL_ERROR_FACTOR = 0.01;
 
+export const DEFAULT_CHARGE_X_POSITION = 0;
+export const DEFAULT_CHARGE_Y_POSITION = 0;
+export const DEFAULT_CHARGE_OSCILLATION_X_POSITION = 0;
+export const DEFAULT_CHARGE_OSCILLATION_Y_POSITION = 0;
+export const DEFAULT_TIMER_COUNT = 1;
+export const DEFAULT_ELAPSED_TIME = 0;
+
 // grid constants
 export const NUM_OF_X_AXIS_TICKS = 20;
 export const GRID_AXES_COLOR = '#000';

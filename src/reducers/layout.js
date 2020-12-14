@@ -2,6 +2,12 @@ import {
   DEFAULT_AMPLITUDE,
   DEFAULT_NUMBER_OF_LINES,
   DEFAULT_FREQUENCY,
+  DEFAULT_CHARGE_X_POSITION,
+  DEFAULT_CHARGE_Y_POSITION,
+  DEFAULT_CHARGE_OSCILLATION_X_POSITION,
+  DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
+  DEFAULT_TIMER_COUNT,
+  DEFAULT_ELAPSED_TIME,
 } from '../config/constants';
 import {
   TOGGLE_SETTINGS,
@@ -12,7 +18,12 @@ import {
   TOGGLE_PAUSE,
   SET_AMPLITUDE,
   SET_NUMBER_OF_LINES,
-  ADJUST_FREQUENCY,
+  SET_FREQUENCY,
+  SET_STAGE_DIMENSIONS,
+  SET_CHARGE_ORIGIN,
+  SET_CHARGE_OSCILLATION,
+  SET_TIMER_COUNT,
+  SET_ELAPSED_TIME,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -22,12 +33,23 @@ const INITIAL_STATE = {
   showLoader: true,
   showSideMenu: true,
   lab: {
+    stageDimensions: { width: 0, height: 0 },
     oscillation: false,
     gridLines: true,
     amplitude: DEFAULT_AMPLITUDE,
     numberOfLines: DEFAULT_NUMBER_OF_LINES,
     frequency: DEFAULT_FREQUENCY,
     isPaused: false,
+    chargeOrigin: {
+      x: DEFAULT_CHARGE_X_POSITION,
+      y: DEFAULT_CHARGE_Y_POSITION,
+    },
+    chargeOscillation: {
+      x: DEFAULT_CHARGE_OSCILLATION_X_POSITION,
+      y: DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
+    },
+    timerCount: DEFAULT_TIMER_COUNT,
+    elapsedTime: DEFAULT_ELAPSED_TIME,
   },
 };
 
@@ -85,12 +107,51 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           numberOfLines: payload,
         },
       };
-    case ADJUST_FREQUENCY: {
+    case SET_FREQUENCY: {
       return {
         ...state,
         lab: {
           ...state.lab,
           frequency: payload,
+        },
+      };
+    }
+    case SET_STAGE_DIMENSIONS: {
+      return { ...state, lab: { ...state.lab, stageDimensions: payload } };
+    }
+    case SET_CHARGE_ORIGIN: {
+      return {
+        ...state,
+        lab: {
+          ...state.lab,
+          chargeOrigin: payload,
+        },
+      };
+    }
+    case SET_CHARGE_OSCILLATION: {
+      return {
+        ...state,
+        lab: {
+          ...state.lab,
+          chargeOscillation: payload,
+        },
+      };
+    }
+    case SET_TIMER_COUNT: {
+      return {
+        ...state,
+        lab: {
+          ...state.lab,
+          timerCount: payload,
+        },
+      };
+    }
+    case SET_ELAPSED_TIME: {
+      return {
+        ...state,
+        lab: {
+          ...state.lab,
+          elapsedTime: payload,
         },
       };
     }
