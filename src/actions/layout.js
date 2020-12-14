@@ -5,6 +5,7 @@ import {
   SET_AMPLITUDE,
   TOGGLE_GRID_LINES,
   TOGGLE_OSCILLATION,
+  TOGGLE_PAUSE,
   SET_NUMBER_OF_LINES,
   ADJUST_FREQUENCY,
 } from '../types';
@@ -41,6 +42,13 @@ const toggleOscillation = (payload) => (dispatch) => {
   });
 };
 
+const togglePause = (payload) => (dispatch) => {
+  dispatch({
+    type: TOGGLE_PAUSE,
+    payload,
+  });
+};
+
 const setAmplitude = (payload) => (dispatch) => {
   dispatch({
     type: SET_AMPLITUDE,
@@ -68,6 +76,7 @@ export {
   toggleSideMenu,
   toggleGridLines,
   toggleOscillation,
+  togglePause,
   setAmplitude,
   setNumberOfLines,
   setFrequency,

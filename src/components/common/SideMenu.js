@@ -19,6 +19,7 @@ import {
 import LineSelector from './LineSelector';
 import CustomSwitch from './CustomSwitch';
 import CustomSlider from './CustomSlider';
+import AnimationControls from './AnimationControls';
 import {
   DRAWER_WIDTH,
   DEFAULT_THEME_DIRECTION,
@@ -46,6 +47,11 @@ const styles = (theme) => ({
   contentWrapper: {
     margin: theme.spacing(2),
   },
+  oscillationSwitchContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });
 
 class SideMenu extends React.Component {
@@ -54,6 +60,7 @@ class SideMenu extends React.Component {
       drawerHeader: PropTypes.string.isRequired,
       drawerPaper: PropTypes.string.isRequired,
       contentWrapper: PropTypes.string.isRequired,
+      oscillationSwitchContainer: PropTypes.string.isRequired,
     }).isRequired,
     theme: PropTypes.shape({
       direction: PropTypes.string.isRequired,
@@ -133,11 +140,14 @@ class SideMenu extends React.Component {
           <div className={classes.contentWrapper}>
             {this.renderDescription()}
             <LineSelector />
-            <CustomSwitch
-              switchLabel={t('Oscillation')}
-              switchStatus={oscillation}
-              switchDispatch={dispatchToggleOscillation}
-            />
+            <div className={classes.oscillationSwitchContainer}>
+              <CustomSwitch
+                switchLabel={t('Oscillation')}
+                switchStatus={oscillation}
+                switchDispatch={dispatchToggleOscillation}
+              />
+              <AnimationControls />
+            </div>
             <CustomSwitch
               switchLabel={t('Show grid')}
               switchStatus={gridLines}

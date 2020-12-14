@@ -9,6 +9,7 @@ import {
   TOGGLE_SIDE_MENU,
   TOGGLE_GRID_LINES,
   TOGGLE_OSCILLATION,
+  TOGGLE_PAUSE,
   SET_AMPLITUDE,
   SET_NUMBER_OF_LINES,
   ADJUST_FREQUENCY,
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
     amplitude: DEFAULT_AMPLITUDE,
     numberOfLines: DEFAULT_NUMBER_OF_LINES,
     frequency: DEFAULT_FREQUENCY,
+    isPaused: false,
   },
 };
 
@@ -65,6 +67,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           oscillation: payload,
         },
       };
+    case TOGGLE_PAUSE:
+      return { ...state, lab: { ...state.lab, isPaused: payload } };
     case SET_AMPLITUDE:
       return {
         ...state,

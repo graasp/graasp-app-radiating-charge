@@ -5,6 +5,7 @@ import { Stage, Layer, Circle, Text } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
 import Grid from './Grid';
+import { togglePause } from '../../actions';
 import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
@@ -42,6 +43,8 @@ class Lab extends Component {
     amplitude: PropTypes.number.isRequired,
     numberOfLines: PropTypes.number.isRequired,
     frequency: PropTypes.number.isRequired,
+    isPaused: PropTypes.bool.isRequired,
+    dispatchTogglePause: PropTypes.func.isRequired,
   };
 
   state = {
@@ -68,25 +71,16 @@ class Lab extends Component {
     ro.observe(document.querySelector(`#container`));
 
     // animation
-    setInterval(() => {
-      const { shouldOscillate, frequency, amplitude } = this.props;
-      const { elapsedTime, timerCount } = this.state;
+    this.beginOscillationInterval();
+  }
 
-      if (shouldOscillate) {
-        this.setState({
-          chargeOscillation: {
-            y: calculateYpositionHarmonically(
-              frequency,
-              amplitude,
-              elapsedTime,
-            ),
-            x: 0,
-          },
-          elapsedTime: SET_INTERVAL_TIME * timerCount,
-          timerCount: timerCount + 1,
-        });
-      }
-    }, SET_INTERVAL_TIME);
+  componentDidUpdate(prevProps) {
+    const { isPaused } = this.props;
+    if (isPaused !== prevProps.isPaused && isPaused) {
+      clearInterval(this.oscillationInterval);
+    } else if (isPaused !== prevProps.isPaused && !isPaused) {
+      this.beginOscillationInterval();
+    }
   }
 
   checkSize = () => {
@@ -108,9 +102,37 @@ class Lab extends Component {
     });
   };
 
+  beginOscillationInterval = () => {
+    this.oscillationInterval = setInterval(() => {
+      const { shouldOscillate, frequency, amplitude, isPaused } = this.props;
+      const { elapsedTime, timerCount } = this.state;
+
+      if (shouldOscillate && !isPaused) {
+        console.log('should oscillate and not is Paused!');
+        this.setState({
+          chargeOscillation: {
+            y: calculateYpositionHarmonically(
+              frequency,
+              amplitude,
+              elapsedTime,
+            ),
+            x: 0,
+          },
+          elapsedTime: SET_INTERVAL_TIME * timerCount,
+          timerCount: timerCount + 1,
+        });
+      }
+    }, SET_INTERVAL_TIME);
+  };
+
+  handleCanvasClick = () => {
+    const { isPaused, dispatchTogglePause } = this.props;
+    dispatchTogglePause(!isPaused);
+  };
+
   // element position should consider header height
   render() {
-    const { gridLines, numberOfLines, classes } = this.props;
+    const { gridLines, numberOfLines, classes, isPaused } = this.props;
     const {
       stageWidth,
       stageHeight,
@@ -131,15 +153,19 @@ class Lab extends Component {
           className={classes.stage}
           width={stageWidth}
           height={stageHeight}
+          onClick={this.handleCanvasClick}
         >
           <Layer>
-            {generateAngles(numberOfLines).map((angle) => (
+            {generateAngles(numberOfLines).map((angle, index) => (
               <EmittedLine
                 charge={charge}
                 chargeOscillation={chargeOscillation}
                 angle={angle}
                 emittedLineStepSize={emittedLineStepSize}
-                key={angle}
+                // key={index} is necessary to ensure that all lines refresh when # of lines changes
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                isPaused={isPaused}
               />
             ))}
             <Circle
@@ -176,9 +202,14 @@ const mapStateToProps = ({ layout }) => ({
   amplitude: layout.lab.amplitude,
   numberOfLines: parseInt(layout.lab.numberOfLines, 10),
   frequency: layout.lab.frequency,
+  isPaused: layout.lab.isPaused,
 });
 
-const ConnectedComponent = connect(mapStateToProps, null)(Lab);
+const mapDispatchToProps = {
+  dispatchTogglePause: togglePause,
+};
+
+const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Lab);
 
 const StyledComponent = withStyles(styles, { withTheme: true })(
   ConnectedComponent,
