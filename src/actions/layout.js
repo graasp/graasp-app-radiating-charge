@@ -4,11 +4,13 @@ import {
   TOGGLE_SIDE_MENU,
   SET_AMPLITUDE,
   TOGGLE_GRID_LINES,
+  TOGGLE_MEASURING_ARROW,
   TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
   SET_NUMBER_OF_LINES,
   SET_FREQUENCY,
   SET_STAGE_DIMENSIONS,
+  SET_MEASURING_ARROW_WIDTH,
   SET_CHARGE_ORIGIN,
   SET_CHARGE_OSCILLATION,
   SET_TIMER_COUNT,
@@ -40,6 +42,13 @@ const toggleGridLines = (payload) => (dispatch) => {
   });
 };
 
+const toggleMeasuringArrow = (payload) => (dispatch) => {
+  dispatch({
+    type: TOGGLE_MEASURING_ARROW,
+    payload,
+  });
+};
+
 const toggleOscillation = (payload) => (dispatch) => {
   dispatch({
     type: TOGGLE_OSCILLATION,
@@ -66,6 +75,10 @@ const setNumberOfLines = (payload) => (dispatch) => {
     type: SET_NUMBER_OF_LINES,
     payload,
   });
+};
+
+const setMeasuringArrowWidth = (payload) => (dispatch) => {
+  dispatch({ type: SET_MEASURING_ARROW_WIDTH, payload });
 };
 
 const setFrequency = (payload) => (dispatch) => {
@@ -115,11 +128,13 @@ export {
   toggleLoadingScreen,
   toggleSideMenu,
   toggleGridLines,
+  toggleMeasuringArrow,
   toggleOscillation,
   togglePause,
   setAmplitude,
   setNumberOfLines,
   setFrequency,
+  setMeasuringArrowWidth,
   setStageDimensions,
   setChargeOrigin,
   setChargeOscillation,

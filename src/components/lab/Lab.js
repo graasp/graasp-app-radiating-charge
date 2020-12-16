@@ -5,6 +5,7 @@ import { Stage, Layer, Circle, Text } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
 import Grid from './Grid';
+import MeasuringArrow from './MeasuringArrow';
 import {
   togglePause,
   setStageDimensions,
@@ -46,6 +47,7 @@ class Lab extends Component {
       stage: PropTypes.string.isRequired,
     }).isRequired,
     gridLines: PropTypes.bool.isRequired,
+    measuringArrow: PropTypes.bool.isRequired,
     shouldOscillate: PropTypes.bool.isRequired,
     amplitude: PropTypes.number.isRequired,
     numberOfLines: PropTypes.number.isRequired,
@@ -71,6 +73,7 @@ class Lab extends Component {
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
     }).isRequired,
+    measuringArrowWidth: PropTypes.number.isRequired,
   };
 
   state = {
@@ -153,11 +156,13 @@ class Lab extends Component {
     const {
       stageDimensions,
       gridLines,
+      measuringArrow,
       numberOfLines,
       classes,
       isPaused,
       chargeOrigin,
       chargeOscillation,
+      measuringArrowWidth,
     } = this.props;
     const { emittedLineStepSize } = this.state;
 
@@ -213,6 +218,13 @@ class Lab extends Component {
                 numOfxAxisTicks={NUM_OF_X_AXIS_TICKS}
               />
             )}
+            {measuringArrow && (
+              <MeasuringArrow
+                measuringArrowWidth={measuringArrowWidth}
+                stageWidth={stageDimensions.width}
+                stageHeight={stageDimensions.height}
+              />
+            )}
           </Layer>
         </Stage>
       </div>
@@ -222,6 +234,8 @@ class Lab extends Component {
 
 const mapStateToProps = ({ layout }) => ({
   gridLines: layout.lab.gridLines,
+  measuringArrow: layout.lab.measuringArrow,
+  measuringArrowWidth: layout.lab.measuringArrowWidth,
   shouldOscillate: layout.lab.oscillation,
   amplitude: layout.lab.amplitude,
   numberOfLines: parseInt(layout.lab.numberOfLines, 10),

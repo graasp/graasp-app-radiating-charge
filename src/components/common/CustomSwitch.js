@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     margin: theme.spacing(2, 0),
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    width: '55%',
   },
-  switch: {
-    marginLeft: theme.spacing(7),
+  label: {
+    display: 'block',
   },
 }));
 
@@ -24,21 +24,26 @@ const CustomSwitch = ({ switchStatus, switchDispatch, switchLabel }) => {
     switchDispatch(!switchStatus);
   };
 
-  const control = (
+  const Control = (
     <Switch
       checked={switchStatus}
       onChange={onSwitchToggle}
       name={switchLabel}
       color="primary"
-      className={classes.switch}
     />
+  );
+
+  const Label = (
+    <Typography variant="body2" className={classes.label}>
+      {switchLabel}
+    </Typography>
   );
 
   return (
     <FormControlLabel
       className={classes.wrapper}
-      control={control}
-      label={<Typography variant="body2">{switchLabel}</Typography>}
+      control={Control}
+      label={Label}
       labelPlacement="start"
     />
   );

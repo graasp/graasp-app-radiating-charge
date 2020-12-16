@@ -11,6 +11,7 @@ import { green, red, yellow } from '@material-ui/core/colors';
 import {
   togglePause,
   toggleOscillation,
+  toggleMeasuringArrow,
   setChargeOrigin,
   setChargeOscillation,
   setTimerCount,
@@ -61,6 +62,7 @@ const AnimationControls = () => {
     dispatch(setElapsedTime(DEFAULT_ELAPSED_TIME));
     dispatch(toggleOscillation(false));
     dispatch(togglePause(false));
+    dispatch(toggleMeasuringArrow(false));
   };
 
   return (

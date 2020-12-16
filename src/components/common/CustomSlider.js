@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     margin: theme.spacing(2, 0),
   },
-  typography: {
-    marginRight: theme.spacing(2),
+  unit: {
+    marginLeft: theme.spacing(1),
   },
   button: {
     borderRadius: '50%',
@@ -24,18 +24,26 @@ const useStyles = makeStyles((theme) => ({
   sliderContainer: {
     display: 'flex',
     alignItems: 'center',
-    width: '70%',
+    width: '60%',
   },
+  typographyContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  superscript: { fontSize: '0.2em' },
 }));
 
 const CustomSlider = ({
   sliderLabel,
+  additionalSliderLabelInfo,
   dispatchSliderValue,
   sliderDefault,
   sliderStep,
   sliderMin,
   sliderMax,
   valueLabelDisplay,
+  displayConversionFactor,
 }) => {
   const classes = useStyles();
   const [sliderValue, setSliderValue] = useState(sliderDefault);
@@ -67,9 +75,21 @@ const CustomSlider = ({
 
   return (
     <div className={classes.container}>
-      <Typography variant="body2" className={classes.typography}>
-        {sliderLabel}
-      </Typography>
+      <div className={classes.typographyContainer}>
+        <Typography variant="body2">{sliderLabel}</Typography>
+        {additionalSliderLabelInfo && (
+          <Typography variant="body2" className={classes.unit}>
+            {'('}
+            {additionalSliderLabelInfo.base}
+            <sup className={classes.superscript}>
+              {additionalSliderLabelInfo.power}
+              {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+            </sup>{' '}
+            {additionalSliderLabelInfo.unit}
+            {')'}
+          </Typography>
+        )}
+      </div>
       <div className={classes.sliderContainer}>
         <IconButton onClick={decreaseSlider}>
           <RemoveCircleOutlineIcon
@@ -84,9 +104,13 @@ const CustomSlider = ({
           min={sliderMin}
           max={sliderMax}
           disabled={!shouldOscillate}
-          valueLabelDisplay={valueLabelDisplay && 'auto'}
-          // sometimes value in slider is e.g. x.0000000000y, in which case valueLabelFormat forces x.0 to display
-          valueLabelFormat={(value) => value.toFixed(1)}
+          valueLabelDisplay={shouldOscillate && valueLabelDisplay && 'on'}
+          // sometimes value in slider is e.g. x.0000000000y, in which case valueLabelFormat forces x.00 to display
+          valueLabelFormat={
+            (value) => parseFloat((value * displayConversionFactor).toFixed(2))
+            // eslint and prettier going crazy :( :(, therefore this disable
+            // eslint-disable-next-line react/jsx-curly-newline
+          }
         />
         <IconButton onClick={increaseSlider}>
           <AddCircleOutlineIcon
@@ -106,6 +130,17 @@ CustomSlider.propTypes = {
   sliderMin: PropTypes.number.isRequired,
   sliderMax: PropTypes.number.isRequired,
   valueLabelDisplay: PropTypes.bool.isRequired,
+  additionalSliderLabelInfo: PropTypes.shape({
+    unit: PropTypes.string,
+    base: PropTypes.string,
+    power: PropTypes.string,
+  }),
+  displayConversionFactor: PropTypes.number,
+};
+
+CustomSlider.defaultProps = {
+  additionalSliderLabelInfo: null,
+  displayConversionFactor: null,
 };
 
 export default CustomSlider;

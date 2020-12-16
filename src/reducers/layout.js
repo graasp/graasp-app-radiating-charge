@@ -8,17 +8,20 @@ import {
   DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
   DEFAULT_TIMER_COUNT,
   DEFAULT_ELAPSED_TIME,
+  DEFAULT_MEASURING_ARROW_WIDTH,
 } from '../config/constants';
 import {
   TOGGLE_SETTINGS,
   TOGGLE_LOADING_SCREEN,
   TOGGLE_SIDE_MENU,
   TOGGLE_GRID_LINES,
+  TOGGLE_MEASURING_ARROW,
   TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
   SET_AMPLITUDE,
   SET_NUMBER_OF_LINES,
   SET_FREQUENCY,
+  SET_MEASURING_ARROW_WIDTH,
   SET_STAGE_DIMENSIONS,
   SET_CHARGE_ORIGIN,
   SET_CHARGE_OSCILLATION,
@@ -36,6 +39,8 @@ const INITIAL_STATE = {
     stageDimensions: { width: 0, height: 0 },
     oscillation: false,
     gridLines: true,
+    measuringArrow: false,
+    measuringArrowWidth: DEFAULT_MEASURING_ARROW_WIDTH,
     amplitude: DEFAULT_AMPLITUDE,
     numberOfLines: DEFAULT_NUMBER_OF_LINES,
     frequency: DEFAULT_FREQUENCY,
@@ -80,6 +85,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           ...state.lab,
           gridLines: payload,
         },
+      };
+    case TOGGLE_MEASURING_ARROW:
+      return {
+        ...state,
+        lab: { ...state.lab, measuringArrow: payload },
       };
     case TOGGLE_OSCILLATION:
       return {
@@ -127,6 +137,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           chargeOrigin: payload,
         },
       };
+    }
+    case SET_MEASURING_ARROW_WIDTH: {
+      return { ...state, lab: { ...state.lab, measuringArrowWidth: payload } };
     }
     case SET_CHARGE_OSCILLATION: {
       return {

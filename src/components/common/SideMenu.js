@@ -13,6 +13,7 @@ import {
   toggleSideMenu,
   toggleOscillation,
   toggleGridLines,
+  toggleMeasuringArrow,
   setAmplitude,
   setFrequency,
 } from '../../actions';
@@ -20,6 +21,7 @@ import LineSelector from './LineSelector';
 import CustomSwitch from './CustomSwitch';
 import CustomSlider from './CustomSlider';
 import AnimationControls from './AnimationControls';
+import MeasuringArrowControls from './MeasuringArrowControls';
 import {
   DRAWER_WIDTH,
   DEFAULT_THEME_DIRECTION,
@@ -31,6 +33,7 @@ import {
   MIN_FREQUENCY,
   MAX_FREQUENCY,
   FREQUENCY_STEP,
+  FREQUENCY_CONVERSION_FACTOR,
 } from '../../config/constants';
 
 const styles = (theme) => ({
@@ -47,7 +50,7 @@ const styles = (theme) => ({
   contentWrapper: {
     margin: theme.spacing(2),
   },
-  oscillationSwitchContainer: {
+  switchContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -60,7 +63,7 @@ class SideMenu extends React.Component {
       drawerHeader: PropTypes.string.isRequired,
       drawerPaper: PropTypes.string.isRequired,
       contentWrapper: PropTypes.string.isRequired,
-      oscillationSwitchContainer: PropTypes.string.isRequired,
+      switchContainer: PropTypes.string.isRequired,
     }).isRequired,
     theme: PropTypes.shape({
       direction: PropTypes.string.isRequired,
@@ -69,7 +72,9 @@ class SideMenu extends React.Component {
     showSideMenu: PropTypes.bool.isRequired,
     oscillation: PropTypes.bool.isRequired,
     gridLines: PropTypes.bool.isRequired,
+    measuringArrow: PropTypes.bool.isRequired,
     dispatchToggleGridLines: PropTypes.func.isRequired,
+    dispatchToggleMeasuringArrow: PropTypes.func.isRequired,
     dispatchToggleOscillation: PropTypes.func.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
     dispatchSetAmplitude: PropTypes.func.isRequired,
@@ -118,8 +123,10 @@ class SideMenu extends React.Component {
       showSideMenu,
       oscillation,
       gridLines,
+      measuringArrow,
       dispatchToggleOscillation,
       dispatchToggleGridLines,
+      dispatchToggleMeasuringArrow,
       dispatchSetAmplitude,
       dispatchSetFrequency,
       t,
@@ -140,7 +147,7 @@ class SideMenu extends React.Component {
           <div className={classes.contentWrapper}>
             {this.renderDescription()}
             <LineSelector />
-            <div className={classes.oscillationSwitchContainer}>
+            <div className={classes.switchContainer}>
               <CustomSwitch
                 switchLabel={t('Oscillation')}
                 switchStatus={oscillation}
@@ -148,11 +155,21 @@ class SideMenu extends React.Component {
               />
               <AnimationControls />
             </div>
-            <CustomSwitch
-              switchLabel={t('Show grid')}
-              switchStatus={gridLines}
-              switchDispatch={dispatchToggleGridLines}
-            />
+            <div className={classes.switchContainer}>
+              <CustomSwitch
+                switchLabel={t('Grid')}
+                switchStatus={gridLines}
+                switchDispatch={dispatchToggleGridLines}
+              />
+            </div>
+            <div className={classes.switchContainer}>
+              <CustomSwitch
+                switchLabel={t('Measuring arrow')}
+                switchStatus={measuringArrow}
+                switchDispatch={dispatchToggleMeasuringArrow}
+              />
+              <MeasuringArrowControls />
+            </div>
             <CustomSlider
               sliderLabel={t('Amplitude')}
               sliderDefault={DEFAULT_AMPLITUDE}
@@ -162,13 +179,15 @@ class SideMenu extends React.Component {
               dispatchSliderValue={dispatchSetAmplitude}
             />
             <CustomSlider
-              sliderLabel={t('Frequency (Hz)')}
+              sliderLabel={t('Frequency')}
+              additionalSliderLabelInfo={{ unit: 'Hz', base: 10, power: 14 }}
               sliderDefault={DEFAULT_FREQUENCY}
               sliderMin={MIN_FREQUENCY}
               sliderMax={MAX_FREQUENCY}
               sliderStep={FREQUENCY_STEP}
               dispatchSliderValue={dispatchSetFrequency}
               valueLabelDisplay
+              displayConversionFactor={FREQUENCY_CONVERSION_FACTOR}
             />
           </div>
         </Drawer>
@@ -181,11 +200,13 @@ const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
   oscillation: layout.lab.oscillation,
   gridLines: layout.lab.gridLines,
+  measuringArrow: layout.lab.measuringArrow,
 });
 
 const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
   dispatchToggleGridLines: toggleGridLines,
+  dispatchToggleMeasuringArrow: toggleMeasuringArrow,
   dispatchToggleOscillation: toggleOscillation,
   dispatchSetFrequency: setFrequency,
   dispatchSetAmplitude: setAmplitude,
