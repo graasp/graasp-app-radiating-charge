@@ -27,7 +27,7 @@ import {
   NUM_OF_X_AXIS_TICKS,
   generateAngles,
 } from '../../config/constants';
-import { calculateYpositionHarmonically } from '../../utils/physics';
+import { calculateYPositionHarmonically } from '../../utils/physics';
 
 const styles = () => ({
   container: {
@@ -139,7 +139,7 @@ class Lab extends Component {
 
       if (shouldOscillate && !isPaused) {
         dispatchSetChargeOscillation({
-          y: calculateYpositionHarmonically(frequency, amplitude, elapsedTime),
+          y: calculateYPositionHarmonically(frequency, amplitude, elapsedTime),
           x: 0,
         });
         dispatchSetElapsedTime(SET_INTERVAL_TIME * timerCount);

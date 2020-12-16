@@ -12,6 +12,7 @@ import {
   togglePause,
   toggleOscillation,
   toggleMeasuringArrow,
+  toggleSpectrumBar,
   setChargeOrigin,
   setChargeOscillation,
   setTimerCount,
@@ -63,6 +64,7 @@ const AnimationControls = () => {
     dispatch(toggleOscillation(false));
     dispatch(togglePause(false));
     dispatch(toggleMeasuringArrow(false));
+    dispatch(toggleSpectrumBar(false));
   };
 
   return (
