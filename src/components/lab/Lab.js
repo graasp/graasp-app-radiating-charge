@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
 import Grid from './Grid';
 import MeasuringArrow from './MeasuringArrow';
+import SpectrumBar from './SpectrumBar';
 import {
   togglePause,
   setStageDimensions,
@@ -74,6 +75,7 @@ class Lab extends Component {
       height: PropTypes.number.isRequired,
     }).isRequired,
     measuringArrowWidth: PropTypes.number.isRequired,
+    spectrumBar: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -163,6 +165,7 @@ class Lab extends Component {
       chargeOrigin,
       chargeOscillation,
       measuringArrowWidth,
+      spectrumBar,
     } = this.props;
     const { emittedLineStepSize } = this.state;
 
@@ -225,6 +228,12 @@ class Lab extends Component {
                 stageHeight={stageDimensions.height}
               />
             )}
+            {spectrumBar && (
+              <SpectrumBar
+                stageWidth={stageDimensions.width}
+                stageHeight={stageDimensions.height}
+              />
+            )}
           </Layer>
         </Stage>
       </div>
@@ -246,6 +255,7 @@ const mapStateToProps = ({ layout }) => ({
   chargeOscillation: layout.lab.chargeOscillation,
   timerCount: layout.lab.timerCount,
   elapsedTime: layout.lab.elapsedTime,
+  spectrumBar: layout.lab.spectrumBar,
 });
 
 const mapDispatchToProps = {

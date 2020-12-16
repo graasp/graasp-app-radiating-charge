@@ -7,6 +7,7 @@ import {
   TOGGLE_MEASURING_ARROW,
   TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
+  TOGGLE_SPECTRUM_BAR,
   SET_NUMBER_OF_LINES,
   SET_FREQUENCY,
   SET_STAGE_DIMENSIONS,
@@ -59,6 +60,13 @@ const toggleOscillation = (payload) => (dispatch) => {
 const togglePause = (payload) => (dispatch) => {
   dispatch({
     type: TOGGLE_PAUSE,
+    payload,
+  });
+};
+
+const toggleSpectrumBar = (payload) => (dispatch) => {
+  dispatch({
+    type: TOGGLE_SPECTRUM_BAR,
     payload,
   });
 };
@@ -131,6 +139,7 @@ export {
   toggleMeasuringArrow,
   toggleOscillation,
   togglePause,
+  toggleSpectrumBar,
   setAmplitude,
   setNumberOfLines,
   setFrequency,

@@ -14,6 +14,7 @@ import {
   toggleOscillation,
   toggleGridLines,
   toggleMeasuringArrow,
+  toggleSpectrumBar,
   setAmplitude,
   setFrequency,
 } from '../../actions';
@@ -71,12 +72,14 @@ class SideMenu extends React.Component {
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
     oscillation: PropTypes.bool.isRequired,
+    spectrumBar: PropTypes.bool.isRequired,
     gridLines: PropTypes.bool.isRequired,
     measuringArrow: PropTypes.bool.isRequired,
     dispatchToggleGridLines: PropTypes.func.isRequired,
     dispatchToggleMeasuringArrow: PropTypes.func.isRequired,
     dispatchToggleOscillation: PropTypes.func.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
+    dispatchToggleSpectrumBar: PropTypes.func.isRequired,
     dispatchSetAmplitude: PropTypes.func.isRequired,
     dispatchSetFrequency: PropTypes.func.isRequired,
   };
@@ -112,7 +115,9 @@ class SideMenu extends React.Component {
       oscillation,
       gridLines,
       measuringArrow,
+      spectrumBar,
       dispatchToggleOscillation,
+      dispatchToggleSpectrumBar,
       dispatchToggleGridLines,
       dispatchToggleMeasuringArrow,
       dispatchSetAmplitude,
@@ -157,6 +162,13 @@ class SideMenu extends React.Component {
               />
               <MeasuringArrowControls />
             </div>
+            <div className={classes.switchContainer}>
+              <CustomSwitch
+                switchLabel={t('Spectrum bar')}
+                switchStatus={spectrumBar}
+                switchDispatch={dispatchToggleSpectrumBar}
+              />
+            </div>
             <CustomSlider
               sliderLabel={t('Amplitude')}
               sliderDefault={DEFAULT_AMPLITUDE}
@@ -188,6 +200,7 @@ const mapStateToProps = ({ layout }) => ({
   oscillation: layout.lab.oscillation,
   gridLines: layout.lab.gridLines,
   measuringArrow: layout.lab.measuringArrow,
+  spectrumBar: layout.lab.spectrumBar,
 });
 
 const mapDispatchToProps = {
@@ -195,6 +208,7 @@ const mapDispatchToProps = {
   dispatchToggleGridLines: toggleGridLines,
   dispatchToggleMeasuringArrow: toggleMeasuringArrow,
   dispatchToggleOscillation: toggleOscillation,
+  dispatchToggleSpectrumBar: toggleSpectrumBar,
   dispatchSetFrequency: setFrequency,
   dispatchSetAmplitude: setAmplitude,
 };

@@ -20,9 +20,9 @@ const MeasuringArrow = ({ measuringArrowWidth, stageWidth, stageHeight }) => {
     container.style.cursor = 'default';
   };
 
-  // place arrow 10% from left and 90% from top of canvas
+  // place arrow 10% from left and 20% from top of canvas
   const arrowInitialXPosition = 0.1 * stageWidth;
-  const arrowInitialYPosition = 0.9 * stageHeight;
+  const arrowInitialYPosition = 0.2 * stageHeight;
 
   return (
     <Group draggable onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>

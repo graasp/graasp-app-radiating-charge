@@ -18,6 +18,7 @@ import {
   TOGGLE_MEASURING_ARROW,
   TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
+  TOGGLE_SPECTRUM_BAR,
   SET_AMPLITUDE,
   SET_NUMBER_OF_LINES,
   SET_FREQUENCY,
@@ -40,6 +41,7 @@ const INITIAL_STATE = {
     oscillation: false,
     gridLines: true,
     measuringArrow: false,
+    spectrumBar: false,
     measuringArrowWidth: DEFAULT_MEASURING_ARROW_WIDTH,
     amplitude: DEFAULT_AMPLITUDE,
     numberOfLines: DEFAULT_NUMBER_OF_LINES,
@@ -101,6 +103,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       };
     case TOGGLE_PAUSE:
       return { ...state, lab: { ...state.lab, isPaused: payload } };
+    case TOGGLE_SPECTRUM_BAR:
+      return { ...state, lab: { ...state.lab, spectrumBar: payload } };
     case SET_AMPLITUDE:
       return {
         ...state,
