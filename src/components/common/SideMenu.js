@@ -105,18 +105,6 @@ class SideMenu extends React.Component {
     );
   };
 
-  renderDescription = () => {
-    const { t } = this.props;
-    return (
-      <>
-        <Typography variant="h6">{t('Description')}</Typography>
-        <Typography variant="subtitle1">
-          {t('This application renders a radiating charge.')}
-        </Typography>
-      </>
-    );
-  };
-
   render() {
     const {
       classes,
@@ -145,7 +133,6 @@ class SideMenu extends React.Component {
         >
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
-            {this.renderDescription()}
             <LineSelector />
             <div className={classes.switchContainer}>
               <CustomSwitch
