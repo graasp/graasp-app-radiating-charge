@@ -196,24 +196,6 @@ class Lab extends Component {
                 isPaused={isPaused}
               />
             ))}
-            <Circle
-              x={chargeOrigin.x + chargeOscillation.x}
-              y={chargeOrigin.y + chargeOscillation.y}
-              radius={CHARGE_RADIUS}
-              fill={CHARGE_COLOR}
-            />
-            <Text
-              // x and y coordinates adjusted manually to approximately center the + in the Circle given its fontSize
-              x={
-                chargeOrigin.x +
-                chargeOscillation.x -
-                (CHARGE_RADIUS / 2 + 0.75)
-              }
-              y={chargeOrigin.y + chargeOscillation.y - (CHARGE_RADIUS + 0.5)}
-              text={CHARGE_SYMBOL}
-              fontSize={CHARGE_SYMBOL_FONT_SIZE}
-              fill={CHARGE_SYMBOL_COLOR}
-            />
             {gridLines && (
               <Grid
                 gridWidth={stageDimensions.width}
@@ -234,6 +216,24 @@ class Lab extends Component {
                 stageHeight={stageDimensions.height}
               />
             )}
+            <Circle
+              x={chargeOrigin.x + chargeOscillation.x}
+              y={chargeOrigin.y + chargeOscillation.y}
+              radius={CHARGE_RADIUS}
+              fill={CHARGE_COLOR}
+            />
+            <Text
+              // x and y coordinates adjusted manually to approximately center the + in the Circle given its fontSize
+              x={
+                chargeOrigin.x +
+                chargeOscillation.x -
+                (CHARGE_RADIUS / 2 + 0.75)
+              }
+              y={chargeOrigin.y + chargeOscillation.y - (CHARGE_RADIUS + 0.5)}
+              text={CHARGE_SYMBOL}
+              fontSize={CHARGE_SYMBOL_FONT_SIZE}
+              fill={CHARGE_SYMBOL_COLOR}
+            />
           </Layer>
         </Stage>
       </div>
