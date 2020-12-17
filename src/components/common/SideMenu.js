@@ -9,12 +9,33 @@ import { Divider, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { toggleSideMenu } from '../../actions';
-import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
-import OscillateSwitch from './OscillateSwitch';
-import AmplitudeSlider from './AmplitudeSlider';
+import {
+  toggleSideMenu,
+  toggleOscillation,
+  toggleGridLines,
+  toggleMeasuringArrow,
+  toggleSpectrumBar,
+  setAmplitude,
+  setFrequency,
+} from '../../actions';
 import LineSelector from './LineSelector';
-import FrequencyAdjuster from './FrequencyAdjuster';
+import CustomSwitch from './CustomSwitch';
+import CustomSlider from './CustomSlider';
+import AnimationControls from './AnimationControls';
+import MeasuringArrowControls from './MeasuringArrowControls';
+import {
+  DRAWER_WIDTH,
+  DEFAULT_THEME_DIRECTION,
+  DEFAULT_AMPLITUDE,
+  MIN_AMPLITUDE,
+  MAX_AMPLITUDE,
+  AMPLITUDE_STEP,
+  DEFAULT_FREQUENCY,
+  MIN_FREQUENCY,
+  MAX_FREQUENCY,
+  FREQUENCY_STEP,
+  FREQUENCY_CONVERSION_FACTOR,
+} from '../../config/constants';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -30,6 +51,11 @@ const styles = (theme) => ({
   contentWrapper: {
     margin: theme.spacing(2),
   },
+  switchContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });
 
 class SideMenu extends React.Component {
@@ -38,14 +64,24 @@ class SideMenu extends React.Component {
       drawerHeader: PropTypes.string.isRequired,
       drawerPaper: PropTypes.string.isRequired,
       contentWrapper: PropTypes.string.isRequired,
+      switchContainer: PropTypes.string.isRequired,
     }).isRequired,
     theme: PropTypes.shape({
       direction: PropTypes.string.isRequired,
     }).isRequired,
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
+    oscillation: PropTypes.bool.isRequired,
+    spectrumBar: PropTypes.bool.isRequired,
+    gridLines: PropTypes.bool.isRequired,
+    measuringArrow: PropTypes.bool.isRequired,
+    dispatchToggleGridLines: PropTypes.func.isRequired,
+    dispatchToggleMeasuringArrow: PropTypes.func.isRequired,
+    dispatchToggleOscillation: PropTypes.func.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
-    shouldOscillate: PropTypes.bool.isRequired,
+    dispatchToggleSpectrumBar: PropTypes.func.isRequired,
+    dispatchSetAmplitude: PropTypes.func.isRequired,
+    dispatchSetFrequency: PropTypes.func.isRequired,
   };
 
   handleToggleSideMenu = (open) => () => {
@@ -72,20 +108,22 @@ class SideMenu extends React.Component {
     );
   };
 
-  renderDescription = () => {
-    const { t } = this.props;
-    return (
-      <>
-        <Typography variant="h6">{t('Description')}</Typography>
-        <Typography variant="subtitle1">
-          {t('This application renders a radiating charge.')}
-        </Typography>
-      </>
-    );
-  };
-
   render() {
-    const { classes, showSideMenu, shouldOscillate } = this.props;
+    const {
+      classes,
+      showSideMenu,
+      oscillation,
+      gridLines,
+      measuringArrow,
+      spectrumBar,
+      dispatchToggleOscillation,
+      dispatchToggleSpectrumBar,
+      dispatchToggleGridLines,
+      dispatchToggleMeasuringArrow,
+      dispatchSetAmplitude,
+      dispatchSetFrequency,
+      t,
+    } = this.props;
 
     return (
       <>
@@ -100,11 +138,56 @@ class SideMenu extends React.Component {
         >
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
-            {this.renderDescription()}
             <LineSelector />
-            <OscillateSwitch />
-            <AmplitudeSlider disabled={!shouldOscillate} />
-            <FrequencyAdjuster />
+            <div className={classes.switchContainer}>
+              <CustomSwitch
+                switchLabel={t('Oscillation')}
+                switchStatus={oscillation}
+                switchDispatch={dispatchToggleOscillation}
+              />
+              <AnimationControls />
+            </div>
+            <div className={classes.switchContainer}>
+              <CustomSwitch
+                switchLabel={t('Grid')}
+                switchStatus={gridLines}
+                switchDispatch={dispatchToggleGridLines}
+              />
+            </div>
+            <div className={classes.switchContainer}>
+              <CustomSwitch
+                switchLabel={t('Measuring arrow')}
+                switchStatus={measuringArrow}
+                switchDispatch={dispatchToggleMeasuringArrow}
+              />
+              <MeasuringArrowControls />
+            </div>
+            <div className={classes.switchContainer}>
+              <CustomSwitch
+                switchLabel={t('Spectrum bar')}
+                switchStatus={spectrumBar}
+                switchDispatch={dispatchToggleSpectrumBar}
+              />
+            </div>
+            <CustomSlider
+              sliderLabel={t('Amplitude')}
+              sliderDefault={DEFAULT_AMPLITUDE}
+              sliderMin={MIN_AMPLITUDE}
+              sliderMax={MAX_AMPLITUDE}
+              sliderStep={AMPLITUDE_STEP}
+              dispatchSliderValue={dispatchSetAmplitude}
+            />
+            <CustomSlider
+              sliderLabel={t('Frequency')}
+              additionalSliderLabelInfo={{ unit: 'Hz', base: 10, power: 14 }}
+              sliderDefault={DEFAULT_FREQUENCY}
+              sliderMin={MIN_FREQUENCY}
+              sliderMax={MAX_FREQUENCY}
+              sliderStep={FREQUENCY_STEP}
+              dispatchSliderValue={dispatchSetFrequency}
+              valueLabelDisplay
+              displayConversionFactor={FREQUENCY_CONVERSION_FACTOR}
+            />
           </div>
         </Drawer>
       </>
@@ -114,11 +197,20 @@ class SideMenu extends React.Component {
 
 const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
-  shouldOscillate: layout.lab.oscillation,
+  oscillation: layout.lab.oscillation,
+  gridLines: layout.lab.gridLines,
+  measuringArrow: layout.lab.measuringArrow,
+  spectrumBar: layout.lab.spectrumBar,
 });
 
 const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
+  dispatchToggleGridLines: toggleGridLines,
+  dispatchToggleMeasuringArrow: toggleMeasuringArrow,
+  dispatchToggleOscillation: toggleOscillation,
+  dispatchToggleSpectrumBar: toggleSpectrumBar,
+  dispatchSetFrequency: setFrequency,
+  dispatchSetAmplitude: setAmplitude,
 };
 
 const ConnectedComponent = connect(

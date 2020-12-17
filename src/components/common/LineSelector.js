@@ -20,7 +20,7 @@ const styles = (theme) => ({
     margin: theme.spacing(2, 0),
   },
   typography: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(9),
   },
 });
 
@@ -44,7 +44,7 @@ class LineSelector extends Component {
 
     return (
       <div className={classes.container}>
-        <Typography className={classes.typography}>
+        <Typography variant="body2" className={classes.typography}>
           {t('Number of lines')}
         </Typography>
         <TextField
@@ -58,6 +58,10 @@ class LineSelector extends Component {
             max: MAX_NUMBER_OF_LINES,
             step: NUMBER_OF_LINES_STEP,
           }}
+          // InputProps is the only way to adjust the text size of the TextField component
+          // but eslint assumes inputProps and InputProps are the same
+          // eslint-disable-next-line react/jsx-no-duplicate-props
+          InputProps={{ style: { fontSize: 14 } }}
           onChange={this.onChange}
           onKeyDown={(event) => {
             event.preventDefault();

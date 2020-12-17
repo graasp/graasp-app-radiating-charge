@@ -1,8 +1,5 @@
-/* eslint-disable react/jsx-indent */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-// eslint-disable-next-line no-unused-vars
+import PropTypes from 'prop-types';
 import { Line } from 'react-konva';
 import {
   DEFAULT_TENSION,
@@ -16,8 +13,35 @@ export default class EmittedLine extends Component {
     points: [0, 0],
   };
 
+  static propTypes = {
+    isPaused: PropTypes.bool.isRequired,
+    chargeOscillation: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    }).isRequired,
+    angle: PropTypes.number.isRequired,
+    emittedLineStepSize: PropTypes.number.isRequired,
+    charge: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    }).isRequired,
+  };
+
   componentDidMount() {
-    setInterval(() => {
+    this.beginLineInterval();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isPaused } = this.props;
+    if (isPaused !== prevProps.isPaused && isPaused) {
+      clearInterval(this.emittedLineInterval);
+    } else if (isPaused !== prevProps.isPaused && !isPaused) {
+      this.beginLineInterval();
+    }
+  }
+
+  beginLineInterval = () => {
+    this.emittedLineInterval = setInterval(() => {
       const { points } = this.state;
       const {
         chargeOscillation: { x, y },
@@ -42,7 +66,7 @@ export default class EmittedLine extends Component {
         points: newPoints,
       });
     }, SET_INTERVAL_TIME);
-  }
+  };
 
   render() {
     const {

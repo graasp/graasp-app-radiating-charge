@@ -4,6 +4,17 @@ import PropTypes from 'prop-types';
 import { Stage, Layer, Circle, Text } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
+import Grid from './Grid';
+import MeasuringArrow from './MeasuringArrow';
+import SpectrumBar from './SpectrumBar';
+import {
+  togglePause,
+  setStageDimensions,
+  setChargeOrigin,
+  setChargeOscillation,
+  setTimerCount,
+  setElapsedTime,
+} from '../../actions';
 import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
@@ -11,12 +22,12 @@ import {
   CHARGE_SYMBOL,
   CHARGE_SYMBOL_FONT_SIZE,
   CHARGE_SYMBOL_COLOR,
-  UPWARDS_DIRECTION,
-  DOWNWARDS_DIRECTION,
-  LINE_STEP_SIZE,
   SET_INTERVAL_TIME,
+  LINE_STEP_SIZE,
+  NUM_OF_X_AXIS_TICKS,
   generateAngles,
 } from '../../config/constants';
+import { calculateYPositionHarmonically } from '../../utils/physics';
 
 const styles = () => ({
   container: {
@@ -36,24 +47,38 @@ class Lab extends Component {
       container: PropTypes.string.isRequired,
       stage: PropTypes.string.isRequired,
     }).isRequired,
+    gridLines: PropTypes.bool.isRequired,
+    measuringArrow: PropTypes.bool.isRequired,
     shouldOscillate: PropTypes.bool.isRequired,
     amplitude: PropTypes.number.isRequired,
     numberOfLines: PropTypes.number.isRequired,
-    frequencyAdjustmentFactor: PropTypes.number.isRequired,
+    frequency: PropTypes.number.isRequired,
+    isPaused: PropTypes.bool.isRequired,
+    dispatchTogglePause: PropTypes.func.isRequired,
+    timerCount: PropTypes.number.isRequired,
+    elapsedTime: PropTypes.number.isRequired,
+    dispatchSetChargeOscillation: PropTypes.func.isRequired,
+    dispatchSetElapsedTime: PropTypes.func.isRequired,
+    dispatchSetTimerCount: PropTypes.func.isRequired,
+    dispatchSetChargeOrigin: PropTypes.func.isRequired,
+    dispatchSetStageDimensions: PropTypes.func.isRequired,
+    chargeOrigin: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    }).isRequired,
+    chargeOscillation: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    }).isRequired,
+    stageDimensions: PropTypes.shape({
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired,
+    }).isRequired,
+    measuringArrowWidth: PropTypes.number.isRequired,
+    spectrumBar: PropTypes.bool.isRequired,
   };
 
   state = {
-    stageWidth: 0,
-    stageHeight: 0,
-    // starting position of the charge
-    charge: {
-      x: 0,
-      y: 0,
-    },
-    // direction charge is moving
-    direction: DOWNWARDS_DIRECTION,
-    chargeOscillation: { x: 0, y: 0 },
-    renderCount: 0,
     emittedLineStepSize: LINE_STEP_SIZE,
   };
 
@@ -67,89 +92,82 @@ class Lab extends Component {
     ro.observe(document.querySelector(`#container`));
 
     // animation
-    setInterval(() => {
-      const {
-        shouldOscillate,
-        amplitude,
-        frequencyAdjustmentFactor,
-      } = this.props;
-      const {
-        chargeOscillation: { y },
-        direction,
-        renderCount,
-      } = this.state;
+    this.beginOscillationInterval();
+  }
 
-      const x = 0;
-      let newY = y;
-      let newDirection = direction;
-      let renderCountIncrement = 1;
-
-      if (shouldOscillate) {
-        // acceleration
-        const delta = frequencyAdjustmentFactor * renderCount;
-
-        switch (direction) {
-          case DOWNWARDS_DIRECTION:
-            newY += delta;
-            break;
-          case UPWARDS_DIRECTION:
-            newY -= delta;
-            break;
-          default:
-          // do nothing
-        }
-
-        // flip directions as soon as charge passes amplitude threshold
-        if (direction === DOWNWARDS_DIRECTION && newY >= amplitude) {
-          newDirection = UPWARDS_DIRECTION;
-          renderCountIncrement = -1 * renderCount;
-        } else if (direction === UPWARDS_DIRECTION && newY <= -amplitude) {
-          newDirection = DOWNWARDS_DIRECTION;
-          renderCountIncrement = -1 * renderCount;
-        }
-
-        this.setState({
-          chargeOscillation: { y: newY, x },
-          direction: newDirection,
-          renderCount: renderCount + renderCountIncrement,
-          emittedLineStepSize: LINE_STEP_SIZE + delta,
-        });
-      }
-    }, SET_INTERVAL_TIME);
+  componentDidUpdate(prevProps) {
+    const { isPaused } = this.props;
+    if (isPaused !== prevProps.isPaused && isPaused) {
+      clearInterval(this.oscillationInterval);
+    } else if (isPaused !== prevProps.isPaused && !isPaused) {
+      this.beginOscillationInterval();
+    }
   }
 
   checkSize = () => {
+    const { dispatchSetStageDimensions } = this.props;
     const stageWidth = this.container?.offsetWidth;
     const stageHeight = this.container?.offsetHeight;
-    this.setState({
-      stageHeight,
-      stageWidth,
+    dispatchSetStageDimensions({
+      width: stageWidth,
+      height: stageHeight,
     });
-    this.updateChargePosition(
-      stageWidth / 2 - CHARGE_RADIUS,
-      stageHeight / 2 - CHARGE_RADIUS,
-    );
+    this.updateChargePosition(stageWidth / 2, stageHeight / 2);
   };
 
   updateChargePosition = (x, y) => {
-    this.setState({
-      charge: {
-        x,
-        y,
-      },
+    const { dispatchSetChargeOrigin } = this.props;
+    dispatchSetChargeOrigin({
+      x,
+      y,
     });
+  };
+
+  beginOscillationInterval = () => {
+    this.oscillationInterval = setInterval(() => {
+      const {
+        shouldOscillate,
+        frequency,
+        amplitude,
+        isPaused,
+        timerCount,
+        elapsedTime,
+        dispatchSetChargeOscillation,
+        dispatchSetElapsedTime,
+        dispatchSetTimerCount,
+      } = this.props;
+
+      if (shouldOscillate && !isPaused) {
+        dispatchSetChargeOscillation({
+          y: calculateYPositionHarmonically(frequency, amplitude, elapsedTime),
+          x: 0,
+        });
+        dispatchSetElapsedTime(SET_INTERVAL_TIME * timerCount);
+        dispatchSetTimerCount(timerCount + 1);
+      }
+    }, SET_INTERVAL_TIME);
+  };
+
+  handleCanvasClick = () => {
+    const { isPaused, dispatchTogglePause } = this.props;
+    dispatchTogglePause(!isPaused);
   };
 
   // element position should consider header height
   render() {
-    const { numberOfLines, classes } = this.props;
     const {
-      stageWidth,
-      stageHeight,
-      charge,
+      stageDimensions,
+      gridLines,
+      measuringArrow,
+      numberOfLines,
+      classes,
+      isPaused,
+      chargeOrigin,
       chargeOscillation,
-      emittedLineStepSize,
-    } = this.state;
+      measuringArrowWidth,
+      spectrumBar,
+    } = this.props;
+    const { emittedLineStepSize } = this.state;
 
     return (
       <div
@@ -161,30 +179,57 @@ class Lab extends Component {
       >
         <Stage
           className={classes.stage}
-          width={stageWidth}
-          height={stageHeight}
+          width={stageDimensions.width}
+          height={stageDimensions.height}
+          onClick={this.handleCanvasClick}
         >
           <Layer>
-            {generateAngles(numberOfLines).map((angle) => (
+            {generateAngles(numberOfLines).map((angle, index) => (
               <EmittedLine
-                charge={charge}
+                charge={chargeOrigin}
                 chargeOscillation={chargeOscillation}
                 angle={angle}
                 emittedLineStepSize={emittedLineStepSize}
-                key={angle}
+                // key={index} is necessary to ensure that all lines refresh when # of lines changes
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                isPaused={isPaused}
               />
             ))}
+            {gridLines && (
+              <Grid
+                gridWidth={stageDimensions.width}
+                gridHeight={stageDimensions.height}
+                numOfxAxisTicks={NUM_OF_X_AXIS_TICKS}
+              />
+            )}
+            {measuringArrow && (
+              <MeasuringArrow
+                measuringArrowWidth={measuringArrowWidth}
+                stageWidth={stageDimensions.width}
+                stageHeight={stageDimensions.height}
+              />
+            )}
+            {spectrumBar && (
+              <SpectrumBar
+                stageWidth={stageDimensions.width}
+                stageHeight={stageDimensions.height}
+              />
+            )}
             <Circle
-              x={charge.x + chargeOscillation.x}
-              y={charge.y + chargeOscillation.y}
+              x={chargeOrigin.x + chargeOscillation.x}
+              y={chargeOrigin.y + chargeOscillation.y}
               radius={CHARGE_RADIUS}
               fill={CHARGE_COLOR}
-              draggable
             />
             <Text
               // x and y coordinates adjusted manually to approximately center the + in the Circle given its fontSize
-              x={charge.x + chargeOscillation.x - (CHARGE_RADIUS / 2 + 0.75)}
-              y={charge.y + chargeOscillation.y - (CHARGE_RADIUS + 0.5)}
+              x={
+                chargeOrigin.x +
+                chargeOscillation.x -
+                (CHARGE_RADIUS / 2 + 0.75)
+              }
+              y={chargeOrigin.y + chargeOscillation.y - (CHARGE_RADIUS + 0.5)}
               text={CHARGE_SYMBOL}
               fontSize={CHARGE_SYMBOL_FONT_SIZE}
               fill={CHARGE_SYMBOL_COLOR}
@@ -197,13 +242,32 @@ class Lab extends Component {
 }
 
 const mapStateToProps = ({ layout }) => ({
+  gridLines: layout.lab.gridLines,
+  measuringArrow: layout.lab.measuringArrow,
+  measuringArrowWidth: layout.lab.measuringArrowWidth,
   shouldOscillate: layout.lab.oscillation,
   amplitude: layout.lab.amplitude,
   numberOfLines: parseInt(layout.lab.numberOfLines, 10),
-  frequencyAdjustmentFactor: layout.lab.frequencyAdjustmentFactor,
+  frequency: layout.lab.frequency,
+  isPaused: layout.lab.isPaused,
+  stageDimensions: layout.lab.stageDimensions,
+  chargeOrigin: layout.lab.chargeOrigin,
+  chargeOscillation: layout.lab.chargeOscillation,
+  timerCount: layout.lab.timerCount,
+  elapsedTime: layout.lab.elapsedTime,
+  spectrumBar: layout.lab.spectrumBar,
 });
 
-const ConnectedComponent = connect(mapStateToProps, null)(Lab);
+const mapDispatchToProps = {
+  dispatchSetStageDimensions: setStageDimensions,
+  dispatchTogglePause: togglePause,
+  dispatchSetChargeOrigin: setChargeOrigin,
+  dispatchSetChargeOscillation: setChargeOscillation,
+  dispatchSetTimerCount: setTimerCount,
+  dispatchSetElapsedTime: setElapsedTime,
+};
+
+const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Lab);
 
 const StyledComponent = withStyles(styles, { withTheme: true })(
   ConnectedComponent,
