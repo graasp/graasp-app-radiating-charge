@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  superscript: { fontSize: '0.2em' },
+  superscript: { fontSize: '0.6em' },
 }));
 
 const CustomSlider = ({
