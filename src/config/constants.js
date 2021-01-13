@@ -57,6 +57,7 @@ export const DEFAULT_MEASURING_ARROW_WIDTH = 95;
 export const MIN_MEASURING_ARROW_WIDTH = 47.5;
 export const MAX_MEASURING_ARROW_WIDTH = 475;
 export const MEASURING_ARROW_STEP = 47.5;
+export const MEASURING_ARROW_TEXT_FONT_SIZE = 16;
 // every 47.5 pixels === 100nm
 // this constant is only used in the text display above the arrow
 export const MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR = 100 / 47.5;
@@ -90,7 +91,7 @@ export const VISIBLE_LIGHT_COLOR_RANGE = [
   'violet',
 ];
 export const ULTRAVIOLET_COLOR_RANGE = [0, 'violet', 1, 'white'];
-export const SPECTRUM_BAR_LABELS_FONT_SIZE = 12;
+export const SPECTRUM_BAR_LABELS_FONT_SIZE = 16;
 export const INFRARED_BAR_LABEL_COLOR = 'white';
 export const ULTRAVIOLET_BAR_LABEL_COLOR = 'black';
 export const WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR = 10;
