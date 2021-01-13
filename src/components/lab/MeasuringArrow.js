@@ -31,13 +31,14 @@ const MeasuringArrow = ({ measuringArrowWidth, stageWidth, stageHeight }) => {
           measuringArrowWidth *
           MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR
         }nm`}
+        // manually position text above arrow
         x={arrowInitialXPosition + MEASURING_ARROW_POINTER_WIDTH}
         y={arrowInitialYPosition - 4 * MEASURING_ARROW_POINTER_LENGTH}
       />
       <Arrow
         x={arrowInitialXPosition}
         y={arrowInitialYPosition}
-        points={[0, 0, measuringArrowWidth, 0]}
+        points={[0, 0, measuringArrowWidth - MEASURING_ARROW_POINTER_LENGTH, 0]}
         pointerLength={MEASURING_ARROW_POINTER_LENGTH}
         pointerWidth={MEASURING_ARROW_POINTER_WIDTH}
         strokeWidth={MEASURING_ARROW_STROKE_WIDTH}

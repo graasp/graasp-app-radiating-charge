@@ -24,7 +24,6 @@ import {
   CHARGE_SYMBOL_COLOR,
   SET_INTERVAL_TIME,
   LINE_STEP_SIZE,
-  NUM_OF_X_AXIS_TICKS,
   generateAngles,
 } from '../../config/constants';
 import { calculateYPositionHarmonically } from '../../utils/physics';
@@ -200,7 +199,6 @@ class Lab extends Component {
               <Grid
                 gridWidth={stageDimensions.width}
                 gridHeight={stageDimensions.height}
-                numOfxAxisTicks={NUM_OF_X_AXIS_TICKS}
               />
             )}
             {measuringArrow && (

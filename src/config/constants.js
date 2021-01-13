@@ -45,7 +45,6 @@ export const DEFAULT_TIMER_COUNT = 1;
 export const DEFAULT_ELAPSED_TIME = 0;
 
 // grid constants
-export const NUM_OF_X_AXIS_TICKS = 20;
 export const GRID_AXES_COLOR = '#000';
 export const GRID_AXES_STROKE_WIDTH = 0.5;
 
@@ -59,6 +58,7 @@ export const MIN_MEASURING_ARROW_WIDTH = 47.5;
 export const MAX_MEASURING_ARROW_WIDTH = 475;
 export const MEASURING_ARROW_STEP = 47.5;
 // every 47.5 pixels === 100nm
+// this constant is only used in the text display above the arrow
 export const MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR = 100 / 47.5;
 
 // spectrum bar constants
