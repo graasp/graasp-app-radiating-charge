@@ -193,6 +193,7 @@ class Lab extends Component {
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 isPaused={isPaused}
+                numberOfLines={numberOfLines}
               />
             ))}
             {gridLines && (

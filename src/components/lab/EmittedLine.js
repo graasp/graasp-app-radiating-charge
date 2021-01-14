@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Line } from 'react-konva';
+import _ from 'lodash';
 import {
   DEFAULT_TENSION,
   MAX_POINTS_FOR_LINES,
@@ -9,8 +10,10 @@ import {
 } from '../../config/constants';
 
 export default class EmittedLine extends Component {
+  static initialPoints = [0, 0];
+
   state = {
-    points: [0, 0],
+    points: EmittedLine.initialPoints,
   };
 
   static propTypes = {
@@ -25,20 +28,31 @@ export default class EmittedLine extends Component {
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
     }).isRequired,
+    numberOfLines: PropTypes.number.isRequired,
   };
 
   componentDidMount() {
     this.beginLineInterval();
   }
 
-  componentDidUpdate(prevProps) {
-    const { isPaused } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    const { isPaused, numberOfLines } = this.props;
     if (isPaused !== prevProps.isPaused && isPaused) {
       clearInterval(this.emittedLineInterval);
     } else if (isPaused !== prevProps.isPaused && !isPaused) {
       this.beginLineInterval();
     }
+    if (
+      numberOfLines !== prevProps.numberOfLines &&
+      !_.isEqual(prevState.points, EmittedLine.initialPoints)
+    ) {
+      this.resetLine();
+    }
   }
+
+  resetLine = () => {
+    this.setState({ points: EmittedLine.initialPoints });
+  };
 
   beginLineInterval = () => {
     this.emittedLineInterval = setInterval(() => {
