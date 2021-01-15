@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { Group, Text, Rect } from 'react-konva';
+import SpectrumBarMarker from './SpectrumBarMarker';
 import {
   SPECTRUM_BAR_HEIGHT,
   INFRARED_BAR_WIDTH,
@@ -18,12 +19,25 @@ import {
   ULTRAVIOLET_BAR_LABEL_COLOR,
   WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR,
   WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR,
+  MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR,
+  MAX_DISPLAYED_WAVELENGTH,
+  MIN_DISPLAYED_WAVELENGTH,
+  APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
 } from '../../config/constants';
+import { calculateWavelength } from '../../utils/physics';
 
-const SpectrumBar = ({ stageWidth, stageHeight }) => {
+const SpectrumBar = ({
+  stageWidth,
+  stageHeight,
+  frequency,
+  shouldOscillate,
+}) => {
   // ref attached to wavelength label (used to detect its width and position it)
+  // initialized to APPROXIMATE_WAVELENGTH_LABEL_WIDTH to minimize adjustment/jump after element has been rendered
   const wavelengthLabel = useRef(null);
-  const [wavelengthLabelWidth, setWavelengthLabelWidth] = useState(0);
+  const [wavelengthLabelWidth, setWavelengthLabelWidth] = useState(
+    APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
+  );
   const { t } = useTranslation();
 
   // on component mount, measure width of wavelength label, update state
@@ -35,6 +49,16 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
   const spectrumBarInitialXPosition =
     stageWidth / 2 - TOTAL_SPECTRUM_BAR_WIDTH / 2;
   const spectrumBarInitialYPosition = 0.85 * stageHeight;
+
+  // used to determine x position of SpectrumBarMarker; if wavelength > 1000 or < 100, return 0 (no spectrum bar shown)
+  const wavelength = calculateWavelength(frequency);
+  const spectrumBarMarkerXPosition =
+    wavelength > MAX_DISPLAYED_WAVELENGTH ||
+    wavelength < MIN_DISPLAYED_WAVELENGTH
+      ? 0
+      : spectrumBarInitialXPosition +
+        (1000 - wavelength) /
+          MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR;
 
   return (
     <Group>
@@ -190,6 +214,11 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
           WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR
         }
       />
+      <SpectrumBarMarker
+        xPosition={spectrumBarMarkerXPosition}
+        yPosition={spectrumBarInitialYPosition}
+        shouldOscillate={shouldOscillate}
+      />
     </Group>
   );
 };
@@ -197,6 +226,8 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
 SpectrumBar.propTypes = {
   stageWidth: PropTypes.number.isRequired,
   stageHeight: PropTypes.number.isRequired,
+  frequency: PropTypes.number.isRequired,
+  shouldOscillate: PropTypes.bool.isRequired,
 };
 
 export default SpectrumBar;

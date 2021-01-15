@@ -165,6 +165,8 @@ class Lab extends Component {
       chargeOscillation,
       measuringArrowWidth,
       spectrumBar,
+      frequency,
+      shouldOscillate,
     } = this.props;
     const { emittedLineStepSize } = this.state;
 
@@ -211,8 +213,10 @@ class Lab extends Component {
             )}
             {spectrumBar && (
               <SpectrumBar
+                frequency={frequency}
                 stageWidth={stageDimensions.width}
                 stageHeight={stageDimensions.height}
+                shouldOscillate={shouldOscillate}
               />
             )}
             <Circle

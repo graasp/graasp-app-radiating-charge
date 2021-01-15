@@ -8,14 +8,21 @@ import {
   MEASURING_ARROW_STROKE_COLOR,
   MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR,
   MEASURING_ARROW_TEXT_FONT_SIZE,
+  APPROXIMATE_MEASURING_ARROW_TEXT_WIDTH,
+  APPROXIMATE_MEASURING_ARROW_DRAG_ICON_WIDTH,
 } from '../../config/constants';
 
 const MeasuringArrow = ({ measuringArrowWidth, stageWidth, stageHeight }) => {
   // refs attached to text nodes above meauring arrow (used to detect their width and position them)
+  // initialized to APPROXIMATE_WIDTHS to minimize adjustment/jump after element has been rendered
   const unitsTextNode = useRef(null);
   const crossHairTextNode = useRef(null);
-  const [unitsTextNodeWidth, setUnitsTextNodeWidth] = useState(0);
-  const [crossHairTextNodeWidth, setCrossHairTextNodeWidth] = useState(0);
+  const [unitsTextNodeWidth, setUnitsTextNodeWidth] = useState(
+    APPROXIMATE_MEASURING_ARROW_TEXT_WIDTH,
+  );
+  const [crossHairTextNodeWidth, setCrossHairTextNodeWidth] = useState(
+    APPROXIMATE_MEASURING_ARROW_DRAG_ICON_WIDTH,
+  );
 
   // whenever measuringArrowWidth changes, update position of text nodes
   useEffect(() => {
