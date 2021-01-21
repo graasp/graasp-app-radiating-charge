@@ -58,6 +58,8 @@ export const MIN_MEASURING_ARROW_WIDTH = 47.5;
 export const MAX_MEASURING_ARROW_WIDTH = 475;
 export const MEASURING_ARROW_STEP = 47.5;
 export const MEASURING_ARROW_TEXT_FONT_SIZE = 16;
+// CharCode 8982 is the crosshair indicating draggability
+export const MEASURING_ARROW_SYMBOL_CHAR_CODE = 8982;
 // every 47.5 pixels === 100nm
 export const MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR = 100 / 47.5;
 // used to initially center measuring arrow labels

@@ -10,6 +10,7 @@ import {
   MEASURING_ARROW_TEXT_FONT_SIZE,
   APPROXIMATE_MEASURING_ARROW_TEXT_WIDTH,
   APPROXIMATE_MEASURING_ARROW_DRAG_ICON_WIDTH,
+  MEASURING_ARROW_SYMBOL_CHAR_CODE,
 } from '../../config/constants';
 
 const MeasuringArrow = ({ measuringArrowWidth, stageWidth, stageHeight }) => {
@@ -40,21 +41,21 @@ const MeasuringArrow = ({ measuringArrowWidth, stageWidth, stageHeight }) => {
     container.style.cursor = 'default';
   };
 
-  // place arrow 10% from left and 20% from top of canvas
+  // place arrow 20% from left and 20% from top of canvas
   const arrowInitialXPosition = 0.2 * stageWidth;
   const arrowInitialYPosition = 0.2 * stageHeight;
+
+  // this is used to center text elements above the arrow in return statement below
+  const arrowCenterPoint =
+    arrowInitialXPosition +
+    (measuringArrowWidth - MEASURING_ARROW_POINTER_LENGTH) / 2;
 
   return (
     <Group draggable onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Text
-        // CharCode 8982 is the crosshair indicating draggability
-        text={String.fromCharCode(8982)}
+        text={String.fromCharCode(MEASURING_ARROW_SYMBOL_CHAR_CODE)}
         ref={crossHairTextNode}
-        x={
-          arrowInitialXPosition +
-          (measuringArrowWidth - MEASURING_ARROW_POINTER_LENGTH) / 2 -
-          crossHairTextNodeWidth / 2
-        }
+        x={arrowCenterPoint - crossHairTextNodeWidth / 2}
         // 'manually' position text above arrow
         y={arrowInitialYPosition - 10 * MEASURING_ARROW_POINTER_LENGTH}
         fontSize={MEASURING_ARROW_TEXT_FONT_SIZE}
@@ -65,11 +66,7 @@ const MeasuringArrow = ({ measuringArrowWidth, stageWidth, stageHeight }) => {
           MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR
         }nm`}
         ref={unitsTextNode}
-        x={
-          arrowInitialXPosition +
-          (measuringArrowWidth - MEASURING_ARROW_POINTER_LENGTH) / 2 -
-          unitsTextNodeWidth / 2
-        }
+        x={arrowCenterPoint - unitsTextNodeWidth / 2}
         // 'manually' position text above arrow
         y={arrowInitialYPosition - 5 * MEASURING_ARROW_POINTER_LENGTH}
         fontSize={MEASURING_ARROW_TEXT_FONT_SIZE}

@@ -15,36 +15,38 @@ const Grid = ({ gridWidth, gridHeight }) => {
   const GRID_SQUARE_WIDTH_AND_HEIGHT = MEASURING_ARROW_STEP;
 
   // in return statement below, a VERTICAL line is drawn at each of the points in xTicksArray
-  // for alignment purposes, initialize xTicksArray to contain the value (gridWidth / 2)
+  // for alignment purposes, ensure xTicksArray includes the point startingXTick
   // this ensures that the vertical radiation line emitted by the charge is in line with the grid
   const centralXTick = gridWidth / 2;
-  const xTicksArray = [centralXTick];
-  let xTickLeft = centralXTick - GRID_SQUARE_WIDTH_AND_HEIGHT;
-  while (xTickLeft >= 0) {
-    xTicksArray.unshift(xTickLeft);
-    xTickLeft -= GRID_SQUARE_WIDTH_AND_HEIGHT;
-  }
-  let xTickRight = centralXTick + GRID_SQUARE_WIDTH_AND_HEIGHT;
-  while (xTickRight <= gridWidth) {
-    xTicksArray.push(xTickRight);
-    xTickRight += GRID_SQUARE_WIDTH_AND_HEIGHT;
-  }
+  const totalNumberOfXTicks = Math.ceil(
+    gridWidth / GRID_SQUARE_WIDTH_AND_HEIGHT,
+  );
+  const startingXTick =
+    centralXTick -
+    Math.floor(totalNumberOfXTicks / 2) * GRID_SQUARE_WIDTH_AND_HEIGHT;
+  const xTicksArray = new Array(totalNumberOfXTicks)
+    .fill()
+    .map(
+      (emptyElement, index) =>
+        startingXTick + index * GRID_SQUARE_WIDTH_AND_HEIGHT,
+    );
 
   // in return statement below, a HORIZONTAL line is drawn at each of the points in yTicksArray
-  // for alignment purposes, initialize yTicksArray to contain the value (gridHeight / 2)
+  // for alignment purposes, ensure yTicksArray includes the point startingYTick
   // this ensures that the horizontal radiation line emitted by the charge is in line with the grid
   const centralYTick = gridHeight / 2;
-  const yTicksArray = [centralYTick];
-  let yTickTop = centralYTick - GRID_SQUARE_WIDTH_AND_HEIGHT;
-  while (yTickTop >= 0) {
-    yTicksArray.unshift(yTickTop);
-    yTickTop -= GRID_SQUARE_WIDTH_AND_HEIGHT;
-  }
-  let yTickBottom = centralYTick + GRID_SQUARE_WIDTH_AND_HEIGHT;
-  while (yTickBottom <= gridHeight) {
-    yTicksArray.push(yTickBottom);
-    yTickBottom += GRID_SQUARE_WIDTH_AND_HEIGHT;
-  }
+  const totalNumberOfYTicks = Math.ceil(
+    gridHeight / GRID_SQUARE_WIDTH_AND_HEIGHT,
+  );
+  const startingYTick =
+    centralYTick -
+    Math.floor(totalNumberOfYTicks / 2) * GRID_SQUARE_WIDTH_AND_HEIGHT;
+  const yTicksArray = new Array(totalNumberOfXTicks)
+    .fill()
+    .map(
+      (emptyElement, index) =>
+        startingYTick + index * GRID_SQUARE_WIDTH_AND_HEIGHT,
+    );
 
   return (
     <>

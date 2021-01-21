@@ -50,14 +50,14 @@ const SpectrumBar = ({
     stageWidth / 2 - TOTAL_SPECTRUM_BAR_WIDTH / 2;
   const spectrumBarInitialYPosition = 0.85 * stageHeight;
 
-  // used to determine x position of SpectrumBarMarker; if wavelength > 1000 or < 100, return 0 (no spectrum bar shown)
+  // used to determine x position of SpectrumBarMarker; if wavelength > 1000 or < 100, return 0 (no spectrum bar marker shown)
   const wavelength = calculateWavelength(frequency);
   const spectrumBarMarkerXPosition =
     wavelength > MAX_DISPLAYED_WAVELENGTH ||
     wavelength < MIN_DISPLAYED_WAVELENGTH
       ? 0
       : spectrumBarInitialXPosition +
-        (1000 - wavelength) /
+        (MAX_DISPLAYED_WAVELENGTH - wavelength) /
           MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR;
 
   return (
