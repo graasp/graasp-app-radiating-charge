@@ -67,10 +67,10 @@ export const APPROXIMATE_MEASURING_ARROW_TEXT_WIDTH = 49;
 export const APPROXIMATE_MEASURING_ARROW_DRAG_ICON_WIDTH = 17.5;
 
 // constants used in utils/physics, to calculate wavelength given frequency
-export const SPEED_OF_LIGHT_IN_METERS_PER_SECOND = 3 * 10 ** 8;
-export const ONE_NANOMETER_IN_METERS = 1 * 10 ** -9;
+export const SPEED_OF_LIGHT_IN_METERS_PER_SECOND = 3e8;
+export const ONE_NANOMETER_IN_METERS = 1e-9;
 // frequency is stated in 10^14 HZ
-export const FREQUENCY_UNITS = 1 * 10 ** 14;
+export const FREQUENCY_UNITS = 1e14;
 export const MAX_DISPLAYED_WAVELENGTH = 1000;
 export const MIN_DISPLAYED_WAVELENGTH = 100;
 
@@ -106,6 +106,8 @@ export const ULTRAVIOLET_COLOR_RANGE = [0, 'violet', 1, 'white'];
 export const SPECTRUM_BAR_LABELS_FONT_SIZE = 16;
 export const INFRARED_BAR_LABEL_COLOR = 'white';
 export const ULTRAVIOLET_BAR_LABEL_COLOR = 'black';
+export const ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR = 80;
+export const INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR = 10;
 export const WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR = 10;
 export const WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR = 5;
 export const APPROXIMATE_WAVELENGTH_LABEL_WIDTH = 120;

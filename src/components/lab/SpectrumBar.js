@@ -23,6 +23,8 @@ import {
   MAX_DISPLAYED_WAVELENGTH,
   MIN_DISPLAYED_WAVELENGTH,
   APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
+  ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR,
+  INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR,
 } from '../../config/constants';
 import { calculateWavelength } from '../../utils/physics';
 
@@ -114,7 +116,9 @@ const SpectrumBar = ({
         text={t('Infrared')}
         fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         // on x-axis, place text slightly to the right of the start of the spectrum bar
-        x={spectrumBarInitialXPosition + 10}
+        x={
+          spectrumBarInitialXPosition + INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR
+        }
         // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
         y={
           spectrumBarInitialYPosition +
@@ -131,7 +135,7 @@ const SpectrumBar = ({
           INFRARED_BAR_WIDTH +
           VISIBLE_LIGHT_BAR_WIDTH +
           ULTRAVIOLET_BAR_WIDTH -
-          80
+          ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR
         }
         // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
         y={
