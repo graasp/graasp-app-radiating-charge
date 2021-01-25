@@ -45,7 +45,6 @@ export const DEFAULT_TIMER_COUNT = 1;
 export const DEFAULT_ELAPSED_TIME = 0;
 
 // grid constants
-export const NUM_OF_X_AXIS_TICKS = 20;
 export const GRID_AXES_COLOR = '#000';
 export const GRID_AXES_STROKE_WIDTH = 0.5;
 
@@ -58,8 +57,22 @@ export const DEFAULT_MEASURING_ARROW_WIDTH = 95;
 export const MIN_MEASURING_ARROW_WIDTH = 47.5;
 export const MAX_MEASURING_ARROW_WIDTH = 475;
 export const MEASURING_ARROW_STEP = 47.5;
+export const MEASURING_ARROW_TEXT_FONT_SIZE = 16;
+// CharCode 8982 is the crosshair indicating draggability
+export const MEASURING_ARROW_SYMBOL_CHAR_CODE = 8982;
 // every 47.5 pixels === 100nm
 export const MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR = 100 / 47.5;
+// used to initially center measuring arrow labels
+export const APPROXIMATE_MEASURING_ARROW_TEXT_WIDTH = 49;
+export const APPROXIMATE_MEASURING_ARROW_DRAG_ICON_WIDTH = 17.5;
+
+// constants used in utils/physics, to calculate wavelength given frequency
+export const SPEED_OF_LIGHT_IN_METERS_PER_SECOND = 3e8;
+export const ONE_NANOMETER_IN_METERS = 1e-9;
+// frequency is stated in 10^14 HZ
+export const FREQUENCY_UNITS = 1e14;
+export const MAX_DISPLAYED_WAVELENGTH = 1000;
+export const MIN_DISPLAYED_WAVELENGTH = 100;
 
 // spectrum bar constants
 // note: infrared range: 1000-700nm; visible light: 700-400nm; ultraviolet: 400-100nm
@@ -90,11 +103,21 @@ export const VISIBLE_LIGHT_COLOR_RANGE = [
   'violet',
 ];
 export const ULTRAVIOLET_COLOR_RANGE = [0, 'violet', 1, 'white'];
-export const SPECTRUM_BAR_LABELS_FONT_SIZE = 12;
+export const SPECTRUM_BAR_LABELS_FONT_SIZE = 16;
 export const INFRARED_BAR_LABEL_COLOR = 'white';
 export const ULTRAVIOLET_BAR_LABEL_COLOR = 'black';
+export const ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR = 80;
+export const INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR = 10;
 export const WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR = 10;
 export const WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR = 5;
+export const APPROXIMATE_WAVELENGTH_LABEL_WIDTH = 120;
+
+// spectrum bar marker constants
+export const SPECTRUM_BAR_MARKER_COLOR = 'black';
+export const SPECTRUM_BAR_MARKER_TRIANGLE_STROKE_WIDTH = 1;
+export const SPECTRUM_BAR_MARKER_LINE_STROKE_WIDTH = 2;
+export const SPECTRUM_BAR_MARKER_TRIANGLE_BASE = 16;
+export const SPECTRUM_BAR_MARKER_TRIANGLE_HEIGHT = 8;
 
 // numOfLines should be >= 2
 export const generateAngles = (numOfLines) => {

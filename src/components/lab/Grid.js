@@ -4,39 +4,49 @@ import { Line } from 'react-konva';
 import {
   GRID_AXES_COLOR,
   GRID_AXES_STROKE_WIDTH,
+  MEASURING_ARROW_STEP,
 } from '../../config/constants';
 
-const Grid = ({ gridWidth, gridHeight, numOfxAxisTicks }) => {
-  // divide x-axis (=gridWidth) into numOfxAxisTicks equally sized ticks, each of width xTickWidth
-  const xTickWidth = gridWidth / numOfxAxisTicks;
-  // create an array xTicksArray: in return statement below, a VERTICAL line is drawn at each of the ticks in this array
-  const xTicksArray = new Array(numOfxAxisTicks)
+const Grid = ({ gridWidth, gridHeight }) => {
+  // MEASURING_ARROW_STEP is the increment with which the measuring arrow's width is increased
+  // each MEASURING_ARROW_STEP is '100nm'
+  // we want the squares in our grid to have 100nm x 100nm dimensions
+  // for clarity, re-assign MEASURING_ARROW_STEP to another variable
+  const GRID_SQUARE_WIDTH_AND_HEIGHT = MEASURING_ARROW_STEP;
+
+  // in return statement below, a VERTICAL line is drawn at each of the points in xTicksArray
+  // for alignment purposes, ensure xTicksArray includes the point startingXTick
+  // this ensures that the vertical radiation line emitted by the charge is in line with the grid
+  const centralXTick = gridWidth / 2;
+  const totalNumberOfXTicks = Math.ceil(
+    gridWidth / GRID_SQUARE_WIDTH_AND_HEIGHT,
+  );
+  const startingXTick =
+    centralXTick -
+    Math.floor(totalNumberOfXTicks / 2) * GRID_SQUARE_WIDTH_AND_HEIGHT;
+  const xTicksArray = new Array(totalNumberOfXTicks)
     .fill()
-    .map((emptyElement, index) => (index + 1) * xTickWidth);
+    .map(
+      (emptyElement, index) =>
+        startingXTick + index * GRID_SQUARE_WIDTH_AND_HEIGHT,
+    );
 
-  // to ensure grid is square, assign yTickHeight = xTickWidth
-  const yTickHeight = xTickWidth;
-
-  // for alignment purposes, initialize yTicksArray to contain the value (gridHeight / 2)
-  // (gridHeight / 2) is the point at which the charge is vertically centered, and from which a horizontal line emanates
-  // this ensures that at app initializion a y-axis grid line is also drawn through this point
-  const yTicksArray = [gridHeight / 2];
-
-  // just as in xTicksArray, in the return statement below a HORIZONTAL line is drawn at each of the ticks in yTicksArray
-  // to calculate these ticks, (1) keep subtracting yTickHeight from the center point all the way to the top of the grid
-  // (2) keep adding yTickHeight from the center point all the way to the bottom of the grid (gridHeight)
-  // with this setup, the grid is also fully responsive to changes in screen size (nice!)
-  let startingPointGoingUp = gridHeight / 2;
-  while (startingPointGoingUp > 0) {
-    yTicksArray.unshift(startingPointGoingUp - yTickHeight);
-    startingPointGoingUp -= yTickHeight;
-  }
-
-  let startingPointGoingDown = gridHeight / 2;
-  while (startingPointGoingDown < gridHeight) {
-    yTicksArray.push(startingPointGoingDown + yTickHeight);
-    startingPointGoingDown += yTickHeight;
-  }
+  // in return statement below, a HORIZONTAL line is drawn at each of the points in yTicksArray
+  // for alignment purposes, ensure yTicksArray includes the point startingYTick
+  // this ensures that the horizontal radiation line emitted by the charge is in line with the grid
+  const centralYTick = gridHeight / 2;
+  const totalNumberOfYTicks = Math.ceil(
+    gridHeight / GRID_SQUARE_WIDTH_AND_HEIGHT,
+  );
+  const startingYTick =
+    centralYTick -
+    Math.floor(totalNumberOfYTicks / 2) * GRID_SQUARE_WIDTH_AND_HEIGHT;
+  const yTicksArray = new Array(totalNumberOfXTicks)
+    .fill()
+    .map(
+      (emptyElement, index) =>
+        startingYTick + index * GRID_SQUARE_WIDTH_AND_HEIGHT,
+    );
 
   return (
     <>
@@ -66,7 +76,6 @@ const Grid = ({ gridWidth, gridHeight, numOfxAxisTicks }) => {
 Grid.propTypes = {
   gridWidth: PropTypes.number.isRequired,
   gridHeight: PropTypes.number.isRequired,
-  numOfxAxisTicks: PropTypes.number.isRequired,
 };
 
 export default Grid;

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { Group, Text, Rect } from 'react-konva';
+import SpectrumBarMarker from './SpectrumBarMarker';
 import {
   SPECTRUM_BAR_HEIGHT,
   INFRARED_BAR_WIDTH,
@@ -18,15 +19,48 @@ import {
   ULTRAVIOLET_BAR_LABEL_COLOR,
   WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR,
   WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR,
+  MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR,
+  MAX_DISPLAYED_WAVELENGTH,
+  MIN_DISPLAYED_WAVELENGTH,
+  APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
+  ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR,
+  INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR,
 } from '../../config/constants';
+import { calculateWavelength } from '../../utils/physics';
 
-const SpectrumBar = ({ stageWidth, stageHeight }) => {
+const SpectrumBar = ({
+  stageWidth,
+  stageHeight,
+  frequency,
+  shouldOscillate,
+}) => {
+  // ref attached to wavelength label (used to detect its width and position it)
+  // initialized to APPROXIMATE_WAVELENGTH_LABEL_WIDTH to minimize adjustment/jump after element has been rendered
+  const wavelengthLabel = useRef(null);
+  const [wavelengthLabelWidth, setWavelengthLabelWidth] = useState(
+    APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
+  );
   const { t } = useTranslation();
+
+  // on component mount, measure width of wavelength label, update state
+  useEffect(() => {
+    setWavelengthLabelWidth(wavelengthLabel.current.textWidth);
+  }, []);
 
   // centers spectrum bar horizontally
   const spectrumBarInitialXPosition =
     stageWidth / 2 - TOTAL_SPECTRUM_BAR_WIDTH / 2;
   const spectrumBarInitialYPosition = 0.85 * stageHeight;
+
+  // used to determine x position of SpectrumBarMarker; if wavelength > 1000 or < 100, return 0 (no spectrum bar marker shown)
+  const wavelength = calculateWavelength(frequency);
+  const spectrumBarMarkerXPosition =
+    wavelength > MAX_DISPLAYED_WAVELENGTH ||
+    wavelength < MIN_DISPLAYED_WAVELENGTH
+      ? 0
+      : spectrumBarInitialXPosition +
+        (MAX_DISPLAYED_WAVELENGTH - wavelength) /
+          MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR;
 
   return (
     <Group>
@@ -82,7 +116,9 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
         text={t('Infrared')}
         fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         // on x-axis, place text slightly to the right of the start of the spectrum bar
-        x={spectrumBarInitialXPosition + 10}
+        x={
+          spectrumBarInitialXPosition + INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR
+        }
         // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
         y={
           spectrumBarInitialYPosition +
@@ -92,13 +128,14 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
       />
       <Text
         text={t('Ultraviolet')}
+        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         // on x-axis, place text slightly to the left of the end of the spectrum bar
         x={
           spectrumBarInitialXPosition +
           INFRARED_BAR_WIDTH +
           VISIBLE_LIGHT_BAR_WIDTH +
           ULTRAVIOLET_BAR_WIDTH -
-          65
+          ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR
         }
         // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
         y={
@@ -110,16 +147,24 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
       {/* wavelength labels */}
       <Text
         text={t('Wavelength (nm)')}
-        // this one has to be positioned manually
-        x={spectrumBarInitialXPosition + TOTAL_SPECTRUM_BAR_WIDTH / 2 - 45}
+        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
+        ref={wavelengthLabel}
+        // this positions the label in the middle of the spectrum bar
+        x={
+          spectrumBarInitialXPosition +
+          TOTAL_SPECTRUM_BAR_WIDTH / 2 -
+          wavelengthLabelWidth / 2
+        }
+        // vertically, position it manually
         y={
           spectrumBarInitialYPosition +
           SPECTRUM_BAR_HEIGHT +
-          WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR
+          WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR * 5
         }
       />
       <Text
         text="1000"
+        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         x={
           spectrumBarInitialXPosition -
           WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR
@@ -132,6 +177,7 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
       />
       <Text
         text="700"
+        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         x={
           spectrumBarInitialXPosition +
           INFRARED_BAR_WIDTH -
@@ -145,6 +191,7 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
       />
       <Text
         text="400"
+        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         x={
           spectrumBarInitialXPosition +
           INFRARED_BAR_WIDTH +
@@ -159,6 +206,7 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
       />
       <Text
         text="100"
+        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         x={
           spectrumBarInitialXPosition +
           TOTAL_SPECTRUM_BAR_WIDTH -
@@ -170,6 +218,11 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
           WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR
         }
       />
+      <SpectrumBarMarker
+        xPosition={spectrumBarMarkerXPosition}
+        yPosition={spectrumBarInitialYPosition}
+        shouldOscillate={shouldOscillate}
+      />
     </Group>
   );
 };
@@ -177,6 +230,8 @@ const SpectrumBar = ({ stageWidth, stageHeight }) => {
 SpectrumBar.propTypes = {
   stageWidth: PropTypes.number.isRequired,
   stageHeight: PropTypes.number.isRequired,
+  frequency: PropTypes.number.isRequired,
+  shouldOscillate: PropTypes.bool.isRequired,
 };
 
 export default SpectrumBar;

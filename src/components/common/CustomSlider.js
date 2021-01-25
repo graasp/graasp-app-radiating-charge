@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  superscript: { fontSize: '0.2em' },
+  superscript: { fontSize: '0.6em' },
 }));
 
 const CustomSlider = ({
@@ -47,22 +46,13 @@ const CustomSlider = ({
 }) => {
   const classes = useStyles();
   const [sliderValue, setSliderValue] = useState(sliderDefault);
-  const shouldOscillate = useSelector(({ layout }) => layout.lab.oscillation);
 
   const increaseSlider = () => {
-    if (shouldOscillate) {
-      setSliderValue((prevValue) =>
-        Math.min(prevValue + sliderStep, sliderMax),
-      );
-    }
+    setSliderValue((prevValue) => Math.min(prevValue + sliderStep, sliderMax));
   };
 
   const decreaseSlider = () => {
-    if (shouldOscillate) {
-      setSliderValue((prevValue) =>
-        Math.max(prevValue - sliderStep, sliderMin),
-      );
-    }
+    setSliderValue((prevValue) => Math.max(prevValue - sliderStep, sliderMin));
   };
 
   const adjustSlider = (event, newValue) => {
@@ -92,9 +82,7 @@ const CustomSlider = ({
       </div>
       <div className={classes.sliderContainer}>
         <IconButton onClick={decreaseSlider}>
-          <RemoveCircleOutlineIcon
-            color={shouldOscillate ? 'secondary' : 'disabled'}
-          />
+          <RemoveCircleOutlineIcon color="secondary" />
         </IconButton>
         <Slider
           value={sliderValue}
@@ -103,8 +91,7 @@ const CustomSlider = ({
           step={sliderStep}
           min={sliderMin}
           max={sliderMax}
-          disabled={!shouldOscillate}
-          valueLabelDisplay={shouldOscillate && valueLabelDisplay && 'on'}
+          valueLabelDisplay={valueLabelDisplay && 'on'}
           // sometimes value in slider is e.g. x.0000000000y, in which case valueLabelFormat forces x.00 to display
           valueLabelFormat={
             (value) => parseFloat((value * displayConversionFactor).toFixed(2))
@@ -113,9 +100,7 @@ const CustomSlider = ({
           }
         />
         <IconButton onClick={increaseSlider}>
-          <AddCircleOutlineIcon
-            color={shouldOscillate ? 'primary' : 'disabled'}
-          />
+          <AddCircleOutlineIcon color="primary" />
         </IconButton>
       </div>
     </div>

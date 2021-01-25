@@ -24,7 +24,6 @@ import {
   CHARGE_SYMBOL_COLOR,
   SET_INTERVAL_TIME,
   LINE_STEP_SIZE,
-  NUM_OF_X_AXIS_TICKS,
   generateAngles,
 } from '../../config/constants';
 import { calculateYPositionHarmonically } from '../../utils/physics';
@@ -166,6 +165,8 @@ class Lab extends Component {
       chargeOscillation,
       measuringArrowWidth,
       spectrumBar,
+      frequency,
+      shouldOscillate,
     } = this.props;
     const { emittedLineStepSize } = this.state;
 
@@ -194,13 +195,13 @@ class Lab extends Component {
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 isPaused={isPaused}
+                numberOfLines={numberOfLines}
               />
             ))}
             {gridLines && (
               <Grid
                 gridWidth={stageDimensions.width}
                 gridHeight={stageDimensions.height}
-                numOfxAxisTicks={NUM_OF_X_AXIS_TICKS}
               />
             )}
             {measuringArrow && (
@@ -212,8 +213,10 @@ class Lab extends Component {
             )}
             {spectrumBar && (
               <SpectrumBar
+                frequency={frequency}
                 stageWidth={stageDimensions.width}
                 stageHeight={stageDimensions.height}
+                shouldOscillate={shouldOscillate}
               />
             )}
             <Circle
