@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.1...v0.1.2) (2021-01-29)
+
+### Features
+
+- add measuring arrow, align frequencies with expected wavelengths ([95c2263](https://github.com/graasp/graasp-app-radiating-charge/commit/95c2263ee752ce9c35ada61117f5af606a028cbb)), closes [#26](https://github.com/graasp/graasp-app-radiating-charge/issues/26)
+- add pause/play functionality ([954fbf6](https://github.com/graasp/graasp-app-radiating-charge/commit/954fbf66e05881957af4a3760ad0ed1b1902a746))
+- add reset functionality ([6d41952](https://github.com/graasp/graasp-app-radiating-charge/commit/6d41952aede694a25cdc2a3be42ddeb47a7a0602)), closes [#24](https://github.com/graasp/graasp-app-radiating-charge/issues/24)
+- add spectrum bar ([9fbf426](https://github.com/graasp/graasp-app-radiating-charge/commit/9fbf4268736a9ca9f81c70c85723df1350f8f1b8)), closes [#20](https://github.com/graasp/graasp-app-radiating-charge/issues/20)
+- add spectrum bar marker displaying wavelength given frequency ([03c596c](https://github.com/graasp/graasp-app-radiating-charge/commit/03c596cccf1a12e41ef5da67e7f191265afabd96)), closes [#34](https://github.com/graasp/graasp-app-radiating-charge/issues/34)
+- adjust arrow/spectrum bar text sizes ([0575304](https://github.com/graasp/graasp-app-radiating-charge/commit/0575304a3d5fff4efe796057c5067f7575d76a9a)), closes [#31](https://github.com/graasp/graasp-app-radiating-charge/issues/31)
+- adjust grid squares calculation approach ([92132c9](https://github.com/graasp/graasp-app-radiating-charge/commit/92132c95ecec359b1eef441ddc8021363fa330bd))
+- display grid on canvas ([6e39486](https://github.com/graasp/graasp-app-radiating-charge/commit/6e39486467de387ca48cae62592a183e68d1bf1c)), closes [#23](https://github.com/graasp/graasp-app-radiating-charge/issues/23)
+- fix width of grid squares to be '100nm' ([6dcb43a](https://github.com/graasp/graasp-app-radiating-charge/commit/6dcb43a2e6b8123ab53753ead4f50ca839336b77)), closes [#30](https://github.com/graasp/graasp-app-radiating-charge/issues/30)
+- make freq/amp adjustable before oscillation toggled on ([8b22cd1](https://github.com/graasp/graasp-app-radiating-charge/commit/8b22cd126385a08c42d73ad584b4d470d60adb12)), closes [#32](https://github.com/graasp/graasp-app-radiating-charge/issues/32)
+- move circle and charge to appear in front of gridlines ([7929fba](https://github.com/graasp/graasp-app-radiating-charge/commit/7929fba79d45cc571967a981aa4d924a8cca3e40))
+- oscillate charge harmonically/sinusoidally ([32f5909](https://github.com/graasp/graasp-app-radiating-charge/commit/32f5909312d14eb150ac50b3f5cb8b054667c75b)), closes [#17](https://github.com/graasp/graasp-app-radiating-charge/issues/17) [#18](https://github.com/graasp/graasp-app-radiating-charge/issues/18) [#19](https://github.com/graasp/graasp-app-radiating-charge/issues/19)
+- remove application description ([4e609bc](https://github.com/graasp/graasp-app-radiating-charge/commit/4e609bcbfee5c8324b08b15f734e0a5a6dea39cb)), closes [#22](https://github.com/graasp/graasp-app-radiating-charge/issues/22)
+- respond to PR review comments ([ce00f6a](https://github.com/graasp/graasp-app-radiating-charge/commit/ce00f6a459843e7617bb84ebda39ac14e5ccef43))
+
+### Bug Fixes
+
+- make superscript visible in firefox ([e2fdb09](https://github.com/graasp/graasp-app-radiating-charge/commit/e2fdb09e47ebf928b6bfff64a3f90a96b0d95192)), closes [#33](https://github.com/graasp/graasp-app-radiating-charge/issues/33)
+- redraw lines when number of lines changes ([4e380bc](https://github.com/graasp/graasp-app-radiating-charge/commit/4e380bc3dbb866b99e51f12692114f21a6f606ec)), closes [#29](https://github.com/graasp/graasp-app-radiating-charge/issues/29)
+
 ### [0.1.1](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.0...v0.1.1) (2020-12-02)
 
 ### Bug Fixes
