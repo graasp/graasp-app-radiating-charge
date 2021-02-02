@@ -9,11 +9,12 @@ export const MAXIMUM_Z_INDEX = 999999;
 
 export const CHARGE_RADIUS = 10;
 export const CHARGE_COLOR = 'red';
-export const CHARGE_SYMBOL = '+';
-export const CHARGE_SYMBOL_FONT_SIZE = 20;
-export const CHARGE_SYMBOL_COLOR = 'white';
 export const BACKGROUND_COLOR = 'lightgrey';
 export const STROKE_COLOR = 'black';
+
+export const CHARGE_SYMBOL_HEIGHT_AND_WIDTH = 10;
+export const CHARGE_SYMBOL_STROKE_WIDTH = 1.5;
+export const CHARGE_SYMBOL_COLOR = 'white';
 
 export const MAX_POINTS_FOR_LINES = 300;
 export const DEFAULT_AMPLITUDE = 20;

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Stage, Layer, Circle, Text } from 'react-konva';
+import { Stage, Layer, Circle } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
 import Grid from './Grid';
+import ChargeSymbol from './ChargeSymbol';
 import MeasuringArrow from './MeasuringArrow';
 import SpectrumBar from './SpectrumBar';
 import {
@@ -19,9 +20,6 @@ import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
   CHARGE_RADIUS,
-  CHARGE_SYMBOL,
-  CHARGE_SYMBOL_FONT_SIZE,
-  CHARGE_SYMBOL_COLOR,
   SET_INTERVAL_TIME,
   LINE_STEP_SIZE,
   generateAngles,
@@ -225,17 +223,9 @@ class Lab extends Component {
               radius={CHARGE_RADIUS}
               fill={CHARGE_COLOR}
             />
-            <Text
-              // x and y coordinates adjusted manually to approximately center the + in the Circle given its fontSize
-              x={
-                chargeOrigin.x +
-                chargeOscillation.x -
-                (CHARGE_RADIUS / 2 + 0.75)
-              }
-              y={chargeOrigin.y + chargeOscillation.y - (CHARGE_RADIUS + 0.5)}
-              text={CHARGE_SYMBOL}
-              fontSize={CHARGE_SYMBOL_FONT_SIZE}
-              fill={CHARGE_SYMBOL_COLOR}
+            <ChargeSymbol
+              x={chargeOrigin.x + chargeOscillation.x}
+              y={chargeOrigin.y + chargeOscillation.y}
             />
           </Layer>
         </Stage>
