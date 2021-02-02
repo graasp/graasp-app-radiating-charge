@@ -26,15 +26,38 @@ export const MAX_NUMBER_OF_LINES = 20;
 export const NUMBER_OF_LINES_STEP = 2;
 export const DEFAULT_TENSION = 0.1;
 export const LINE_STEP_SIZE = 5;
-export const DEFAULT_FREQUENCY = 1.0;
+
+// frequency constants
+export const DEFAULT_FREQUENCY = 3.0;
 export const MIN_FREQUENCY = 0;
-export const MAX_FREQUENCY = 10;
-export const FREQUENCY_STEP = 0.25;
-// *****IMPORTANT: we were provided with a table matching frequencies to wavelengths*****
-// specifically we expect [frequency, wavelength] pairs of...
-// [[30, 100], [15, 200], [10, 300], [7.5, 400], [6, 500], [5, 600], [4.29, 700], [3.75, 800], [3.33, 900], [3, 1000]]
-// (where frequency is measured in 10^14 Hz and wavelength in nanometers)
-// THIS table should be reflected in the application (i.e. in generated wavelengths)
+export const MAX_FREQUENCY = 30;
+// unlike amplitude slider, frequency slider takes custom marks, i.e. it doesn't increase/decrease by a fixed step
+// this is so that the generated wavelengths are distributed evenly between infrared/visible/ultraviolet ranges
+export const FREQUENCY_MARKS = [
+  0,
+  3,
+  3.25,
+  3.5,
+  3.75,
+  4,
+  4.5,
+  5,
+  5.5,
+  6,
+  6.5,
+  7,
+  8,
+  10,
+  12,
+  15,
+  20,
+  30,
+];
+// ***** frequencies generate wavelengths as per wavelength (nm) = speed of light (nm/s) / frequency (1/s) *****
+// therefore we expect [frequency, wavelength] pairs of...
+// [[30 (x10^14), 100], [20, 150], [15, 200], [12, 250], ...]
+// this factor converts the stated frequencies in the application to an oscillation frequency that generates the expected wavelength
+// it is a (very good) approximation (not derived programatically)
 export const FREQUENCY_CONVERSION_FACTOR = 3;
 
 export const DEFAULT_CHARGE_X_POSITION = 0;
