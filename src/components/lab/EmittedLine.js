@@ -4,7 +4,6 @@ import { Line } from 'react-konva';
 import _ from 'lodash';
 import {
   DEFAULT_TENSION,
-  MAX_POINTS_FOR_LINES,
   SET_INTERVAL_TIME,
   STROKE_COLOR,
 } from '../../config/constants';
@@ -29,6 +28,7 @@ export default class EmittedLine extends Component {
       y: PropTypes.number.isRequired,
     }).isRequired,
     numberOfLines: PropTypes.number.isRequired,
+    maxPointsForLines: PropTypes.number.isRequired,
   };
 
   componentDidMount() {
@@ -61,6 +61,7 @@ export default class EmittedLine extends Component {
         chargeOscillation: { x, y },
         angle,
         emittedLineStepSize,
+        maxPointsForLines,
       } = this.props;
 
       // add points in respective direction
@@ -74,8 +75,8 @@ export default class EmittedLine extends Component {
 
       // the first point is where the charge is
       // add second point where the new point should be
-      // keeps only MAX_POINTS_FOR_LINES first points
-      newPoints = [0, 0, x, y, ...newPoints].slice(0, MAX_POINTS_FOR_LINES);
+      // keeps only the maxPointsForLine first points, sufficient to fill screen
+      newPoints = [0, 0, x, y, ...newPoints].slice(0, maxPointsForLines);
       this.setState({
         points: newPoints,
       });
