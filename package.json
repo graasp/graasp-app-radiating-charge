@@ -5,12 +5,11 @@
   "author": "EPFL",
   "contributors": [
     "Juan Carlos Farah",
-    "Hassan Abdul Ghaffar",
-    "Mashkour Abdel Aziz",
-    "Kim Lan Phan Hoang"
+    "Kim Lan Phan Hoang",
+    "Hagop Taminian"
   ],
   "homepage": ".",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "dependencies": {
     "@material-ui/core": "4.11.0",
     "@material-ui/icons": "4.9.1",

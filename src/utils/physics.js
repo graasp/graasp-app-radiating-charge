@@ -29,3 +29,7 @@ export const calculateWavelength = (frequency) => {
       ONE_NANOMETER_IN_METERS);
   return wavelength;
 };
+
+export const calculateDiagonalLength = (width, height) => {
+  return Math.sqrt(width ** 2 + height ** 2);
+};

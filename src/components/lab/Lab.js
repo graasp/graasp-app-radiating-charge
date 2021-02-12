@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Stage, Layer, Circle, Text } from 'react-konva';
+import { Stage, Layer, Circle } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
 import EmittedLine from './EmittedLine';
 import Grid from './Grid';
+import ChargeSymbol from './ChargeSymbol';
 import MeasuringArrow from './MeasuringArrow';
 import SpectrumBar from './SpectrumBar';
 import {
@@ -19,14 +20,15 @@ import {
   BACKGROUND_COLOR,
   CHARGE_COLOR,
   CHARGE_RADIUS,
-  CHARGE_SYMBOL,
-  CHARGE_SYMBOL_FONT_SIZE,
-  CHARGE_SYMBOL_COLOR,
   SET_INTERVAL_TIME,
   LINE_STEP_SIZE,
   generateAngles,
+  MAX_POINTS_FOR_LINES,
 } from '../../config/constants';
-import { calculateYPositionHarmonically } from '../../utils/physics';
+import {
+  calculateYPositionHarmonically,
+  calculateDiagonalLength,
+} from '../../utils/physics';
 
 const styles = () => ({
   container: {
@@ -79,6 +81,7 @@ class Lab extends Component {
 
   state = {
     emittedLineStepSize: LINE_STEP_SIZE,
+    maxPointsForLines: MAX_POINTS_FOR_LINES,
   };
 
   componentDidMount() {
@@ -105,13 +108,37 @@ class Lab extends Component {
 
   checkSize = () => {
     const { dispatchSetStageDimensions } = this.props;
-    const stageWidth = this.container?.offsetWidth;
-    const stageHeight = this.container?.offsetHeight;
+    const stageWidth = this.container?.offsetWidth || 0;
+    const stageHeight = this.container?.offsetHeight || 0;
     dispatchSetStageDimensions({
       width: stageWidth,
       height: stageHeight,
     });
     this.updateChargePosition(stageWidth / 2, stageHeight / 2);
+
+    // based on screen dimensions, calculate the number of points needed for emitted lines to fill the screen
+    // keep in mind that lines are drawn from an array [(origin, origin), (0, 0), (pt1x, pt1y), (pt2x, pt2y), ...]
+    // the longest possible line is the diagonal; hence, the number of points needed for the diagonal are calculated
+    // this number is used for all lines (overshoots for some lines, but this is ok, as excess points are outside the screen)
+    const quadrantDiagonalLength = calculateDiagonalLength(
+      stageWidth / 2,
+      stageHeight / 2,
+    );
+
+    // if diagonal length is e.g. 100, and distance between each point (LINE_STEP_SIZE) is 5, then you need 20 points to fill diagonal
+    // since points are of the form (x, y), this means that the line array would need to contain 40 points (hence * 2)
+    // add 4 since the first 4 points, i.e. (origin, origin) and (0, 0), do not contribute to length
+    let quadrantDiagonalMaxPoints =
+      Math.ceil((2 * quadrantDiagonalLength) / LINE_STEP_SIZE) + 4;
+
+    // ensure that quadrantDiagonalMaxPoints is even (to avoid potential bugs with React Konva line drawings)
+    if (quadrantDiagonalMaxPoints % 2 === 1) {
+      quadrantDiagonalMaxPoints += 1;
+    }
+
+    this.setState({
+      maxPointsForLines: quadrantDiagonalMaxPoints,
+    });
   };
 
   updateChargePosition = (x, y) => {
@@ -168,7 +195,7 @@ class Lab extends Component {
       frequency,
       shouldOscillate,
     } = this.props;
-    const { emittedLineStepSize } = this.state;
+    const { emittedLineStepSize, maxPointsForLines } = this.state;
 
     return (
       <div
@@ -191,6 +218,7 @@ class Lab extends Component {
                 chargeOscillation={chargeOscillation}
                 angle={angle}
                 emittedLineStepSize={emittedLineStepSize}
+                maxPointsForLines={maxPointsForLines}
                 // key={index} is necessary to ensure that all lines refresh when # of lines changes
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
@@ -225,17 +253,9 @@ class Lab extends Component {
               radius={CHARGE_RADIUS}
               fill={CHARGE_COLOR}
             />
-            <Text
-              // x and y coordinates adjusted manually to approximately center the + in the Circle given its fontSize
-              x={
-                chargeOrigin.x +
-                chargeOscillation.x -
-                (CHARGE_RADIUS / 2 + 0.75)
-              }
-              y={chargeOrigin.y + chargeOscillation.y - (CHARGE_RADIUS + 0.5)}
-              text={CHARGE_SYMBOL}
-              fontSize={CHARGE_SYMBOL_FONT_SIZE}
-              fill={CHARGE_SYMBOL_COLOR}
+            <ChargeSymbol
+              x={chargeOrigin.x + chargeOscillation.x}
+              y={chargeOrigin.y + chargeOscillation.y}
             />
           </Layer>
         </Stage>

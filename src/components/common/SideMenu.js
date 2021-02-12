@@ -20,22 +20,11 @@ import {
 } from '../../actions';
 import LineSelector from './LineSelector';
 import CustomSwitch from './CustomSwitch';
-import CustomSlider from './CustomSlider';
+import AmplitudeSlider from './AmplitudeSlider';
+import FrequencySlider from './FrequencySlider';
 import AnimationControls from './AnimationControls';
 import MeasuringArrowControls from './MeasuringArrowControls';
-import {
-  DRAWER_WIDTH,
-  DEFAULT_THEME_DIRECTION,
-  DEFAULT_AMPLITUDE,
-  MIN_AMPLITUDE,
-  MAX_AMPLITUDE,
-  AMPLITUDE_STEP,
-  DEFAULT_FREQUENCY,
-  MIN_FREQUENCY,
-  MAX_FREQUENCY,
-  FREQUENCY_STEP,
-  FREQUENCY_CONVERSION_FACTOR,
-} from '../../config/constants';
+import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -57,7 +46,6 @@ const styles = (theme) => ({
     justifyContent: 'space-between',
   },
 });
-
 class SideMenu extends React.Component {
   static propTypes = {
     classes: PropTypes.shape({
@@ -169,25 +157,8 @@ class SideMenu extends React.Component {
                 switchDispatch={dispatchToggleSpectrumBar}
               />
             </div>
-            <CustomSlider
-              sliderLabel={t('Amplitude')}
-              sliderDefault={DEFAULT_AMPLITUDE}
-              sliderMin={MIN_AMPLITUDE}
-              sliderMax={MAX_AMPLITUDE}
-              sliderStep={AMPLITUDE_STEP}
-              dispatchSliderValue={dispatchSetAmplitude}
-            />
-            <CustomSlider
-              sliderLabel={t('Frequency')}
-              additionalSliderLabelInfo={{ unit: 'Hz', base: 10, power: 14 }}
-              sliderDefault={DEFAULT_FREQUENCY}
-              sliderMin={MIN_FREQUENCY}
-              sliderMax={MAX_FREQUENCY}
-              sliderStep={FREQUENCY_STEP}
-              dispatchSliderValue={dispatchSetFrequency}
-              valueLabelDisplay
-              displayConversionFactor={FREQUENCY_CONVERSION_FACTOR}
-            />
+            <AmplitudeSlider dispatchSetAmplitude={dispatchSetAmplitude} />
+            <FrequencySlider dispatchSetFrequency={dispatchSetFrequency} />
           </div>
         </Drawer>
       </>
