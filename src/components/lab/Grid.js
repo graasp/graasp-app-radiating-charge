@@ -41,7 +41,7 @@ const Grid = ({ gridWidth, gridHeight }) => {
   const startingYTick =
     centralYTick -
     Math.floor(totalNumberOfYTicks / 2) * GRID_SQUARE_WIDTH_AND_HEIGHT;
-  const yTicksArray = new Array(totalNumberOfXTicks)
+  const yTicksArray = new Array(totalNumberOfYTicks)
     .fill()
     .map(
       (emptyElement, index) =>

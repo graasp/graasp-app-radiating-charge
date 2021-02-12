@@ -72,20 +72,26 @@ const AnimationControls = () => {
       {!isPaused && (
         <Tooltip title={t('Pause')}>
           <IconButton onClick={onClickPauseOrPlay}>
-            <PauseCircleOutlineIcon className={classes.pauseButton} />
+            <PauseCircleOutlineIcon
+              className={classes.pauseButton}
+              fontSize="large"
+            />
           </IconButton>
         </Tooltip>
       )}
       {isPaused && (
         <Tooltip title={t('Play')}>
           <IconButton onClick={onClickPauseOrPlay}>
-            <PlayCircleOutlineIcon className={classes.playButton} />
+            <PlayCircleOutlineIcon
+              className={classes.playButton}
+              fontSize="large"
+            />
           </IconButton>
         </Tooltip>
       )}
       <Tooltip title={t('Reset')}>
         <IconButton onClick={onClickReset}>
-          <RotateLeftIcon className={classes.resetButton} />
+          <RotateLeftIcon className={classes.resetButton} fontSize="large" />
         </IconButton>
       </Tooltip>
     </div>

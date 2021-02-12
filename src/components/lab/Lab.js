@@ -108,8 +108,8 @@ class Lab extends Component {
 
   checkSize = () => {
     const { dispatchSetStageDimensions } = this.props;
-    const stageWidth = this.container?.offsetWidth;
-    const stageHeight = this.container?.offsetHeight;
+    const stageWidth = this.container?.offsetWidth || 0;
+    const stageHeight = this.container?.offsetHeight || 0;
     dispatchSetStageDimensions({
       width: stageWidth,
       height: stageHeight,
@@ -128,8 +128,13 @@ class Lab extends Component {
     // if diagonal length is e.g. 100, and distance between each point (LINE_STEP_SIZE) is 5, then you need 20 points to fill diagonal
     // since points are of the form (x, y), this means that the line array would need to contain 40 points (hence * 2)
     // add 4 since the first 4 points, i.e. (origin, origin) and (0, 0), do not contribute to length
-    const quadrantDiagonalMaxPoints =
-      (2 * quadrantDiagonalLength) / LINE_STEP_SIZE + 4;
+    let quadrantDiagonalMaxPoints =
+      Math.ceil((2 * quadrantDiagonalLength) / LINE_STEP_SIZE) + 4;
+
+    // ensure that quadrantDiagonalMaxPoints is even (to avoid potential bugs with React Konva line drawings)
+    if (quadrantDiagonalMaxPoints % 2 === 1) {
+      quadrantDiagonalMaxPoints += 1;
+    }
 
     this.setState({
       maxPointsForLines: quadrantDiagonalMaxPoints,
