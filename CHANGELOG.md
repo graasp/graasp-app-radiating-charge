@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.2...v0.1.3) (2021-02-14)
+
+### Features
+
+- add custom marks to frequency slider ([4a8e666](https://github.com/graasp/graasp-app-radiating-charge/commit/4a8e666cfa9eccad9ee5d2ea5df6f34403e01b9b)), closes [#39](https://github.com/graasp/graasp-app-radiating-charge/issues/39)
+- center charge symbol on charge ([035cda5](https://github.com/graasp/graasp-app-radiating-charge/commit/035cda5a961bd253aef5af9b60b732c7b7ab5a12)), closes [#38](https://github.com/graasp/graasp-app-radiating-charge/issues/38)
+- dynamically calculate emitted line length ([9e25ecd](https://github.com/graasp/graasp-app-radiating-charge/commit/9e25ecdabcbe0a814ce4fc6194191f9a85bc45e3)), closes [#37](https://github.com/graasp/graasp-app-radiating-charge/issues/37)
+
+### Documentation
+
+- update license ([9e1bd6a](https://github.com/graasp/graasp-app-radiating-charge/commit/9e1bd6aad0ffefd1562afe21a93e43eea9b9a981))
+- update readme.md ([d89fcaf](https://github.com/graasp/graasp-app-radiating-charge/commit/d89fcaf0c14c77e76b202884700e965444055578)), closes [#36](https://github.com/graasp/graasp-app-radiating-charge/issues/36)
+
 ### [0.1.2](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.1...v0.1.2) (2021-01-29)
 
 ### Features
