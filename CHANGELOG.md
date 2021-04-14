@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.3...v0.1.4) (2021-04-14)
+
+### Bug Fixes
+
+- fix faulty api call to actions endpoint ([0ea29a8](https://github.com/graasp/graasp-app-radiating-charge/commit/0ea29a8f56e6ae4b686c7c1e22006fd2e722aa56)), closes [#42](https://github.com/graasp/graasp-app-radiating-charge/issues/42) [#43](https://github.com/graasp/graasp-app-radiating-charge/issues/43)
+
 ### [0.1.3](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.2...v0.1.3) (2021-02-14)
 
 ### Features
