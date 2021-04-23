@@ -1,12 +1,25 @@
 {
   "translations": {
-    "This is the student view. Switch to the teacher view by clicking on the URL below.": "Ceci est la vue des étudiants. Passez à la vue enseignant en cliquant sur l’URL ci-dessous.",
-    "This is the teacher view. Switch to the student view by clicking on the URL below.": "Ceci est la vue de l'enseignant. Passez à la vue des étudiants en cliquant sur l’URL ci-dessous.",
     "Observe": "Observe",
     "Language": "Langue",
     "Show Header": "Montrer l'en-tête",
     "Settings": "Paramètres",
     "Open Drawer": "Ouvrir le Menu",
-    "Description": "Description"
+    "Description": "Description",
+    "Oscillation":"Oscillation",
+    "Grid":"Grille",
+    "Measuring arrow":"Flèche de mesure",
+    "Spectrum bar":"Spectre",
+    "Number of lines":"Nombre de ligne",
+    "Pause":"Pause",
+    "Reset":"Réinitiliaser",
+    "Decrease arrow width":"Diminuer la longueur de la flèche",
+    "Increase arrow width":"Augmenter la longueur de la flèche",
+    "Amplitude":"Amplitude",
+    "Frequency":"Fréquence",
+    " Hz)":" Hz)",
+    "Infrared":"infrarouge",
+    "Ultraviolet":"Ultraviolet",
+    "Wavelength (nm)":"Longueur d'onde (nm)"
   }
 }

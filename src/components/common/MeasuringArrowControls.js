@@ -35,38 +35,44 @@ const MeasuringArrowControls = () => {
   return (
     <div>
       <Tooltip title={t('Decrease arrow width')}>
-        <IconButton
-          onClick={decreaseWidth}
-          disabled={
-            !measuringArrow || measuringArrowWidth === MIN_MEASURING_ARROW_WIDTH
-          }
-        >
-          <RemoveCircleOutlineIcon
-            color={
-              measuringArrow &&
-              measuringArrowWidth !== MIN_MEASURING_ARROW_WIDTH
-                ? 'secondary'
-                : 'disabled'
+        <span>
+          <IconButton
+            onClick={decreaseWidth}
+            disabled={
+              !measuringArrow ||
+              measuringArrowWidth === MIN_MEASURING_ARROW_WIDTH
             }
-          />
-        </IconButton>
+          >
+            <RemoveCircleOutlineIcon
+              color={
+                measuringArrow &&
+                measuringArrowWidth !== MIN_MEASURING_ARROW_WIDTH
+                  ? 'secondary'
+                  : 'disabled'
+              }
+            />
+          </IconButton>
+        </span>
       </Tooltip>
       <Tooltip title={t('Increase arrow width')}>
-        <IconButton
-          onClick={increaseWidth}
-          disabled={
-            !measuringArrow || measuringArrowWidth === MAX_MEASURING_ARROW_WIDTH
-          }
-        >
-          <AddCircleOutlineIcon
-            color={
-              measuringArrow &&
-              measuringArrowWidth !== MAX_MEASURING_ARROW_WIDTH
-                ? 'primary'
-                : 'disabled'
+        <span>
+          <IconButton
+            onClick={increaseWidth}
+            disabled={
+              !measuringArrow ||
+              measuringArrowWidth === MAX_MEASURING_ARROW_WIDTH
             }
-          />
-        </IconButton>
+          >
+            <AddCircleOutlineIcon
+              color={
+                measuringArrow &&
+                measuringArrowWidth !== MAX_MEASURING_ARROW_WIDTH
+                  ? 'primary'
+                  : 'disabled'
+              }
+            />
+          </IconButton>
+        </span>
       </Tooltip>
     </div>
   );
