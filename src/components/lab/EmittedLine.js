@@ -32,7 +32,10 @@ export default class EmittedLine extends Component {
   };
 
   componentDidMount() {
-    this.beginLineInterval();
+    const { isPaused } = this.props;
+    if (!isPaused) {
+      this.beginLineInterval();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
