@@ -113,7 +113,7 @@ const SpectrumBar = ({
       />
       {/* two text labels for labels inside the spectrum bar */}
       <Text
-        text={t('Infrared')}
+        text={t('Infrared [IR]')}
         fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         // on x-axis, place text slightly to the right of the start of the spectrum bar
         x={
@@ -127,7 +127,7 @@ const SpectrumBar = ({
         fill={INFRARED_BAR_LABEL_COLOR}
       />
       <Text
-        text={t('Ultraviolet')}
+        text={t('Ultraviolet [UV]')}
         fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         // on x-axis, place text slightly to the left of the end of the spectrum bar
         x={
@@ -143,6 +143,7 @@ const SpectrumBar = ({
           (SPECTRUM_BAR_HEIGHT - SPECTRUM_BAR_LABELS_FONT_SIZE) / 2
         }
         fill={ULTRAVIOLET_BAR_LABEL_COLOR}
+        align="right"
       />
       {/* wavelength labels */}
       <Text

@@ -11,6 +11,7 @@
     "Measuring arrow": "Flèche de mesure",
     "Spectrum bar": "Spectre",
     "Number of lines": "Nombre de ligne",
+    "Play": "Simuler",
     "Pause": "Pause",
     "Reset": "Réinitiliaser",
     "Decrease arrow width": "Diminuer la longueur de la flèche",
@@ -18,8 +19,8 @@
     "Amplitude": "Amplitude",
     "Frequency": "Fréquence",
     " Hz)": " Hz)",
-    "Infrared": "infrarouge",
-    "Ultraviolet": "Ultraviolet",
+    "Infrared [IR]": "Infrarouge [IR]",
+    "Ultraviolet [UV]": "Ultraviolet [UV]",
     "Wavelength (nm)": "Longueur d'onde (nm)"
   }
 }
