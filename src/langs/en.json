@@ -11,6 +11,7 @@
     "Measuring arrow": "Measuring arrow",
     "Spectrum bar": "Spectrum bar",
     "Number of lines": "Number of lines",
+    "Play": "Play",
     "Pause": "Pause",
     "Reset": "Reset",
     "Decrease arrow width": "Decrease arrow width",
@@ -18,8 +19,8 @@
     "Amplitude": "Amplitude",
     "Frequency": "Frequency",
     " Hz)": " Hz)",
-    "Infrared": "Infrared",
-    "Ultraviolet": "Ultraviolet",
+    "Infrared [IR]": "Infrared [IR]",
+    "Ultraviolet [UV]": "Ultraviolet [UV]",
     "Wavelength (nm)": "Wavelength (nm)"
   }
 }

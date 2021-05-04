@@ -23,8 +23,7 @@ import {
   MAX_DISPLAYED_WAVELENGTH,
   MIN_DISPLAYED_WAVELENGTH,
   APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
-  ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR,
-  INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR,
+  SPECTRUM_BAR_PADDING,
 } from '../../config/constants';
 import { calculateWavelength } from '../../utils/physics';
 
@@ -113,12 +112,10 @@ const SpectrumBar = ({
       />
       {/* two text labels for labels inside the spectrum bar */}
       <Text
-        text={t('Infrared')}
+        text={t('Infrared [IR]')}
         fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         // on x-axis, place text slightly to the right of the start of the spectrum bar
-        x={
-          spectrumBarInitialXPosition + INFRARED_LABEL_X_AXIS_ADJUSTMENT_FACTOR
-        }
+        x={spectrumBarInitialXPosition + SPECTRUM_BAR_PADDING}
         // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
         y={
           spectrumBarInitialYPosition +
@@ -127,15 +124,14 @@ const SpectrumBar = ({
         fill={INFRARED_BAR_LABEL_COLOR}
       />
       <Text
-        text={t('Ultraviolet')}
+        text={t('Ultraviolet [UV]')}
         fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         // on x-axis, place text slightly to the left of the end of the spectrum bar
         x={
           spectrumBarInitialXPosition +
           INFRARED_BAR_WIDTH +
-          VISIBLE_LIGHT_BAR_WIDTH +
-          ULTRAVIOLET_BAR_WIDTH -
-          ULTRAVIOLET_LABEL_X_AXIS_ADJUSTMENT_FACTOR
+          VISIBLE_LIGHT_BAR_WIDTH -
+          SPECTRUM_BAR_PADDING
         }
         // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
         y={
@@ -143,6 +139,8 @@ const SpectrumBar = ({
           (SPECTRUM_BAR_HEIGHT - SPECTRUM_BAR_LABELS_FONT_SIZE) / 2
         }
         fill={ULTRAVIOLET_BAR_LABEL_COLOR}
+        align="right"
+        width={ULTRAVIOLET_BAR_WIDTH}
       />
       {/* wavelength labels */}
       <Text
