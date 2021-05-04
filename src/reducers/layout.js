@@ -46,7 +46,7 @@ const INITIAL_STATE = {
     amplitude: DEFAULT_AMPLITUDE,
     numberOfLines: DEFAULT_NUMBER_OF_LINES,
     frequency: DEFAULT_FREQUENCY,
-    isPaused: false,
+    isPaused: true,
     chargeOrigin: {
       x: DEFAULT_CHARGE_X_POSITION,
       y: DEFAULT_CHARGE_Y_POSITION,

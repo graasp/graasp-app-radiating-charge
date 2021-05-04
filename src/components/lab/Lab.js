@@ -9,7 +9,6 @@ import ChargeSymbol from './ChargeSymbol';
 import MeasuringArrow from './MeasuringArrow';
 import SpectrumBar from './SpectrumBar';
 import {
-  togglePause,
   setStageDimensions,
   setChargeOrigin,
   setChargeOscillation,
@@ -55,7 +54,6 @@ class Lab extends Component {
     numberOfLines: PropTypes.number.isRequired,
     frequency: PropTypes.number.isRequired,
     isPaused: PropTypes.bool.isRequired,
-    dispatchTogglePause: PropTypes.func.isRequired,
     timerCount: PropTypes.number.isRequired,
     elapsedTime: PropTypes.number.isRequired,
     dispatchSetChargeOscillation: PropTypes.func.isRequired,
@@ -77,6 +75,7 @@ class Lab extends Component {
     }).isRequired,
     measuringArrowWidth: PropTypes.number.isRequired,
     spectrumBar: PropTypes.bool.isRequired,
+    oscillation: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -174,11 +173,6 @@ class Lab extends Component {
     }, SET_INTERVAL_TIME);
   };
 
-  handleCanvasClick = () => {
-    const { isPaused, dispatchTogglePause } = this.props;
-    dispatchTogglePause(!isPaused);
-  };
-
   // element position should consider header height
   render() {
     const {
@@ -194,6 +188,8 @@ class Lab extends Component {
       spectrumBar,
       frequency,
       shouldOscillate,
+      oscillation,
+      timerCount,
     } = this.props;
     const { emittedLineStepSize, maxPointsForLines } = this.state;
 
@@ -209,7 +205,6 @@ class Lab extends Component {
           className={classes.stage}
           width={stageDimensions.width}
           height={stageDimensions.height}
-          onClick={this.handleCanvasClick}
         >
           <Layer>
             {generateAngles(numberOfLines).map((angle, index) => (
@@ -224,6 +219,8 @@ class Lab extends Component {
                 key={index}
                 isPaused={isPaused}
                 numberOfLines={numberOfLines}
+                oscillation={oscillation}
+                timerCount={timerCount}
               />
             ))}
             {gridLines && (
@@ -279,11 +276,11 @@ const mapStateToProps = ({ layout }) => ({
   timerCount: layout.lab.timerCount,
   elapsedTime: layout.lab.elapsedTime,
   spectrumBar: layout.lab.spectrumBar,
+  oscillation: layout.lab.oscillation,
 });
 
 const mapDispatchToProps = {
   dispatchSetStageDimensions: setStageDimensions,
-  dispatchTogglePause: togglePause,
   dispatchSetChargeOrigin: setChargeOrigin,
   dispatchSetChargeOscillation: setChargeOscillation,
   dispatchSetTimerCount: setTimerCount,
