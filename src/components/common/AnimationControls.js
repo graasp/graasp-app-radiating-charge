@@ -8,7 +8,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import StopIcon from '@material-ui/icons/Stop';
 import Tooltip from '@material-ui/core/Tooltip';
-import { green, red, blue, yellow } from '@material-ui/core/colors';
+import { green, orange, blue, yellow } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import {
   togglePause,
@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
   },
   playButton: { color: green[800] },
   stopButton: { color: blue[900] },
-  resetButton: { color: red[800] },
+  resetButton: { color: orange[800] },
 }));
 
 const AnimationControls = () => {
@@ -67,8 +67,6 @@ const AnimationControls = () => {
     dispatch(setElapsedTime(DEFAULT_ELAPSED_TIME));
     dispatch(toggleOscillation(false));
     dispatch(togglePause(true));
-    dispatch(toggleMeasuringArrow(false));
-    dispatch(toggleSpectrumBar(false));
   };
 
   const onClickReset = () => {
@@ -95,7 +93,7 @@ const AnimationControls = () => {
   return (
     <div className={classes.buttonContainer}>
       {!isPaused && (
-        <Tooltip title={t('Pause')}>
+        <Tooltip title={t('Pause')} placement="left">
           <IconButton onClick={onClickPause}>
             <PauseCircleOutlineIcon
               className={clsx(classes.button, classes.pauseButton)}
@@ -104,7 +102,7 @@ const AnimationControls = () => {
         </Tooltip>
       )}
       {isPaused && (
-        <Tooltip title={t('Play')}>
+        <Tooltip title={t('Play')} placement="left">
           <IconButton onClick={onClickPlay}>
             <PlayCircleOutlineIcon
               className={clsx(classes.button, classes.playButton)}
@@ -112,12 +110,16 @@ const AnimationControls = () => {
           </IconButton>
         </Tooltip>
       )}
-      <Tooltip title={t('Stop')}>
-        <IconButton onClick={onClickStop}>
-          <StopIcon className={clsx(classes.button, classes.stopButton)} />
+      <Tooltip title={t('Stop')} placement="top">
+        <IconButton disabled={isPaused} onClick={onClickStop}>
+          <StopIcon
+            className={clsx(classes.button, {
+              [classes.stopButton]: !isPaused,
+            })}
+          />
         </IconButton>
       </Tooltip>
-      <Tooltip title={t('Reset')}>
+      <Tooltip title={t('Reset')} placement="right">
         <IconButton onClick={onClickReset}>
           <RotateLeftIcon
             className={clsx(classes.button, classes.resetButton)}

@@ -40,18 +40,23 @@ export default class EmittedLine extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { isPaused, oscillation, timerCount, numberOfLines } = this.props;
-    if (isPaused !== prevProps.isPaused && isPaused && !oscillation) {
-      clearInterval(this.emittedLineInterval);
-    } else if (isPaused !== prevProps.isPaused && !isPaused && oscillation) {
-      clearInterval(this.emittedLineInterval);
-      this.beginLineInterval();
+    if (isPaused !== prevProps.isPaused) {
+      if (isPaused && !oscillation) {
+        clearInterval(this.emittedLineInterval);
+      }
+      if (!isPaused && oscillation) {
+        clearInterval(this.emittedLineInterval);
+        this.beginLineInterval();
+      }
     }
+
     if (
       timerCount !== prevProps.timerCount &&
       timerCount === DEFAULT_TIMER_COUNT
     ) {
       this.beginLineInterval();
     }
+
     if (
       numberOfLines !== prevProps.numberOfLines &&
       !_.isEqual(prevState.points, EmittedLine.initialPoints)
