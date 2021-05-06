@@ -170,3 +170,7 @@ export const generateAngles = (numOfLines) => {
     ...fourthQuadrantAngles,
   ];
 };
+
+// other constants
+export const PAUSED_STRING = 'paused';
+export const PLAYING_STRING = 'playing';
