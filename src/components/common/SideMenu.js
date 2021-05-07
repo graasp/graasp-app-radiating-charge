@@ -11,7 +11,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
   toggleSideMenu,
-  toggleOscillation,
   toggleGridLines,
   toggleMeasuringArrow,
   toggleSpectrumBar,
@@ -59,13 +58,11 @@ class SideMenu extends React.Component {
     }).isRequired,
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
-    oscillation: PropTypes.bool.isRequired,
     spectrumBar: PropTypes.bool.isRequired,
     gridLines: PropTypes.bool.isRequired,
     measuringArrow: PropTypes.bool.isRequired,
     dispatchToggleGridLines: PropTypes.func.isRequired,
     dispatchToggleMeasuringArrow: PropTypes.func.isRequired,
-    dispatchToggleOscillation: PropTypes.func.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
     dispatchToggleSpectrumBar: PropTypes.func.isRequired,
     dispatchSetAmplitude: PropTypes.func.isRequired,
@@ -100,11 +97,9 @@ class SideMenu extends React.Component {
     const {
       classes,
       showSideMenu,
-      oscillation,
       gridLines,
       measuringArrow,
       spectrumBar,
-      dispatchToggleOscillation,
       dispatchToggleSpectrumBar,
       dispatchToggleGridLines,
       dispatchToggleMeasuringArrow,
@@ -126,15 +121,8 @@ class SideMenu extends React.Component {
         >
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
+            <AnimationControls />
             <LineSelector />
-            <div className={classes.switchContainer}>
-              <CustomSwitch
-                switchLabel={t('Oscillation')}
-                switchStatus={oscillation}
-                switchDispatch={dispatchToggleOscillation}
-              />
-              <AnimationControls />
-            </div>
             <div className={classes.switchContainer}>
               <CustomSwitch
                 switchLabel={t('Grid')}
@@ -168,7 +156,7 @@ class SideMenu extends React.Component {
 
 const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
-  oscillation: layout.lab.oscillation,
+
   gridLines: layout.lab.gridLines,
   measuringArrow: layout.lab.measuringArrow,
   spectrumBar: layout.lab.spectrumBar,
@@ -178,7 +166,6 @@ const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
   dispatchToggleGridLines: toggleGridLines,
   dispatchToggleMeasuringArrow: toggleMeasuringArrow,
-  dispatchToggleOscillation: toggleOscillation,
   dispatchToggleSpectrumBar: toggleSpectrumBar,
   dispatchSetFrequency: setFrequency,
   dispatchSetAmplitude: setAmplitude,

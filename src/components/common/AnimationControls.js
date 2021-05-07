@@ -6,8 +6,10 @@ import IconButton from '@material-ui/core/IconButton';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import StopIcon from '@material-ui/icons/Stop';
 import Tooltip from '@material-ui/core/Tooltip';
-import { green, red, yellow } from '@material-ui/core/colors';
+import { green, orange, blue, yellow } from '@material-ui/core/colors';
+import clsx from 'clsx';
 import {
   togglePause,
   toggleOscillation,
@@ -26,11 +28,19 @@ import {
 } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  button: {
+    fontSize: '1.75em',
+  },
   pauseButton: {
     color: yellow[800],
   },
   playButton: { color: green[800] },
-  resetButton: { color: red[800] },
+  stopButton: { color: blue[900] },
+  resetButton: { color: orange[800] },
 }));
 
 const AnimationControls = () => {
@@ -42,8 +52,21 @@ const AnimationControls = () => {
   );
   const dispatch = useDispatch();
 
-  const onClickPauseOrPlay = () => {
-    dispatch(togglePause(!isPaused));
+  const onClickPlay = () => {
+    dispatch(togglePause(false));
+    dispatch(toggleOscillation(true));
+  };
+
+  const onClickPause = () => {
+    dispatch(togglePause(true));
+    dispatch(toggleOscillation(false));
+  };
+
+  const onClickStop = () => {
+    dispatch(setTimerCount(DEFAULT_TIMER_COUNT));
+    dispatch(setElapsedTime(DEFAULT_ELAPSED_TIME));
+    dispatch(toggleOscillation(false));
+    dispatch(togglePause(true));
   };
 
   const onClickReset = () => {
@@ -62,36 +85,45 @@ const AnimationControls = () => {
     dispatch(setTimerCount(DEFAULT_TIMER_COUNT));
     dispatch(setElapsedTime(DEFAULT_ELAPSED_TIME));
     dispatch(toggleOscillation(false));
-    dispatch(togglePause(false));
+    dispatch(togglePause(true));
     dispatch(toggleMeasuringArrow(false));
     dispatch(toggleSpectrumBar(false));
   };
 
   return (
-    <div>
+    <div className={classes.buttonContainer}>
       {!isPaused && (
-        <Tooltip title={t('Pause')}>
-          <IconButton onClick={onClickPauseOrPlay}>
+        <Tooltip title={t('Pause')} placement="left">
+          <IconButton onClick={onClickPause}>
             <PauseCircleOutlineIcon
-              className={classes.pauseButton}
-              fontSize="large"
+              className={clsx(classes.button, classes.pauseButton)}
             />
           </IconButton>
         </Tooltip>
       )}
       {isPaused && (
-        <Tooltip title={t('Play')}>
-          <IconButton onClick={onClickPauseOrPlay}>
+        <Tooltip title={t('Play')} placement="left">
+          <IconButton onClick={onClickPlay}>
             <PlayCircleOutlineIcon
-              className={classes.playButton}
-              fontSize="large"
+              className={clsx(classes.button, classes.playButton)}
             />
           </IconButton>
         </Tooltip>
       )}
-      <Tooltip title={t('Reset')}>
+      <Tooltip title={t('Stop')} placement="top">
+        <IconButton disabled={isPaused} onClick={onClickStop}>
+          <StopIcon
+            className={clsx(classes.button, {
+              [classes.stopButton]: !isPaused,
+            })}
+          />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={t('Reset')} placement="right">
         <IconButton onClick={onClickReset}>
-          <RotateLeftIcon className={classes.resetButton} fontSize="large" />
+          <RotateLeftIcon
+            className={clsx(classes.button, classes.resetButton)}
+          />
         </IconButton>
       </Tooltip>
     </div>

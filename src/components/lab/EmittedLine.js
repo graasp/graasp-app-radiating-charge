@@ -4,6 +4,7 @@ import { Line } from 'react-konva';
 import _ from 'lodash';
 import {
   DEFAULT_TENSION,
+  DEFAULT_TIMER_COUNT,
   SET_INTERVAL_TIME,
   STROKE_COLOR,
 } from '../../config/constants';
@@ -29,6 +30,8 @@ export default class EmittedLine extends Component {
     }).isRequired,
     numberOfLines: PropTypes.number.isRequired,
     maxPointsForLines: PropTypes.number.isRequired,
+    oscillation: PropTypes.bool.isRequired,
+    timerCount: PropTypes.number.isRequired,
   };
 
   componentDidMount() {
@@ -36,17 +39,31 @@ export default class EmittedLine extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isPaused, numberOfLines } = this.props;
-    if (isPaused !== prevProps.isPaused && isPaused) {
-      clearInterval(this.emittedLineInterval);
-    } else if (isPaused !== prevProps.isPaused && !isPaused) {
+    const { isPaused, oscillation, timerCount, numberOfLines } = this.props;
+    if (isPaused !== prevProps.isPaused) {
+      if (isPaused && !oscillation) {
+        clearInterval(this.emittedLineInterval);
+      }
+      if (!isPaused && oscillation) {
+        clearInterval(this.emittedLineInterval);
+        this.beginLineInterval();
+      }
+    }
+
+    if (
+      timerCount !== prevProps.timerCount &&
+      timerCount === DEFAULT_TIMER_COUNT
+    ) {
       this.beginLineInterval();
     }
+
     if (
       numberOfLines !== prevProps.numberOfLines &&
       !_.isEqual(prevState.points, EmittedLine.initialPoints)
     ) {
+      clearInterval(this.emittedLineInterval);
       this.resetLine();
+      this.beginLineInterval();
     }
   }
 
