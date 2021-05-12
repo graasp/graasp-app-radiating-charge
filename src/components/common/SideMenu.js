@@ -24,6 +24,14 @@ import FrequencySlider from './FrequencySlider';
 import AnimationControls from './AnimationControls';
 import MeasuringArrowControls from './MeasuringArrowControls';
 import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
+import {
+  TOGGLED_MEASURING_ARROW_OFF,
+  TOGGLED_GRID_OFF,
+  TOGGLED_GRID_ON,
+  TOGGLED_MEASURING_ARROW_ON,
+  TOGGLED_SPECTRUM_BAR_OFF,
+  TOGGLED_SPECTRUM_BAR_ON,
+} from '../../config/verbs';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -128,6 +136,8 @@ class SideMenu extends React.Component {
                 switchLabel={t('Grid')}
                 switchStatus={gridLines}
                 switchDispatch={dispatchToggleGridLines}
+                toggleOffAction={TOGGLED_GRID_OFF}
+                toggleOnAction={TOGGLED_GRID_ON}
               />
             </div>
             <div className={classes.switchContainer}>
@@ -135,6 +145,8 @@ class SideMenu extends React.Component {
                 switchLabel={t('Measuring arrow')}
                 switchStatus={measuringArrow}
                 switchDispatch={dispatchToggleMeasuringArrow}
+                toggleOffAction={TOGGLED_MEASURING_ARROW_OFF}
+                toggleOnAction={TOGGLED_MEASURING_ARROW_ON}
               />
               <MeasuringArrowControls />
             </div>
@@ -143,6 +155,8 @@ class SideMenu extends React.Component {
                 switchLabel={t('Spectrum bar')}
                 switchStatus={spectrumBar}
                 switchDispatch={dispatchToggleSpectrumBar}
+                toggleOffAction={TOGGLED_SPECTRUM_BAR_OFF}
+                toggleOnAction={TOGGLED_SPECTRUM_BAR_ON}
               />
             </div>
             <AmplitudeSlider dispatchSetAmplitude={dispatchSetAmplitude} />

@@ -19,13 +19,21 @@ import {
   setChargeOscillation,
   setTimerCount,
   setElapsedTime,
+  postAction,
 } from '../../actions';
 import {
   DEFAULT_CHARGE_OSCILLATION_X_POSITION,
   DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
   DEFAULT_TIMER_COUNT,
   DEFAULT_ELAPSED_TIME,
+  FREQUENCY_CONVERSION_FACTOR,
 } from '../../config/constants';
+import {
+  CLICKED_PAUSE,
+  CLICKED_PLAY,
+  CLICKED_RESET,
+  CLICKED_STOP,
+} from '../../config/verbs';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -46,20 +54,46 @@ const useStyles = makeStyles(() => ({
 const AnimationControls = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const isPaused = useSelector(({ layout }) => layout.lab.isPaused);
-  const stageDimensions = useSelector(
-    ({ layout }) => layout.lab.stageDimensions,
-  );
+  const {
+    isPaused,
+    stageDimensions,
+    numberOfLines,
+    frequency,
+    amplitude,
+    measuringArrow,
+    spectrumBar,
+    gridLines,
+  } = useSelector(({ layout }) => layout.lab);
   const dispatch = useDispatch();
 
   const onClickPlay = () => {
     dispatch(togglePause(false));
     dispatch(toggleOscillation(true));
+
+    // action dispatched for cases when application is opened within a Graasp ILS
+    // when the play button is clicked, we also record the current app settings in the dispatched action
+    const appSettings = {
+      numberOfLines,
+      measuringArrow,
+      spectrumBar,
+      gridLines,
+      frequency: `${(frequency * FREQUENCY_CONVERSION_FACTOR).toFixed(
+        1,
+      )} x 10^14 Hz`,
+      amplitude,
+    };
+    dispatch(
+      postAction({
+        verb: CLICKED_PLAY,
+        data: { ...appSettings },
+      }),
+    );
   };
 
   const onClickPause = () => {
     dispatch(togglePause(true));
     dispatch(toggleOscillation(false));
+    dispatch(postAction({ verb: CLICKED_PAUSE }));
   };
 
   const onClickStop = () => {
@@ -67,6 +101,7 @@ const AnimationControls = () => {
     dispatch(setElapsedTime(DEFAULT_ELAPSED_TIME));
     dispatch(toggleOscillation(false));
     dispatch(togglePause(true));
+    dispatch(postAction({ verb: CLICKED_STOP }));
   };
 
   const onClickReset = () => {
@@ -88,6 +123,7 @@ const AnimationControls = () => {
     dispatch(togglePause(true));
     dispatch(toggleMeasuringArrow(false));
     dispatch(toggleSpectrumBar(false));
+    dispatch(postAction({ verb: CLICKED_RESET }));
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -12,7 +13,11 @@ import {
   MIN_AMPLITUDE,
   MAX_AMPLITUDE,
   AMPLITUDE_STEP,
+  PAUSED_STRING,
+  PLAYING_STRING,
 } from '../../config/constants';
+import { postAction } from '../../actions';
+import { DECREASED_AMPLITUDE, INCREASED_AMPLITUDE } from '../../config/verbs';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,25 +47,57 @@ const useStyles = makeStyles((theme) => ({
 
 const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const isPaused = useSelector(({ layout }) => layout.lab.isPaused);
   const { t } = useTranslation();
   const [amplitude, setAmplitude] = useState(DEFAULT_AMPLITUDE);
+  const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   // callback used in the + ('increase') IconButton (slider doesn't natively come with such a button)
   const increaseAmplitude = () => {
-    setAmplitude((prevValue) =>
-      Math.min(prevValue + AMPLITUDE_STEP, MAX_AMPLITUDE),
-    );
+    setAmplitude((prevValue) => {
+      const newAmplitude = Math.min(prevValue + AMPLITUDE_STEP, MAX_AMPLITUDE);
+      dispatch(
+        postAction({
+          verb: INCREASED_AMPLITUDE,
+          data: { newAmplitude, applicationState },
+        }),
+      );
+      return newAmplitude;
+    });
   };
 
   // callback used in the - ('decrease') IconButton (slider doesn't natively come with such a button)
   const decreaseAmplitude = () => {
-    setAmplitude((prevValue) =>
-      Math.max(prevValue - AMPLITUDE_STEP, MIN_AMPLITUDE),
-    );
+    setAmplitude((prevValue) => {
+      const newAmplitude = Math.max(prevValue - AMPLITUDE_STEP, MIN_AMPLITUDE);
+      dispatch(
+        postAction({
+          verb: DECREASED_AMPLITUDE,
+          data: { newAmplitude, applicationState },
+        }),
+      );
+      return newAmplitude;
+    });
   };
 
   // callback used in slider's default onChange handler
   const adjustAmplitude = (event, newValue) => {
+    if (newValue > amplitude) {
+      dispatch(
+        postAction({
+          verb: INCREASED_AMPLITUDE,
+          data: { newAmplitude: newValue, applicationState },
+        }),
+      );
+    } else if (newValue < amplitude) {
+      dispatch(
+        postAction({
+          verb: DECREASED_AMPLITUDE,
+          data: { newAmplitude: newValue, applicationState },
+        }),
+      );
+    }
     setAmplitude(newValue);
   };
 
