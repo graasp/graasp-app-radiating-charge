@@ -6,9 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import StopIcon from '@material-ui/icons/Stop';
 import Tooltip from '@material-ui/core/Tooltip';
-import { green, orange, blue, yellow } from '@material-ui/core/colors';
+import { green, orange, yellow } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import {
   togglePause,
@@ -28,12 +27,7 @@ import {
   DEFAULT_ELAPSED_TIME,
   FREQUENCY_CONVERSION_FACTOR,
 } from '../../config/constants';
-import {
-  CLICKED_PAUSE,
-  CLICKED_PLAY,
-  CLICKED_RESET,
-  CLICKED_STOP,
-} from '../../config/verbs';
+import { CLICKED_PAUSE, CLICKED_PLAY, CLICKED_RESET } from '../../config/verbs';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -47,7 +41,6 @@ const useStyles = makeStyles(() => ({
     color: yellow[800],
   },
   playButton: { color: green[800] },
-  stopButton: { color: blue[900] },
   resetButton: { color: orange[800] },
 }));
 
@@ -96,14 +89,6 @@ const AnimationControls = () => {
     dispatch(postAction({ verb: CLICKED_PAUSE }));
   };
 
-  const onClickStop = () => {
-    dispatch(setTimerCount(DEFAULT_TIMER_COUNT));
-    dispatch(setElapsedTime(DEFAULT_ELAPSED_TIME));
-    dispatch(toggleOscillation(false));
-    dispatch(togglePause(true));
-    dispatch(postAction({ verb: CLICKED_STOP }));
-  };
-
   const onClickReset = () => {
     dispatch(
       setChargeOrigin({
@@ -146,15 +131,6 @@ const AnimationControls = () => {
           </IconButton>
         </Tooltip>
       )}
-      <Tooltip title={t('Stop')} placement="top">
-        <IconButton disabled={isPaused} onClick={onClickStop}>
-          <StopIcon
-            className={clsx(classes.button, {
-              [classes.stopButton]: !isPaused,
-            })}
-          />
-        </IconButton>
-      </Tooltip>
       <Tooltip title={t('Reset')} placement="right">
         <IconButton onClick={onClickReset}>
           <RotateLeftIcon

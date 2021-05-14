@@ -2,7 +2,6 @@
 export const SAVED = 'saved';
 export const CLICKED_PLAY = 'clickedPlay';
 export const CLICKED_PAUSE = 'clickedPause';
-export const CLICKED_STOP = 'clickedStop';
 export const CLICKED_RESET = 'clickedReset';
 export const INCREASED_NUMBER_OF_LINES = 'increasedNumberOfLines';
 export const DECREASED_NUMBER_OF_LINES = 'decreasedNumberOfLines';
