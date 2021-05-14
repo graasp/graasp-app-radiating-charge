@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.4...v0.1.5) (2021-05-14)
+
+### Features
+
+- log user actions ([686f3d1](https://github.com/graasp/graasp-app-radiating-charge/commit/686f3d1250ca94b0503b56fb3106dcc363733278)), closes [#54](https://github.com/graasp/graasp-app-radiating-charge/issues/54)
+- reconfigure animation controls ([0f7903a](https://github.com/graasp/graasp-app-radiating-charge/commit/0f7903af5deebc9108af522df7bce6f717b80e77)), closes [#50](https://github.com/graasp/graasp-app-radiating-charge/issues/50)
+- remove stop button ([67719ac](https://github.com/graasp/graasp-app-radiating-charge/commit/67719ac8d808f98af53136222546177ea8a143c4)), closes [#56](https://github.com/graasp/graasp-app-radiating-charge/issues/56)
+- translate app in french ([8071245](https://github.com/graasp/graasp-app-radiating-charge/commit/80712459c7c5787a6777c4ea3c7ee72cc34e3e54))
+
+### Bug Fixes
+
+- fix bug with line increment when app is paused ([d54359a](https://github.com/graasp/graasp-app-radiating-charge/commit/d54359a7817690940d54cd2b5fcad65fdd07833b)), closes [#46](https://github.com/graasp/graasp-app-radiating-charge/issues/46)
+
+### Build System
+
+- add GitHub actions for automatic deployment ([21632a3](https://github.com/graasp/graasp-app-radiating-charge/commit/21632a309cb22adcc8b1f15fdec2ad74f1e47800)), closes [#45](https://github.com/graasp/graasp-app-radiating-charge/issues/45)
+
 ### [0.1.4](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.3...v0.1.4) (2021-04-14)
 
 ### Bug Fixes
