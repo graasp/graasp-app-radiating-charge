@@ -21,10 +21,10 @@ export const DEFAULT_AMPLITUDE = 20;
 export const MIN_AMPLITUDE = 0;
 export const MAX_AMPLITUDE = 40;
 export const AMPLITUDE_STEP = 5;
-export const DEFAULT_NUMBER_OF_LINES = 6;
-export const MIN_NUMBER_OF_LINES = 2;
-export const MAX_NUMBER_OF_LINES = 20;
-export const NUMBER_OF_LINES_STEP = 2;
+export const DEFAULT_NUMBER_OF_LINES = 12;
+export const MIN_NUMBER_OF_LINES = 4;
+export const MAX_NUMBER_OF_LINES = 40;
+export const NUMBER_OF_LINES_STEP = 4;
 export const DEFAULT_TENSION = 0.1;
 export const LINE_STEP_SIZE = 5;
 
@@ -144,10 +144,10 @@ export const SPECTRUM_BAR_MARKER_TRIANGLE_HEIGHT = 8;
 
 // numOfLines should be >= 2
 export const generateAngles = (numOfLines) => {
-  const firstQuadrantAngles = new Array(numOfLines / 2)
+  const firstQuadrantAngles = new Array(numOfLines / 4)
     .fill()
     .map(
-      (emptyElement, index) => (Math.PI / 2 / (numOfLines / 2)) * (index + 1),
+      (emptyElement, index) => (Math.PI / 2 / (numOfLines / 4)) * (index + 1),
     );
 
   // generating angles for remaining quadrants is easy: just add 90deg (PI / 2) to each angle in previous quadrant
