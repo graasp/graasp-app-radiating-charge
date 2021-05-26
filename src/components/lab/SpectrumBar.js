@@ -27,12 +27,7 @@ import {
 } from '../../config/constants';
 import { calculateWavelength } from '../../utils/physics';
 
-const SpectrumBar = ({
-  stageWidth,
-  stageHeight,
-  frequency,
-  shouldOscillate,
-}) => {
+const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
   // ref attached to wavelength label (used to detect its width and position it)
   // initialized to APPROXIMATE_WAVELENGTH_LABEL_WIDTH to minimize adjustment/jump after element has been rendered
   const wavelengthLabel = useRef(null);
@@ -209,7 +204,6 @@ const SpectrumBar = ({
       <SpectrumBarMarker
         xPosition={spectrumBarMarkerXPosition}
         yPosition={spectrumBarInitialYPosition}
-        shouldOscillate={shouldOscillate}
       />
     </Group>
   );
@@ -219,7 +213,6 @@ SpectrumBar.propTypes = {
   stageWidth: PropTypes.number.isRequired,
   stageHeight: PropTypes.number.isRequired,
   frequency: PropTypes.number.isRequired,
-  shouldOscillate: PropTypes.bool.isRequired,
 };
 
 export default SpectrumBar;

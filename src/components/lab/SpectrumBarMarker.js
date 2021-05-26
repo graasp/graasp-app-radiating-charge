@@ -10,8 +10,8 @@ import {
   SPECTRUM_BAR_MARKER_TRIANGLE_HEIGHT,
 } from '../../config/constants';
 
-const SpectrumBarMarker = ({ xPosition, yPosition, shouldOscillate }) => {
-  if (!shouldOscillate || xPosition === 0) {
+const SpectrumBarMarker = ({ xPosition, yPosition }) => {
+  if (xPosition === 0) {
     return null;
   }
 
@@ -68,7 +68,6 @@ const SpectrumBarMarker = ({ xPosition, yPosition, shouldOscillate }) => {
 SpectrumBarMarker.propTypes = {
   yPosition: PropTypes.number.isRequired,
   xPosition: PropTypes.number.isRequired,
-  shouldOscillate: PropTypes.bool.isRequired,
 };
 
 export default SpectrumBarMarker;
