@@ -11,9 +11,9 @@ import {
   TOTAL_SPECTRUM_BAR_WIDTH,
   SPECTRUM_BAR_STROKE_COLOR,
   SPECTRUM_BAR_STROKE_WIDTH,
-  INFRARED_COLOR_RANGE,
+  INFRARED_BAR_COLOR,
   VISIBLE_LIGHT_COLOR_RANGE,
-  ULTRAVIOLET_COLOR_RANGE,
+  ULTRAVIOLET_BAR_COLOR,
   SPECTRUM_BAR_LABELS_FONT_SIZE,
   INFRARED_BAR_LABEL_COLOR,
   ULTRAVIOLET_BAR_LABEL_COLOR,
@@ -71,12 +71,7 @@ const SpectrumBar = ({
         height={SPECTRUM_BAR_HEIGHT}
         stroke={SPECTRUM_BAR_STROKE_COLOR}
         strokeWidth={SPECTRUM_BAR_STROKE_WIDTH}
-        fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-        fillLinearGradientEndPoint={{
-          x: INFRARED_BAR_WIDTH,
-          y: 0,
-        }}
-        fillLinearGradientColorStops={INFRARED_COLOR_RANGE}
+        fill={INFRARED_BAR_COLOR}
       />
       <Rect
         x={spectrumBarInitialXPosition + INFRARED_BAR_WIDTH}
@@ -103,12 +98,7 @@ const SpectrumBar = ({
         height={SPECTRUM_BAR_HEIGHT}
         stroke={SPECTRUM_BAR_STROKE_COLOR}
         strokeWidth={SPECTRUM_BAR_STROKE_WIDTH}
-        fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-        fillLinearGradientEndPoint={{
-          x: ULTRAVIOLET_BAR_WIDTH,
-          y: 0,
-        }}
-        fillLinearGradientColorStops={ULTRAVIOLET_COLOR_RANGE}
+        fill={ULTRAVIOLET_BAR_COLOR}
       />
       {/* two text labels for labels inside the spectrum bar */}
       <Text
