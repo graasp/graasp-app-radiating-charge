@@ -11,9 +11,7 @@ import {
   TOTAL_SPECTRUM_BAR_WIDTH,
   SPECTRUM_BAR_STROKE_COLOR,
   SPECTRUM_BAR_STROKE_WIDTH,
-  INFRARED_BAR_COLOR,
   VISIBLE_LIGHT_COLOR_RANGE,
-  ULTRAVIOLET_BAR_COLOR,
   SPECTRUM_BAR_LABELS_FONT_SIZE,
   INFRARED_BAR_LABEL_COLOR,
   ULTRAVIOLET_BAR_LABEL_COLOR,
@@ -24,6 +22,8 @@ import {
   MIN_DISPLAYED_WAVELENGTH,
   APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
   SPECTRUM_BAR_PADDING,
+  ULTRAVIOLET_COLOR_RANGE,
+  INFRARED_COLOR_RANGE,
 } from '../../config/constants';
 import { calculateWavelength } from '../../utils/physics';
 
@@ -66,7 +66,12 @@ const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
         height={SPECTRUM_BAR_HEIGHT}
         stroke={SPECTRUM_BAR_STROKE_COLOR}
         strokeWidth={SPECTRUM_BAR_STROKE_WIDTH}
-        fill={INFRARED_BAR_COLOR}
+        fillLinearGradientStartPoint={{ x: 0, y: 0 }}
+        fillLinearGradientEndPoint={{
+          x: INFRARED_BAR_WIDTH,
+          y: 0,
+        }}
+        fillLinearGradientColorStops={INFRARED_COLOR_RANGE}
       />
       <Rect
         x={spectrumBarInitialXPosition + INFRARED_BAR_WIDTH}
@@ -93,7 +98,12 @@ const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
         height={SPECTRUM_BAR_HEIGHT}
         stroke={SPECTRUM_BAR_STROKE_COLOR}
         strokeWidth={SPECTRUM_BAR_STROKE_WIDTH}
-        fill={ULTRAVIOLET_BAR_COLOR}
+        fillLinearGradientStartPoint={{ x: 0, y: 0 }}
+        fillLinearGradientEndPoint={{
+          x: ULTRAVIOLET_BAR_WIDTH,
+          y: 0,
+        }}
+        fillLinearGradientColorStops={ULTRAVIOLET_COLOR_RANGE}
       />
       {/* two text labels for labels inside the spectrum bar */}
       <Text

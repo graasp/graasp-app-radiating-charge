@@ -109,7 +109,7 @@ export const SPECTRUM_BAR_HEIGHT = 50;
 export const SPECTRUM_BAR_STROKE_COLOR = 'black';
 export const SPECTRUM_BAR_STROKE_WIDTH = 0.5;
 // css gradient, values from 0 to 1
-export const INFRARED_BAR_COLOR = 'black';
+export const INFRARED_COLOR_RANGE = [0, 'black', 0.9, 'black', 1, 'red'];
 export const VISIBLE_LIGHT_COLOR_RANGE = [
   0,
   'red',
@@ -126,7 +126,7 @@ export const VISIBLE_LIGHT_COLOR_RANGE = [
   1,
   'violet',
 ];
-export const ULTRAVIOLET_BAR_COLOR = 'black';
+export const ULTRAVIOLET_COLOR_RANGE = [0, 'violet', 0.1, 'black'];
 export const SPECTRUM_BAR_LABELS_FONT_SIZE = 16;
 export const INFRARED_BAR_LABEL_COLOR = 'white';
 export const ULTRAVIOLET_BAR_LABEL_COLOR = 'white';
