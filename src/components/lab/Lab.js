@@ -187,7 +187,6 @@ class Lab extends Component {
       measuringArrowWidth,
       spectrumBar,
       frequency,
-      shouldOscillate,
       oscillation,
       timerCount,
     } = this.props;
@@ -241,7 +240,6 @@ class Lab extends Component {
                 frequency={frequency}
                 stageWidth={stageDimensions.width}
                 stageHeight={stageDimensions.height}
-                shouldOscillate={shouldOscillate}
               />
             )}
             <Circle

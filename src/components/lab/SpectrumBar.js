@@ -11,9 +11,7 @@ import {
   TOTAL_SPECTRUM_BAR_WIDTH,
   SPECTRUM_BAR_STROKE_COLOR,
   SPECTRUM_BAR_STROKE_WIDTH,
-  INFRARED_COLOR_RANGE,
   VISIBLE_LIGHT_COLOR_RANGE,
-  ULTRAVIOLET_COLOR_RANGE,
   SPECTRUM_BAR_LABELS_FONT_SIZE,
   INFRARED_BAR_LABEL_COLOR,
   ULTRAVIOLET_BAR_LABEL_COLOR,
@@ -24,15 +22,12 @@ import {
   MIN_DISPLAYED_WAVELENGTH,
   APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
   SPECTRUM_BAR_PADDING,
+  ULTRAVIOLET_COLOR_RANGE,
+  INFRARED_COLOR_RANGE,
 } from '../../config/constants';
 import { calculateWavelength } from '../../utils/physics';
 
-const SpectrumBar = ({
-  stageWidth,
-  stageHeight,
-  frequency,
-  shouldOscillate,
-}) => {
+const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
   // ref attached to wavelength label (used to detect its width and position it)
   // initialized to APPROXIMATE_WAVELENGTH_LABEL_WIDTH to minimize adjustment/jump after element has been rendered
   const wavelengthLabel = useRef(null);
@@ -219,7 +214,6 @@ const SpectrumBar = ({
       <SpectrumBarMarker
         xPosition={spectrumBarMarkerXPosition}
         yPosition={spectrumBarInitialYPosition}
-        shouldOscillate={shouldOscillate}
       />
     </Group>
   );
@@ -229,7 +223,6 @@ SpectrumBar.propTypes = {
   stageWidth: PropTypes.number.isRequired,
   stageHeight: PropTypes.number.isRequired,
   frequency: PropTypes.number.isRequired,
-  shouldOscillate: PropTypes.bool.isRequired,
 };
 
 export default SpectrumBar;
