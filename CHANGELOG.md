@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.5...v0.1.6) (2021-06-11)
+
+### Features
+
+- change color of spectrum bar infrared and UV portion to black ([2aec4df](https://github.com/graasp/graasp-app-radiating-charge/commit/2aec4df38ea375513d80ed5b2ddcc0e9a2c3a47d)), closes [#58](https://github.com/graasp/graasp-app-radiating-charge/issues/58)
+- restate number of lines in TextField ([dafd207](https://github.com/graasp/graasp-app-radiating-charge/commit/dafd20724800fd31ee73ac2bb0374330cc29a747)), closes [#60](https://github.com/graasp/graasp-app-radiating-charge/issues/60)
+- show spectrum bar marker even when simulation is paused ([0f67e4f](https://github.com/graasp/graasp-app-radiating-charge/commit/0f67e4faaeb0d7bc146fe5d404838407e791ffdd)), closes [#59](https://github.com/graasp/graasp-app-radiating-charge/issues/59)
+
 ### [0.1.5](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.4...v0.1.5) (2021-05-14)
 
 ### Features
