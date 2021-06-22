@@ -54,7 +54,7 @@ const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
       ? 0
       : spectrumBarInitialXPosition +
         (MAX_DISPLAYED_WAVELENGTH - wavelength) /
-          MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR;
+          (MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR / 2);
 
   return (
     <Group>
