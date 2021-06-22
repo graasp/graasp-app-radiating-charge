@@ -71,6 +71,10 @@ export const DEFAULT_ELAPSED_TIME = 0;
 // grid constants
 export const GRID_AXES_COLOR = '#000';
 export const GRID_AXES_STROKE_WIDTH = 0.5;
+export const GRID_LEGEND_LABEL_TEXT = '100nm';
+export const GRID_SCALE_FONT_SIZE = 14;
+export const GRID_SCALE_TEXT_WIDTH = 48;
+export const SCALE_STROKE_MARGIN = 2;
 
 // measuring arrow constants
 export const MEASURING_ARROW_POINTER_LENGTH = 5;
