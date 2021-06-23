@@ -110,8 +110,6 @@ export const ULTRAVIOLET_BAR_WIDTH = MEASURING_ARROW_STEP * 6;
 export const TOTAL_SPECTRUM_BAR_WIDTH =
   INFRARED_BAR_WIDTH + VISIBLE_LIGHT_BAR_WIDTH + ULTRAVIOLET_BAR_WIDTH;
 export const SPECTRUM_BAR_HEIGHT = 50;
-export const SPECTRUM_BAR_STROKE_COLOR = 'black';
-export const SPECTRUM_BAR_STROKE_WIDTH = 0.5;
 // css gradient, values from 0 to 1
 export const INFRARED_COLOR_RANGE = [0, 'black', 0.9, 'black', 1, 'red'];
 export const VISIBLE_LIGHT_COLOR_RANGE = [
@@ -140,9 +138,10 @@ export const WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR = 5;
 export const APPROXIMATE_WAVELENGTH_LABEL_WIDTH = 120;
 
 // spectrum bar marker constants
-export const SPECTRUM_BAR_MARKER_COLOR = 'red';
+export const SPECTRUM_BAR_MARKER_FILL = 'white';
+export const SPECTRUM_BAR_MARKER_BORDER = 'red';
 export const SPECTRUM_BAR_MARKER_TRIANGLE_STROKE_WIDTH = 1;
-export const SPECTRUM_BAR_MARKER_LINE_STROKE_WIDTH = 2;
+export const SPECTRUM_BAR_MARKER_LINE_STROKE_WIDTH = 1;
 export const SPECTRUM_BAR_MARKER_TRIANGLE_BASE = 16;
 export const SPECTRUM_BAR_MARKER_TRIANGLE_HEIGHT = 8;
 

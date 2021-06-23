@@ -9,8 +9,6 @@ import {
   VISIBLE_LIGHT_BAR_WIDTH,
   ULTRAVIOLET_BAR_WIDTH,
   TOTAL_SPECTRUM_BAR_WIDTH,
-  SPECTRUM_BAR_STROKE_COLOR,
-  SPECTRUM_BAR_STROKE_WIDTH,
   VISIBLE_LIGHT_COLOR_RANGE,
   SPECTRUM_BAR_LABELS_FONT_SIZE,
   INFRARED_BAR_LABEL_COLOR,
@@ -64,8 +62,6 @@ const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
         y={spectrumBarInitialYPosition}
         width={INFRARED_BAR_WIDTH}
         height={SPECTRUM_BAR_HEIGHT}
-        stroke={SPECTRUM_BAR_STROKE_COLOR}
-        strokeWidth={SPECTRUM_BAR_STROKE_WIDTH}
         fillLinearGradientStartPoint={{ x: 0, y: 0 }}
         fillLinearGradientEndPoint={{
           x: INFRARED_BAR_WIDTH,
@@ -78,8 +74,6 @@ const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
         y={spectrumBarInitialYPosition}
         width={VISIBLE_LIGHT_BAR_WIDTH}
         height={SPECTRUM_BAR_HEIGHT}
-        stroke={SPECTRUM_BAR_STROKE_COLOR}
-        strokeWidth={SPECTRUM_BAR_STROKE_WIDTH}
         fillLinearGradientStartPoint={{ x: 0, y: 0 }}
         fillLinearGradientEndPoint={{
           x: VISIBLE_LIGHT_BAR_WIDTH,
@@ -96,8 +90,6 @@ const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
         y={spectrumBarInitialYPosition}
         width={ULTRAVIOLET_BAR_WIDTH}
         height={SPECTRUM_BAR_HEIGHT}
-        stroke={SPECTRUM_BAR_STROKE_COLOR}
-        strokeWidth={SPECTRUM_BAR_STROKE_WIDTH}
         fillLinearGradientStartPoint={{ x: 0, y: 0 }}
         fillLinearGradientEndPoint={{
           x: ULTRAVIOLET_BAR_WIDTH,
