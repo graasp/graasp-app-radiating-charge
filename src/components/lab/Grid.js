@@ -6,6 +6,7 @@ import {
   GRID_AXES_STROKE_WIDTH,
   MEASURING_ARROW_STEP,
 } from '../../config/constants';
+import GridScale from './GridScale';
 
 const Grid = ({ gridWidth, gridHeight }) => {
   // MEASURING_ARROW_STEP is the increment with which the measuring arrow's width is increased
@@ -69,6 +70,12 @@ const Grid = ({ gridWidth, gridHeight }) => {
           strokeWidth={GRID_AXES_STROKE_WIDTH}
         />
       ))}
+
+      <GridScale
+        y={yTicksArray[1]}
+        x={xTicksArray[3]}
+        gridSquareWidthAndHeight={GRID_SQUARE_WIDTH_AND_HEIGHT}
+      />
     </>
   );
 };

@@ -71,21 +71,25 @@ export const DEFAULT_ELAPSED_TIME = 0;
 // grid constants
 export const GRID_AXES_COLOR = '#000';
 export const GRID_AXES_STROKE_WIDTH = 0.5;
+export const GRID_LEGEND_LABEL_TEXT = '100nm';
+export const GRID_SCALE_FONT_SIZE = 14;
+export const GRID_SCALE_TEXT_WIDTH = 48;
+export const SCALE_STROKE_MARGIN = 2;
 
 // measuring arrow constants
 export const MEASURING_ARROW_POINTER_LENGTH = 5;
 export const MEASURING_ARROW_POINTER_WIDTH = 5;
 export const MEASURING_ARROW_STROKE_WIDTH = 3;
 export const MEASURING_ARROW_STROKE_COLOR = 'darkgreen';
-export const DEFAULT_MEASURING_ARROW_WIDTH = 95;
-export const MIN_MEASURING_ARROW_WIDTH = 47.5;
-export const MAX_MEASURING_ARROW_WIDTH = 475;
-export const MEASURING_ARROW_STEP = 47.5;
+export const DEFAULT_MEASURING_ARROW_WIDTH = 47.5;
+export const MIN_MEASURING_ARROW_WIDTH = 23.75;
+export const MAX_MEASURING_ARROW_WIDTH = 237.5;
+export const MEASURING_ARROW_STEP = 23.75;
 export const MEASURING_ARROW_TEXT_FONT_SIZE = 16;
 // CharCode 8982 is the crosshair indicating draggability
 export const MEASURING_ARROW_SYMBOL_CHAR_CODE = 8982;
-// every 47.5 pixels === 100nm
-export const MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR = 100 / 47.5;
+// every 23.75 pixels === 100nm
+export const MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR = 100 / 23.75;
 // used to initially center measuring arrow labels
 export const APPROXIMATE_MEASURING_ARROW_TEXT_WIDTH = 49;
 export const APPROXIMATE_MEASURING_ARROW_DRAG_ICON_WIDTH = 17.5;
@@ -100,14 +104,12 @@ export const MIN_DISPLAYED_WAVELENGTH = 100;
 
 // spectrum bar constants
 // note: infrared range: 1000-700nm; visible light: 700-400nm; ultraviolet: 400-100nm
-export const INFRARED_BAR_WIDTH = MEASURING_ARROW_STEP * 3;
-export const VISIBLE_LIGHT_BAR_WIDTH = MEASURING_ARROW_STEP * 3;
-export const ULTRAVIOLET_BAR_WIDTH = MEASURING_ARROW_STEP * 3;
+export const INFRARED_BAR_WIDTH = MEASURING_ARROW_STEP * 6;
+export const VISIBLE_LIGHT_BAR_WIDTH = MEASURING_ARROW_STEP * 6;
+export const ULTRAVIOLET_BAR_WIDTH = MEASURING_ARROW_STEP * 6;
 export const TOTAL_SPECTRUM_BAR_WIDTH =
   INFRARED_BAR_WIDTH + VISIBLE_LIGHT_BAR_WIDTH + ULTRAVIOLET_BAR_WIDTH;
 export const SPECTRUM_BAR_HEIGHT = 50;
-export const SPECTRUM_BAR_STROKE_COLOR = 'black';
-export const SPECTRUM_BAR_STROKE_WIDTH = 0.5;
 // css gradient, values from 0 to 1
 export const INFRARED_COLOR_RANGE = [0, 'black', 0.9, 'black', 1, 'red'];
 export const VISIBLE_LIGHT_COLOR_RANGE = [
@@ -136,9 +138,10 @@ export const WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR = 5;
 export const APPROXIMATE_WAVELENGTH_LABEL_WIDTH = 120;
 
 // spectrum bar marker constants
-export const SPECTRUM_BAR_MARKER_COLOR = 'red';
+export const SPECTRUM_BAR_MARKER_FILL = 'white';
+export const SPECTRUM_BAR_MARKER_BORDER = 'red';
 export const SPECTRUM_BAR_MARKER_TRIANGLE_STROKE_WIDTH = 1;
-export const SPECTRUM_BAR_MARKER_LINE_STROKE_WIDTH = 2;
+export const SPECTRUM_BAR_MARKER_LINE_STROKE_WIDTH = 1;
 export const SPECTRUM_BAR_MARKER_TRIANGLE_BASE = 16;
 export const SPECTRUM_BAR_MARKER_TRIANGLE_HEIGHT = 8;
 
