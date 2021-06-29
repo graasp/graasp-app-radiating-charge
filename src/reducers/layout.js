@@ -39,7 +39,7 @@ const INITIAL_STATE = {
   lab: {
     stageDimensions: { width: 0, height: 0 },
     oscillation: false,
-    gridLines: true,
+    gridLines: false,
     measuringArrow: false,
     spectrumBar: false,
     measuringArrowWidth: DEFAULT_MEASURING_ARROW_WIDTH,
