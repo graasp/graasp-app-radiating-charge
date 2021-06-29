@@ -84,7 +84,7 @@ export const MEASURING_ARROW_STROKE_COLOR = 'darkgreen';
 export const DEFAULT_MEASURING_ARROW_WIDTH = 47.5;
 export const MIN_MEASURING_ARROW_WIDTH = 23.75;
 export const MAX_MEASURING_ARROW_WIDTH = 237.5;
-export const MEASURING_ARROW_STEP = 23.75;
+export const MEASURING_ARROW_STEP = 11.875;
 export const MEASURING_ARROW_TEXT_FONT_SIZE = 16;
 // CharCode 8982 is the crosshair indicating draggability
 export const MEASURING_ARROW_SYMBOL_CHAR_CODE = 8982;
