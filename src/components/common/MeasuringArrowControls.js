@@ -20,11 +20,9 @@ import {
 } from '../../config/verbs';
 
 const MeasuringArrowControls = () => {
-  const measuringArrow = useSelector(({ layout }) => layout.lab.measuringArrow);
-  const measuringArrowWidth = useSelector(
-    ({ layout }) => layout.lab.measuringArrowWidth,
+  const { measuringArrow, measuringArrowWidth, isPaused } = useSelector(
+    ({ lab }) => lab,
   );
-  const isPaused = useSelector(({ layout }) => layout.lab.isPaused);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;

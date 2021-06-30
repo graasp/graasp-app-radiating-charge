@@ -47,16 +47,16 @@ const useStyles = makeStyles(() => ({
 const AnimationControls = () => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { stageDimensions } = useSelector(({ layout }) => layout.lab);
   const {
     isPaused,
-    stageDimensions,
     numberOfLines,
     frequency,
     amplitude,
     measuringArrow,
     spectrumBar,
     gridLines,
-  } = useSelector(({ layout }) => layout.lab);
+  } = useSelector(({ lab }) => lab);
   const dispatch = useDispatch();
 
   const onClickPlay = () => {

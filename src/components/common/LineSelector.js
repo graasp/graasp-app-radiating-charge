@@ -99,9 +99,9 @@ class LineSelector extends Component {
   }
 }
 
-const mapStateToProps = ({ layout }) => ({
-  numberOfLines: layout.lab.numberOfLines,
-  isPaused: layout.lab.isPaused,
+const mapStateToProps = ({ lab }) => ({
+  numberOfLines: lab.numberOfLines,
+  isPaused: lab.isPaused,
 });
 
 const mapDispatchToProps = {
