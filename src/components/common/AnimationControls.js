@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => ({
 const AnimationControls = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { stageDimensions } = useSelector(({ layout }) => layout.lab);
+  const { stageDimensions } = useSelector(({ layout }) => layout);
   const {
     isPaused,
     numberOfLines,

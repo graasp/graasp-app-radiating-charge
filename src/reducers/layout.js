@@ -11,9 +11,7 @@ const INITIAL_STATE = {
   },
   showLoader: true,
   showSideMenu: true,
-  lab: {
-    stageDimensions: { width: 0, height: 0 },
-  },
+  stageDimensions: { width: 0, height: 0 },
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -37,7 +35,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         showSideMenu: payload,
       };
     case SET_STAGE_DIMENSIONS: {
-      return { ...state, lab: { ...state.lab, stageDimensions: payload } };
+      return { ...state, stageDimensions: payload };
     }
     default:
       return state;

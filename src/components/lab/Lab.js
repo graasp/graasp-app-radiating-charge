@@ -268,7 +268,7 @@ const mapStateToProps = ({ layout, lab }) => ({
   numberOfLines: parseInt(lab.numberOfLines, 10),
   frequency: lab.frequency,
   isPaused: lab.isPaused,
-  stageDimensions: layout.lab.stageDimensions,
+  stageDimensions: layout.stageDimensions,
   chargeOrigin: lab.chargeOrigin,
   chargeOscillation: lab.chargeOscillation,
   timerCount: lab.timerCount,
