@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.6...v0.1.7) (2021-07-01)
+
+### Features
+
+- add size indicator on grid ([29e8a29](https://github.com/graasp/graasp-app-radiating-charge/commit/29e8a294fd2f5b98ca34f69e0117bffefd9b233d)), closes [#63](https://github.com/graasp/graasp-app-radiating-charge/issues/63)
+- adjust measuring arrow step to 50nm ([a0bceb9](https://github.com/graasp/graasp-app-radiating-charge/commit/a0bceb94228444b14515bb7f086e08c63f6f248e)), closes [#68](https://github.com/graasp/graasp-app-radiating-charge/issues/68)
+- adjust spectrum bar and marker ([051aafa](https://github.com/graasp/graasp-app-radiating-charge/commit/051aafa140bee1de55f57969ae24a838a01436b9)), closes [#62](https://github.com/graasp/graasp-app-radiating-charge/issues/62) [#65](https://github.com/graasp/graasp-app-radiating-charge/issues/65)
+
+### Bug Fixes
+
+- adjust grid and measuring arrow width to match wavelengths ([22b31eb](https://github.com/graasp/graasp-app-radiating-charge/commit/22b31eb23c8a0b7152792bda17d90276e1121300)), closes [#64](https://github.com/graasp/graasp-app-radiating-charge/issues/64)
+
 ### [0.1.6](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.5...v0.1.6) (2021-06-11)
 
 ### Features
