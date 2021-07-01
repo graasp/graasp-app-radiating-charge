@@ -13,7 +13,7 @@ const Grid = ({ gridWidth, gridHeight }) => {
   // each MEASURING_ARROW_STEP is '100nm'
   // we want the squares in our grid to have 100nm x 100nm dimensions
   // for clarity, re-assign MEASURING_ARROW_STEP to another variable
-  const GRID_SQUARE_WIDTH_AND_HEIGHT = MEASURING_ARROW_STEP;
+  const GRID_SQUARE_WIDTH_AND_HEIGHT = MEASURING_ARROW_STEP * 2;
 
   // in return statement below, a VERTICAL line is drawn at each of the points in xTicksArray
   // for alignment purposes, ensure xTicksArray includes the point startingXTick

@@ -259,22 +259,22 @@ class Lab extends Component {
   }
 }
 
-const mapStateToProps = ({ layout }) => ({
-  gridLines: layout.lab.gridLines,
-  measuringArrow: layout.lab.measuringArrow,
-  measuringArrowWidth: layout.lab.measuringArrowWidth,
-  shouldOscillate: layout.lab.oscillation,
-  amplitude: layout.lab.amplitude,
-  numberOfLines: parseInt(layout.lab.numberOfLines, 10),
-  frequency: layout.lab.frequency,
-  isPaused: layout.lab.isPaused,
-  stageDimensions: layout.lab.stageDimensions,
-  chargeOrigin: layout.lab.chargeOrigin,
-  chargeOscillation: layout.lab.chargeOscillation,
-  timerCount: layout.lab.timerCount,
-  elapsedTime: layout.lab.elapsedTime,
-  spectrumBar: layout.lab.spectrumBar,
-  oscillation: layout.lab.oscillation,
+const mapStateToProps = ({ layout, lab }) => ({
+  gridLines: lab.gridLines,
+  measuringArrow: lab.measuringArrow,
+  measuringArrowWidth: lab.measuringArrowWidth,
+  shouldOscillate: lab.oscillation,
+  amplitude: lab.amplitude,
+  numberOfLines: parseInt(lab.numberOfLines, 10),
+  frequency: lab.frequency,
+  isPaused: lab.isPaused,
+  stageDimensions: layout.stageDimensions,
+  chargeOrigin: lab.chargeOrigin,
+  chargeOscillation: lab.chargeOscillation,
+  timerCount: lab.timerCount,
+  elapsedTime: lab.elapsedTime,
+  spectrumBar: lab.spectrumBar,
+  oscillation: lab.oscillation,
 });
 
 const mapDispatchToProps = {

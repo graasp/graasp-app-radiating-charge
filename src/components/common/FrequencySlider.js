@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 const FrequencySlider = ({ dispatchSetFrequency }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isPaused = useSelector(({ layout }) => layout.lab.isPaused);
+  const isPaused = useSelector(({ lab }) => lab.isPaused);
   const { t } = useTranslation();
   const [frequency, setFrequency] = useState(DEFAULT_FREQUENCY);
   const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;

@@ -29,7 +29,7 @@ const CustomSwitch = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isPaused = useSelector(({ layout }) => layout.lab.isPaused);
+  const isPaused = useSelector(({ lab }) => lab.isPaused);
   const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   const onSwitchToggle = () => {

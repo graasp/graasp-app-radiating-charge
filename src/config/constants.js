@@ -84,7 +84,7 @@ export const MEASURING_ARROW_STROKE_COLOR = 'darkgreen';
 export const DEFAULT_MEASURING_ARROW_WIDTH = 47.5;
 export const MIN_MEASURING_ARROW_WIDTH = 23.75;
 export const MAX_MEASURING_ARROW_WIDTH = 237.5;
-export const MEASURING_ARROW_STEP = 23.75;
+export const MEASURING_ARROW_STEP = 11.875;
 export const MEASURING_ARROW_TEXT_FONT_SIZE = 16;
 // CharCode 8982 is the crosshair indicating draggability
 export const MEASURING_ARROW_SYMBOL_CHAR_CODE = 8982;
@@ -104,9 +104,9 @@ export const MIN_DISPLAYED_WAVELENGTH = 100;
 
 // spectrum bar constants
 // note: infrared range: 1000-700nm; visible light: 700-400nm; ultraviolet: 400-100nm
-export const INFRARED_BAR_WIDTH = MEASURING_ARROW_STEP * 6;
-export const VISIBLE_LIGHT_BAR_WIDTH = MEASURING_ARROW_STEP * 6;
-export const ULTRAVIOLET_BAR_WIDTH = MEASURING_ARROW_STEP * 6;
+export const INFRARED_BAR_WIDTH = MEASURING_ARROW_STEP * 12;
+export const VISIBLE_LIGHT_BAR_WIDTH = MEASURING_ARROW_STEP * 12;
+export const ULTRAVIOLET_BAR_WIDTH = MEASURING_ARROW_STEP * 12;
 export const TOTAL_SPECTRUM_BAR_WIDTH =
   INFRARED_BAR_WIDTH + VISIBLE_LIGHT_BAR_WIDTH + ULTRAVIOLET_BAR_WIDTH;
 export const SPECTRUM_BAR_HEIGHT = 50;

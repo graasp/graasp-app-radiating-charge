@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isPaused = useSelector(({ layout }) => layout.lab.isPaused);
+  const isPaused = useSelector(({ lab }) => lab.isPaused);
   const { t } = useTranslation();
   const [amplitude, setAmplitude] = useState(DEFAULT_AMPLITUDE);
   const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;

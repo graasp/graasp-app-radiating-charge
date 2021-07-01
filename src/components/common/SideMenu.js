@@ -168,12 +168,11 @@ class SideMenu extends React.Component {
   }
 }
 
-const mapStateToProps = ({ layout }) => ({
+const mapStateToProps = ({ layout, lab }) => ({
   showSideMenu: layout.showSideMenu,
-
-  gridLines: layout.lab.gridLines,
-  measuringArrow: layout.lab.measuringArrow,
-  spectrumBar: layout.lab.spectrumBar,
+  gridLines: lab.gridLines,
+  measuringArrow: lab.measuringArrow,
+  spectrumBar: lab.spectrumBar,
 });
 
 const mapDispatchToProps = {
