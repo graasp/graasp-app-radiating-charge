@@ -28,7 +28,7 @@ import {
 
 const INITIAL_STATE = {
   oscillation: false,
-  gridLines: false,
+  gridLines: true,
   measuringArrow: false,
   spectrumBar: false,
   measuringArrowWidth: DEFAULT_MEASURING_ARROW_WIDTH,

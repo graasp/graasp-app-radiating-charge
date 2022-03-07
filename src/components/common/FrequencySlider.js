@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,11 +13,7 @@ import {
   MAX_FREQUENCY,
   FREQUENCY_MARKS,
   FREQUENCY_CONVERSION_FACTOR,
-  PAUSED_STRING,
-  PLAYING_STRING,
 } from '../../config/constants';
-import { postAction } from '../../actions';
-import { DECREASED_FREQUENCY, INCREASED_FREQUENCY } from '../../config/verbs';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -45,11 +40,9 @@ const useStyles = makeStyles((theme) => ({
 
 const FrequencySlider = ({ dispatchSetFrequency }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const isPaused = useSelector(({ lab }) => lab.isPaused);
   const { t } = useTranslation();
   const [frequency, setFrequency] = useState(DEFAULT_FREQUENCY);
-  const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
+  // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   // callback used in the + ('increase') IconButton (slider doesn't natively come with such a button)
   const increaseFrequency = () => {
@@ -58,15 +51,15 @@ const FrequencySlider = ({ dispatchSetFrequency }) => {
         prevValue === MAX_FREQUENCY
           ? prevValue
           : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(prevValue) + 1];
-      dispatch(
-        postAction({
-          verb: INCREASED_FREQUENCY,
-          data: {
-            newFrequency: `${newFrequency.toFixed(1)} x 10^14 Hz`,
-            applicationState,
-          },
-        }),
-      );
+      // dispatch(
+      //   postAction({
+      //     verb: INCREASED_FREQUENCY,
+      //     data: {
+      //       newFrequency: `${newFrequency.toFixed(1)} x 10^14 Hz`,
+      //       applicationState,
+      //     },
+      //   }),
+      // );
       return newFrequency;
     });
   };
@@ -78,42 +71,42 @@ const FrequencySlider = ({ dispatchSetFrequency }) => {
         prevValue === MIN_FREQUENCY
           ? prevValue
           : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(prevValue) - 1];
-      dispatch(
-        postAction({
-          verb: DECREASED_FREQUENCY,
-          data: {
-            newFrequency: `${newFrequency.toFixed(1)} x 10^14 Hz`,
-            applicationState,
-          },
-        }),
-      );
+      // dispatch(
+      //   postAction({
+      //     verb: DECREASED_FREQUENCY,
+      //     data: {
+      //       newFrequency: `${newFrequency.toFixed(1)} x 10^14 Hz`,
+      //       applicationState,
+      //     },
+      //   }),
+      // );
       return newFrequency;
     });
   };
 
   // callback used in slider's default onChange handler
   const adjustFrequency = (event, newValue) => {
-    if (newValue > frequency) {
-      dispatch(
-        postAction({
-          verb: INCREASED_FREQUENCY,
-          data: {
-            newFrequency: `${newValue.toFixed(1)} x 10^14 Hz`,
-            applicationState,
-          },
-        }),
-      );
-    } else if (newValue < frequency) {
-      dispatch(
-        postAction({
-          verb: DECREASED_FREQUENCY,
-          data: {
-            newFrequency: `${newValue.toFixed(1)} x 10^14 Hz`,
-            applicationState,
-          },
-        }),
-      );
-    }
+    // if (newValue > frequency) {
+    //   dispatch(
+    //     postAction({
+    //       verb: INCREASED_FREQUENCY,
+    //       data: {
+    //         newFrequency: `${newValue.toFixed(1)} x 10^14 Hz`,
+    //         applicationState,
+    //       },
+    //     }),
+    //   );
+    // } else if (newValue < frequency) {
+    //   dispatch(
+    //     postAction({
+    //       verb: DECREASED_FREQUENCY,
+    //       data: {
+    //         newFrequency: `${newValue.toFixed(1)} x 10^14 Hz`,
+    //         applicationState,
+    //       },
+    //     }),
+    //   );
+    // }
     setFrequency(newValue);
   };
 

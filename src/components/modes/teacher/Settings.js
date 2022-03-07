@@ -8,7 +8,7 @@ import Switch from '@material-ui/core/Switch';
 import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withTranslation } from 'react-i18next';
-import { toggleSettings, patchAppInstance } from '../../../actions';
+import { toggleSettings } from '../../../actions';
 import Loader from '../../common/Loader';
 import LanguageSelect from './LanguageSelect';
 import { DEFAULT_HEADER_VISIBLE } from '../../../config/constants';
@@ -45,7 +45,6 @@ class Settings extends Component {
     }),
     t: PropTypes.func.isRequired,
     dispatchToggleSettings: PropTypes.func.isRequired,
-    dispatchPatchAppInstance: PropTypes.func.isRequired,
     i18n: PropTypes.shape({
       defaultNS: PropTypes.string,
     }).isRequired,
@@ -58,14 +57,15 @@ class Settings extends Component {
   };
 
   saveSettings = (settingsToChange) => {
-    const { settings, dispatchPatchAppInstance } = this.props;
+    const { settings } = this.props;
     const newSettings = {
       ...settings,
       ...settingsToChange,
     };
-    dispatchPatchAppInstance({
-      data: newSettings,
-    });
+    console.log(newSettings);
+    // dispatchPatchAppInstance({
+    //   data: newSettings,
+    // });
   };
 
   handleChangeHeaderVisibility = () => {
@@ -116,29 +116,24 @@ class Settings extends Component {
     const { open, classes, t } = this.props;
 
     return (
-      <div>
-        <Modal open={open} onClose={this.handleClose}>
-          <div className={classes.paper}>
-            <Typography variant="h5">{t('Settings')}</Typography>
-            {this.renderModalContent()}
-          </div>
-        </Modal>
-      </div>
+      <Modal open={open} onClose={this.handleClose}>
+        <div className={classes.paper}>
+          <Typography variant="h5">{t('Settings')}</Typography>
+          {this.renderModalContent()}
+        </div>
+      </Modal>
     );
   }
 }
 
-const mapStateToProps = ({ layout, appInstance }) => {
+const mapStateToProps = ({ layout }) => {
   return {
     open: layout.settings.open,
-    settings: appInstance.content.settings,
-    activity: Boolean(appInstance.activity.length),
   };
 };
 
 const mapDispatchToProps = {
   dispatchToggleSettings: toggleSettings,
-  dispatchPatchAppInstance: patchAppInstance,
 };
 
 const ConnectedComponent = connect(
