@@ -5,19 +5,13 @@ import { withTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import { postAction, setNumberOfLines } from '../../actions';
+import { setNumberOfLines } from '../../actions';
 import {
   DEFAULT_NUMBER_OF_LINES,
   MIN_NUMBER_OF_LINES,
   MAX_NUMBER_OF_LINES,
   NUMBER_OF_LINES_STEP,
-  PAUSED_STRING,
-  PLAYING_STRING,
 } from '../../config/constants';
-import {
-  DECREASED_NUMBER_OF_LINES,
-  INCREASED_NUMBER_OF_LINES,
-} from '../../config/verbs';
 
 const styles = (theme) => ({
   container: {
@@ -38,32 +32,30 @@ class LineSelector extends Component {
       typography: PropTypes.string.isRequired,
     }).isRequired,
     dispatchSetNumberOflines: PropTypes.func.isRequired,
-    dispatchPostAction: PropTypes.func.isRequired,
-    isPaused: PropTypes.bool.isRequired,
   };
 
-  state = {
-    currentNumberOfLines: DEFAULT_NUMBER_OF_LINES,
-  };
+  // todo: adapt for new graasp
+  // state = {
+  //   currentNumberOfLines: DEFAULT_NUMBER_OF_LINES,
+  // };
 
   onChange = (event) => {
-    const { currentNumberOfLines } = this.state;
-    const {
-      dispatchSetNumberOflines,
-      dispatchPostAction,
-      isPaused,
-    } = this.props;
-    const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
+    // todo: adapt for new graasp
+    // const { currentNumberOfLines } = this.state;
+    const { dispatchSetNumberOflines } = this.props;
+    // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
     const newNumberOfLines = event.target.value;
     dispatchSetNumberOflines(newNumberOfLines);
-    dispatchPostAction({
-      verb:
-        newNumberOfLines > currentNumberOfLines
-          ? INCREASED_NUMBER_OF_LINES
-          : DECREASED_NUMBER_OF_LINES,
-      data: { newNumberOfLines, applicationState },
-    });
-    this.setState({ currentNumberOfLines: newNumberOfLines });
+
+    // todo: adapt for new graasp
+    // dispatchPostAction({
+    //   verb:
+    //     newNumberOfLines > currentNumberOfLines
+    //       ? INCREASED_NUMBER_OF_LINES
+    //       : DECREASED_NUMBER_OF_LINES,
+    //   data: { newNumberOfLines, applicationState },
+    // });
+    // this.setState({ currentNumberOfLines: newNumberOfLines });
   };
 
   render() {
@@ -106,7 +98,6 @@ const mapStateToProps = ({ lab }) => ({
 
 const mapDispatchToProps = {
   dispatchSetNumberOflines: setNumberOfLines,
-  dispatchPostAction: postAction,
 };
 
 const ConnectedComponent = connect(

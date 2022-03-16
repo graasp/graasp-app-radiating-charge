@@ -53,6 +53,7 @@ const Grid = ({ gridWidth, gridHeight }) => {
     <>
       {xTicksArray.map((tick) => (
         <Line
+          key={tick}
           x={tick}
           y={0}
           points={[0, 0, 0, gridHeight]}

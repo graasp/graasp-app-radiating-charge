@@ -18,7 +18,6 @@ import {
   setChargeOscillation,
   setTimerCount,
   setElapsedTime,
-  postAction,
 } from '../../actions';
 import {
   DEFAULT_CHARGE_OSCILLATION_X_POSITION,
@@ -27,7 +26,6 @@ import {
   DEFAULT_ELAPSED_TIME,
   FREQUENCY_CONVERSION_FACTOR,
 } from '../../config/constants';
-import { CLICKED_PAUSE, CLICKED_PLAY, CLICKED_RESET } from '../../config/verbs';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -75,18 +73,23 @@ const AnimationControls = () => {
       )} x 10^14 Hz`,
       amplitude,
     };
-    dispatch(
-      postAction({
-        verb: CLICKED_PLAY,
-        data: { ...appSettings },
-      }),
-    );
+    console.log(appSettings);
+
+    // todo: adapt for new graasp
+    // dispatch(
+    //   postAction({
+    //     verb: CLICKED_PLAY,
+    //     data: { ...appSettings },
+    //   }),
+    // );
   };
 
   const onClickPause = () => {
     dispatch(togglePause(true));
     dispatch(toggleOscillation(false));
-    dispatch(postAction({ verb: CLICKED_PAUSE }));
+
+    // todo: adapt for new graasp
+    // dispatch(postAction({ verb: CLICKED_PAUSE }));
   };
 
   const onClickReset = () => {
@@ -108,7 +111,9 @@ const AnimationControls = () => {
     dispatch(togglePause(true));
     dispatch(toggleMeasuringArrow(false));
     dispatch(toggleSpectrumBar(false));
-    dispatch(postAction({ verb: CLICKED_RESET }));
+
+    // todo: adapt for new graasp
+    // dispatch(postAction({ verb: CLICKED_RESET }));
   };
 
   return (
