@@ -16,11 +16,15 @@ const MeasuringArrowControls = () => {
   const { measuringArrow, measuringArrowWidth } = useSelector(({ lab }) => lab);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  // todo: adapt for new graasp
   // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   const increaseWidth = () => {
     const newWidth = measuringArrowWidth + MEASURING_ARROW_STEP;
     dispatch(setMeasuringArrowWidth(newWidth));
+
+    // todo: adapt for new graasp
     // dispatch(
     //   postAction({
     //     verb: INCREASED_MEASURING_ARROW_WIDTH,
@@ -37,6 +41,8 @@ const MeasuringArrowControls = () => {
   const decreaseWidth = () => {
     const newWidth = measuringArrowWidth - MEASURING_ARROW_STEP;
     dispatch(setMeasuringArrowWidth(newWidth));
+
+    // todo: adapt for new graasp
     // dispatch(
     //   postAction({
     //     verb: DECREASED_MEASURING_ARROW_WIDTH,

@@ -62,6 +62,7 @@ class Settings extends Component {
       ...settings,
       ...settingsToChange,
     };
+    // todo: adapt for new graasp
     console.log(newSettings);
     // dispatchPatchAppInstance({
     //   data: newSettings,

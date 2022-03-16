@@ -101,10 +101,8 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = ({ layout, context }) => ({
+const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
-  appInstanceId: context.appInstanceId,
-  spaceId: context.spaceId,
 });
 
 const mapDispatchToProps = {

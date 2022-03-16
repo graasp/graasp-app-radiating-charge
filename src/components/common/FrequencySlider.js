@@ -51,6 +51,8 @@ const FrequencySlider = ({ dispatchSetFrequency }) => {
         prevValue === MAX_FREQUENCY
           ? prevValue
           : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(prevValue) + 1];
+
+      // todo: adapt for new graasp
       // dispatch(
       //   postAction({
       //     verb: INCREASED_FREQUENCY,
@@ -71,6 +73,8 @@ const FrequencySlider = ({ dispatchSetFrequency }) => {
         prevValue === MIN_FREQUENCY
           ? prevValue
           : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(prevValue) - 1];
+
+      // todo: adapt for new graasp
       // dispatch(
       //   postAction({
       //     verb: DECREASED_FREQUENCY,
@@ -86,6 +90,7 @@ const FrequencySlider = ({ dispatchSetFrequency }) => {
 
   // callback used in slider's default onChange handler
   const adjustFrequency = (event, newValue) => {
+    // todo: adapt for new graasp
     // if (newValue > frequency) {
     //   dispatch(
     //     postAction({

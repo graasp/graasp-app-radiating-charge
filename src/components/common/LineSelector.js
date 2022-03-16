@@ -34,16 +34,20 @@ class LineSelector extends Component {
     dispatchSetNumberOflines: PropTypes.func.isRequired,
   };
 
+  // todo: adapt for new graasp
   // state = {
   //   currentNumberOfLines: DEFAULT_NUMBER_OF_LINES,
   // };
 
   onChange = (event) => {
+    // todo: adapt for new graasp
     // const { currentNumberOfLines } = this.state;
     const { dispatchSetNumberOflines } = this.props;
     // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
     const newNumberOfLines = event.target.value;
     dispatchSetNumberOflines(newNumberOfLines);
+
+    // todo: adapt for new graasp
     // dispatchPostAction({
     //   verb:
     //     newNumberOfLines > currentNumberOfLines

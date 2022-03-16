@@ -38,7 +38,6 @@
   "scripts": {
     "start": "npm-run-all --parallel start:local",
     "start:local": "env-cmd -f ./.env.local react-scripts start",
-    "prestart:api": "cat data/default.json > data/db.json",
     "build": "run-s build:react",
     "build:react": "react-scripts build",
     "build:local": "env-cmd -f ./.env.local yarn build",

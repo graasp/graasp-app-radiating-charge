@@ -42,15 +42,21 @@ const useStyles = makeStyles((theme) => ({
 
 const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
   const classes = useStyles();
+
+  // todo: adapt for new graasp
   // const isPaused = useSelector(({ lab }) => lab.isPaused);
   const { t } = useTranslation();
   const [amplitude, setAmplitude] = useState(DEFAULT_AMPLITUDE);
+
+  // todo: adapt for new graasp
   // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   // callback used in the + ('increase') IconButton (slider doesn't natively come with such a button)
   const increaseAmplitude = () => {
     setAmplitude((prevValue) => {
       const newAmplitude = Math.min(prevValue + AMPLITUDE_STEP, MAX_AMPLITUDE);
+
+      // todo: adapt for new graasp
       // dispatch(
       //   postAction({
       //     verb: INCREASED_AMPLITUDE,
@@ -65,6 +71,8 @@ const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
   const decreaseAmplitude = () => {
     setAmplitude((prevValue) => {
       const newAmplitude = Math.max(prevValue - AMPLITUDE_STEP, MIN_AMPLITUDE);
+
+      // todo: adapt for new graasp
       // dispatch(
       //   postAction({
       //     verb: DECREASED_AMPLITUDE,
@@ -78,6 +86,7 @@ const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
   // callback used in slider's default onChange handler
   const adjustAmplitude = (event, newValue) => {
     if (newValue > amplitude) {
+      // todo: adapt for new graasp
       // dispatch(
       //   postAction({
       //     verb: INCREASED_AMPLITUDE,
@@ -85,6 +94,7 @@ const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
       //   }),
       // );
     } else if (newValue < amplitude) {
+      // todo: adapt for new graasp
       // dispatch(
       //   postAction({
       //     verb: DECREASED_AMPLITUDE,

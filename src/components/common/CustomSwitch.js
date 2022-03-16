@@ -25,10 +25,13 @@ const CustomSwitch = ({
   // toggleOnAction,
 }) => {
   const classes = useStyles();
+
+  // todo: adapt for new graasp
   // const isPaused = useSelector(({ lab }) => lab.isPaused);
   // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   const onSwitchToggle = () => {
+    // todo: adapt for new graasp
     // dispatch(
     //   postAction({
     //     verb: switchStatus === true ? toggleOffAction : toggleOnAction,

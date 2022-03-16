@@ -74,6 +74,8 @@ const AnimationControls = () => {
       amplitude,
     };
     console.log(appSettings);
+
+    // todo: adapt for new graasp
     // dispatch(
     //   postAction({
     //     verb: CLICKED_PLAY,
@@ -85,6 +87,8 @@ const AnimationControls = () => {
   const onClickPause = () => {
     dispatch(togglePause(true));
     dispatch(toggleOscillation(false));
+
+    // todo: adapt for new graasp
     // dispatch(postAction({ verb: CLICKED_PAUSE }));
   };
 
@@ -107,6 +111,8 @@ const AnimationControls = () => {
     dispatch(togglePause(true));
     dispatch(toggleMeasuringArrow(false));
     dispatch(toggleSpectrumBar(false));
+
+    // todo: adapt for new graasp
     // dispatch(postAction({ verb: CLICKED_RESET }));
   };
 

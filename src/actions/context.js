@@ -95,6 +95,7 @@ const getContext = () => (dispatch) => {
 
 // the only context we currently allow to override is language
 const changeLanguage = (lang) => (dispatch) => {
+  // todo: adapt for new graasp
   // const currentSettings = getSettings(getState);
   // const newSettings = {
   //   ...currentSettings,
