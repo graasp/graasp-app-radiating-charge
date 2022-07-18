@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.7...v0.1.8) (2022-07-18)
+
+### Features
+
+- add caller workflow to graasp-deploy ([b2d63dd](https://github.com/graasp/graasp-app-radiating-charge/commit/b2d63ddd72466109ec3d5ec24625c451b17d1ca8))
+- add cdelivery and cdeployment workflows ([5f0169e](https://github.com/graasp/graasp-app-radiating-charge/commit/5f0169e7149c8cccb982f6784667c59592a76b8a))
+- include required scripts to use standard-version ([883d24a](https://github.com/graasp/graasp-app-radiating-charge/commit/883d24a253e37bc5d494f79d143ecc8c847692d5))
+- update staging versions in graasp deploy ([33de7c7](https://github.com/graasp/graasp-app-radiating-charge/commit/33de7c7b68bc2a0879e32075afd2d5c9dca95361))
+
+### Bug Fixes
+
+- minor fixes ([c211291](https://github.com/graasp/graasp-app-radiating-charge/commit/c2112919a8eb7ee7c7a7649c4c85a9330ce8c140))
+- remove unused workflows ([6df4535](https://github.com/graasp/graasp-app-radiating-charge/commit/6df453555d43f0a45937eef8d5a3cd70d47a4295))
+- update sha ref and solve minor issues ([eeece31](https://github.com/graasp/graasp-app-radiating-charge/commit/eeece312aa30ee96833df4e0c496d782e665953d))
+- update workflow sha ref ([e39c0ae](https://github.com/graasp/graasp-app-radiating-charge/commit/e39c0ae74fb226681f95d8d7bf4d227f84966960))
+
 ### [0.1.7](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.6...v0.1.7) (2021-07-01)
 
 ### Features
