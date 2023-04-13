@@ -11,11 +11,10 @@ on:
   # Allows to run the workflow manually from the Actions tab
   workflow_dispatch:
 
-# This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
   graasp-deploy-s3-apps-workflow:
     name: Graasp app radiating charge
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@v1
     with:
       build-folder: 'build'
       version: 'latest'
