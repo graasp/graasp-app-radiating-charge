@@ -41,10 +41,6 @@ const styles = (theme) => ({
   hide: {
     display: 'none',
   },
-  link: {
-    color: 'white',
-    marginLeft: theme.spacing(1),
-  },
 });
 
 class Header extends Component {

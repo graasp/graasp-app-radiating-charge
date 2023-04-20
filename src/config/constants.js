@@ -29,7 +29,15 @@ export const DEFAULT_TENSION = 0.1;
 export const LINE_STEP_SIZE = 5;
 
 // frequency constants
-export const DEFAULT_FREQUENCY = 3.0;
+
+// ***** frequencies generate wavelengths as per wavelength (nm) = speed of light (nm/s) / frequency (1/s) *****
+// therefore we expect [frequency, wavelength] pairs of...
+// [[30 (x10^14), 100], [20, 150], [15, 200], [12, 250], ...]
+// this factor converts the stated frequencies in the application to an oscillation frequency that generates the expected wavelength
+// it is a (very good) approximation (not derived programatically)
+export const FREQUENCY_CONVERSION_FACTOR = 3;
+
+export const DEFAULT_FREQUENCY = 3.0 / FREQUENCY_CONVERSION_FACTOR;
 export const MIN_FREQUENCY = 0;
 export const MAX_FREQUENCY = 30;
 // unlike amplitude slider, frequency slider takes custom marks, i.e. it doesn't increase/decrease by a fixed step
@@ -54,12 +62,6 @@ export const FREQUENCY_MARKS = [
   20,
   30,
 ];
-// ***** frequencies generate wavelengths as per wavelength (nm) = speed of light (nm/s) / frequency (1/s) *****
-// therefore we expect [frequency, wavelength] pairs of...
-// [[30 (x10^14), 100], [20, 150], [15, 200], [12, 250], ...]
-// this factor converts the stated frequencies in the application to an oscillation frequency that generates the expected wavelength
-// it is a (very good) approximation (not derived programatically)
-export const FREQUENCY_CONVERSION_FACTOR = 3;
 
 export const DEFAULT_CHARGE_X_POSITION = 0;
 export const DEFAULT_CHARGE_Y_POSITION = 0;

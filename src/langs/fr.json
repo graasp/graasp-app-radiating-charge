@@ -1,6 +1,5 @@
 {
   "translations": {
-    "Observe": "Observe",
     "Language": "Langue",
     "Show Header": "Montrer l'en-tête",
     "Settings": "Paramètres",
@@ -21,6 +20,8 @@
     " Hz)": " Hz)",
     "Infrared [IR]": "Infrarouge [IR]",
     "Ultraviolet [UV]": "Ultraviolet [UV]",
-    "Wavelength (nm)": "Longueur d'onde (nm)"
+    "Wavelength (nm)": "Longueur d'onde (nm)",
+    "Close side menu": "",
+    "Open side menu": ""
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -17,34 +18,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomSwitch = ({
-  switchStatus,
-  switchDispatch,
-  switchLabel,
-  // toggleOffAction,
-  // toggleOnAction,
-}) => {
+const CustomSwitch = ({ switchStatus, switchAction, switchLabel }) => {
   const classes = useStyles();
-
-  // todo: adapt for new graasp
-  // const isPaused = useSelector(({ lab }) => lab.isPaused);
-  // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
-
-  const onSwitchToggle = () => {
-    // todo: adapt for new graasp
-    // dispatch(
-    //   postAction({
-    //     verb: switchStatus === true ? toggleOffAction : toggleOnAction,
-    //     data: { applicationState },
-    //   }),
-    // );
-    switchDispatch(!switchStatus);
-  };
+  const dispatch = useDispatch();
 
   const Control = (
     <Switch
       checked={switchStatus}
-      onChange={onSwitchToggle}
+      onChange={() => dispatch(switchAction(!switchStatus))}
       name={switchLabel}
       color="primary"
     />
@@ -68,7 +49,7 @@ const CustomSwitch = ({
 
 CustomSwitch.propTypes = {
   switchStatus: PropTypes.bool.isRequired,
-  switchDispatch: PropTypes.func.isRequired,
+  switchAction: PropTypes.func.isRequired,
   switchLabel: PropTypes.string.isRequired,
 };
 

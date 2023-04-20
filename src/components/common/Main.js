@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import TuneIcon from '@material-ui/icons/Tune';
 import { withStyles } from '@material-ui/core/styles';
-import { CssBaseline, Fab } from '@material-ui/core';
+import { CssBaseline, Fab, Tooltip } from '@material-ui/core';
 import { toggleSideMenu } from '../../actions';
 import Header from './Header';
 import SideMenu from './SideMenu';
@@ -19,13 +19,6 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     height: '100%',
-  },
-  fullScreen: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   content: {
     flexGrow: 1,
@@ -80,14 +73,16 @@ class Main extends Component {
     const { classes, showSideMenu, headerVisible, children, t } = this.props;
 
     const fab = !showSideMenu && (
-      <Fab
-        color="primary"
-        aria-label={t('Open Drawer')}
-        onClick={this.handleToggleSideMenu(!showSideMenu)}
-        className={classes.fab}
-      >
-        <TuneIcon />
-      </Fab>
+      <Tooltip title={t('Open side menu')}>
+        <Fab
+          color="primary"
+          aria-label={t('Open Drawer')}
+          onClick={this.handleToggleSideMenu(!showSideMenu)}
+          className={classes.fab}
+        >
+          <TuneIcon />
+        </Fab>
+      </Tooltip>
     );
 
     return (
