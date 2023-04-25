@@ -11,8 +11,16 @@
     "cy": true,
     "Cypress": true
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
+  },
   "rules": {
+    // TO REMOVE
+    "class-methods-use-this": "off",
     "no-console": "off",
     "no-underscore-dangle": [
       "error",

@@ -1,18 +1,41 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { createRoot } from 'react-dom/client';
+import { mockApi, withContext } from '@graasp/apps-query-client';
+import {
+  hooks,
+  QueryClientProvider,
+  queryClient,
+  ReactQueryDevtools,
+} from './config/queryClient';
 import Root from './components/Root';
 import configureStore from './store/configureStore';
 import './index.css';
+import { showErrorToast } from './utils/toasts';
+import ProgressScreen from './components/common/LoadingScreen';
 
-const root = document.getElementById('root');
+if (process.env.REACT_APP_ENABLE_MOCK_API === 'true') {
+  mockApi();
+}
 
 const renderApp = (RootComponent, store) => {
-  render(
-    <Provider store={store}>
-      <RootComponent />
-    </Provider>,
-    root,
+  const AppWithContext = withContext(RootComponent, {
+    LoadingComponent: <ProgressScreen />,
+    useGetLocalContext: hooks.useGetLocalContext,
+    useAutoResize: hooks.useAutoResize,
+    onError: () => {
+      showErrorToast('An error occured while fetching the context.');
+    },
+  });
+
+  const root = createRoot(document.getElementById('root'));
+  root.render(
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <AppWithContext />
+      </Provider>
+      {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
+    </QueryClientProvider>,
   );
 };
 

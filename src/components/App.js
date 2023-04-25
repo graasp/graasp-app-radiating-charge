@@ -1,89 +1,57 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import qs from 'qs';
 import { withTranslation } from 'react-i18next';
+import { Context, PermissionLevel } from '@graasp/sdk';
+import { useLocalContext } from '@graasp/apps-query-client';
 import PropTypes from 'prop-types';
 import StudentMode from './modes/student/StudentMode';
-import { getContext } from '../actions';
-import { DEFAULT_LANG, DEFAULT_MODE, MODES } from '../config/settings';
-import { DEFAULT_VIEW } from '../config/views';
+import { DEFAULT_LANG } from '../config/settings';
 import TeacherMode from './modes/teacher/TeacherMode';
-import ProgressScreen from './common/LoadingScreen';
 
-export class App extends Component {
-  static propTypes = {
-    i18n: PropTypes.shape({
-      defaultNS: PropTypes.string,
-      changeLanguage: PropTypes.func,
-    }).isRequired,
-    lang: PropTypes.string,
-    mode: PropTypes.string,
-    view: PropTypes.string,
-    loading: PropTypes.bool,
-  };
+export const App = ({ i18n }) => {
+  const { data: context } = useLocalContext();
 
-  static defaultProps = {
-    lang: DEFAULT_LANG,
-    mode: DEFAULT_MODE,
-    view: DEFAULT_VIEW,
-    loading: true,
-  };
-
-  componentDidMount() {
-    const { lang } = this.props;
-    // set the language on first load
-    this.handleChangeLang(lang);
-  }
-
-  componentDidUpdate({ lang: prevLang }) {
-    const { lang } = this.props;
-    // handle a change of language
-    if (lang !== prevLang) {
-      this.handleChangeLang(lang);
-    }
-  }
-
-  handleChangeLang = (lang) => {
-    const { i18n } = this.props;
+  const handleChangeLang = (lang) => {
     i18n.changeLanguage(lang);
   };
 
-  render() {
-    const { mode, view, loading } = this.props;
-
-    if (loading) {
-      return <ProgressScreen />;
+  useEffect(() => {
+    // get lang from context or query string
+    // necessary for standalone setting
+    const { lang } = qs.parse(window.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    const newLang = context?.lang || lang;
+    // set the language on first load
+    if (newLang !== i18n.language) {
+      handleChangeLang(newLang || DEFAULT_LANG);
     }
+  }, [context?.lang]);
 
-    switch (mode) {
-      // show teacher view when in producer (educator) mode
-      case MODES.TEACHER:
-      case MODES.PRODUCER:
-      case MODES.EDUCATOR:
-      case MODES.ADMIN:
+  const view = context?.context;
+  const permission = context?.permission;
+  switch (view) {
+    // show teacher view when in producer (educator) mode
+    case Context.BUILDER:
+      if (
+        permission === PermissionLevel.Admin ||
+        permission === PermissionLevel.Write
+      ) {
         return <TeacherMode view={view} />;
+      }
+      return <StudentMode />;
 
-      // by default go with the consumer (learner) mode
-      case MODES.STUDENT:
-      case MODES.CONSUMER:
-      case MODES.LEARNER:
-      default:
-        return <StudentMode />;
-    }
+    default:
+      return <StudentMode />;
   }
-}
-
-const mapStateToProps = ({ context, layout }) => ({
-  lang: context.lang,
-  mode: context.mode,
-  view: context.view,
-  standalone: context.standalone,
-  loading: layout.showLoader,
-});
-
-const mapDispatchToProps = {
-  dispatchGetContext: getContext,
 };
 
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+App.propTypes = {
+  i18n: PropTypes.shape({
+    defaultNS: PropTypes.string,
+    changeLanguage: PropTypes.func,
+    language: PropTypes.string,
+  }).isRequired,
+};
 
-export default withTranslation()(ConnectedApp);
+export default withTranslation()(App);

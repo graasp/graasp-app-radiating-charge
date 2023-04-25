@@ -10,10 +10,10 @@ import {
 } from '../../config/constants';
 
 export default class EmittedLine extends Component {
-  static initialPoints = [0, 0];
+  initialPoints = [0, 0];
 
   state = {
-    points: EmittedLine.initialPoints,
+    points: this.initialPoints,
   };
 
   static propTypes = {
