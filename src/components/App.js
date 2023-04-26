@@ -22,7 +22,7 @@ export const App = () => {
     if (newLang !== i18n.language) {
       handleChangeLang(newLang || DEFAULT_LANG);
     }
-  }, [context]);
+  }, [context, lang]);
 
   // eslint-disable-next-line react/destructuring-assignment
   const view = context?.context;
