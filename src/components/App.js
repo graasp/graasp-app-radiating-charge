@@ -8,7 +8,7 @@ import { DEFAULT_LANG } from '../config/settings';
 import TeacherMode from './modes/teacher/TeacherMode';
 
 export const App = () => {
-  const { lang } = useSelector((state) => state.context.lang);
+  const lang = useSelector((state) => state.context.lang);
   const { i18n } = useTranslation();
   const context = useLocalContext();
 
@@ -17,7 +17,7 @@ export const App = () => {
   };
 
   useEffect(() => {
-    const newLang = context?.lang || lang;
+    const newLang = lang ?? context?.lang;
     // set the language on first load
     if (newLang !== i18n.language) {
       handleChangeLang(newLang || DEFAULT_LANG);
