@@ -10,7 +10,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withTranslation } from 'react-i18next';
 import { toggleSettings } from '../../../actions';
 import Loader from '../../common/Loader';
-import LanguageSelect from './LanguageSelect';
 import { DEFAULT_HEADER_VISIBLE } from '../../../config/constants';
 
 const modalTopPercent = 50;
@@ -106,9 +105,10 @@ class Settings extends Component {
         <Grid item xs={12}>
           <FormControlLabel control={switchControl} label={t('Show Header')} />
         </Grid>
-        <Grid item xs={12}>
+        {/* this does nothing: language is deduced from query string or context */}
+        {/* <Grid item xs={12}>
           <LanguageSelect />
-        </Grid>
+        </Grid> */}
       </Grid>
     );
   }
