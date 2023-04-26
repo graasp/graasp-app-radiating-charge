@@ -9,7 +9,7 @@ import TeacherMode from './modes/teacher/TeacherMode';
 
 export const App = () => {
   const { i18n } = useTranslation();
-  const { data: context } = useLocalContext();
+  const context = useLocalContext();
 
   const handleChangeLang = (lang) => {
     i18n.changeLanguage(lang);
