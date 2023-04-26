@@ -28,6 +28,8 @@ export const App = () => {
     }
   }, [context]);
 
+  console.log(context);
+
   // eslint-disable-next-line react/destructuring-assignment
   const view = context?.context;
   // eslint-disable-next-line react/destructuring-assignment
