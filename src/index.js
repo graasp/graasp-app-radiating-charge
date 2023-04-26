@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createRoot } from 'react-dom/client';
+import { render } from 'react-dom';
 import { mockApi, withContext } from '@graasp/apps-query-client';
 import {
   hooks,
@@ -14,28 +14,40 @@ import './index.css';
 import { showErrorToast } from './utils/toasts';
 import ProgressScreen from './components/common/LoadingScreen';
 
-if (process.env.REACT_APP_ENABLE_MOCK_API === 'true') {
+const inIframe = () => {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+};
+
+if (process.env.REACT_APP_ENABLE_MOCK_API === 'true' || !inIframe()) {
   mockApi();
 }
 
-const renderApp = (RootComponent, store) => {
-  const AppWithContext = withContext(RootComponent, {
-    LoadingComponent: <ProgressScreen />,
-    useGetLocalContext: hooks.useGetLocalContext,
-    useAutoResize: hooks.useAutoResize,
-    onError: () => {
-      showErrorToast('An error occured while fetching the context.');
-    },
-  });
+const root = document.getElementById('root');
 
-  const root = createRoot(document.getElementById('root'));
-  root.render(
+const renderApp = (RootComponent, store) => {
+  const App = inIframe()
+    ? withContext(RootComponent, {
+        LoadingComponent: <ProgressScreen />,
+        useGetLocalContext: hooks.useGetLocalContext,
+        useAutoResize: hooks.useAutoResize,
+        onError: () => {
+          showErrorToast('An error occured while fetching the context.');
+        },
+      })
+    : RootComponent;
+
+  render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <AppWithContext />
+        <App />
       </Provider>
       {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
     </QueryClientProvider>,
+    root,
   );
 };
 
