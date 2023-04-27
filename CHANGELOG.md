@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.9](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.8...v0.1.9) (2023-04-27)
+
+
+### Bug Fixes
+
+* update package.json ([3992842](https://github.com/graasp/graasp-app-radiating-charge/commit/39928422bf55b5e979d614f39ed7c897bad40246))
+* update workflow sha ref ([703c2e6](https://github.com/graasp/graasp-app-radiating-charge/commit/703c2e6f5a61d2d52f8eebbc09f6af029df5050c))
+
 ### [0.1.8](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.7...v0.1.8) (2022-07-18)
 
 ### Features
