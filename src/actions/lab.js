@@ -5,7 +5,6 @@ import {
   TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
   TOGGLE_SPECTRUM_BAR,
-  SET_NUMBER_OF_LINES,
   SET_FREQUENCY,
   SET_MEASURING_ARROW_WIDTH,
   SET_CHARGE_ORIGIN,
@@ -56,13 +55,6 @@ const setAmplitude = (payload) => (dispatch) => {
   });
 };
 
-const setNumberOfLines = (payload) => (dispatch) => {
-  dispatch({
-    type: SET_NUMBER_OF_LINES,
-    payload,
-  });
-};
-
 const setMeasuringArrowWidth = (payload) => (dispatch) => {
   dispatch({ type: SET_MEASURING_ARROW_WIDTH, payload });
 };
@@ -109,7 +101,6 @@ export {
   togglePause,
   toggleSpectrumBar,
   setAmplitude,
-  setNumberOfLines,
   setFrequency,
   setMeasuringArrowWidth,
   setChargeOrigin,

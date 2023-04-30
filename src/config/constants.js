@@ -22,9 +22,6 @@ export const MIN_AMPLITUDE = 0;
 export const MAX_AMPLITUDE = 40;
 export const AMPLITUDE_STEP = 5;
 export const DEFAULT_NUMBER_OF_LINES = 12;
-export const MIN_NUMBER_OF_LINES = 4;
-export const MAX_NUMBER_OF_LINES = 40;
-export const NUMBER_OF_LINES_STEP = 4;
 export const DEFAULT_TENSION = 0.1;
 export const LINE_STEP_SIZE = 5;
 

@@ -1,6 +1,5 @@
 import {
   DEFAULT_AMPLITUDE,
-  DEFAULT_NUMBER_OF_LINES,
   DEFAULT_FREQUENCY,
   DEFAULT_CHARGE_X_POSITION,
   DEFAULT_CHARGE_Y_POSITION,
@@ -17,7 +16,6 @@ import {
   TOGGLE_PAUSE,
   TOGGLE_SPECTRUM_BAR,
   SET_AMPLITUDE,
-  SET_NUMBER_OF_LINES,
   SET_FREQUENCY,
   SET_MEASURING_ARROW_WIDTH,
   SET_CHARGE_ORIGIN,
@@ -33,7 +31,6 @@ const INITIAL_STATE = {
   spectrumBar: false,
   measuringArrowWidth: DEFAULT_MEASURING_ARROW_WIDTH,
   amplitude: DEFAULT_AMPLITUDE,
-  numberOfLines: DEFAULT_NUMBER_OF_LINES,
   frequency: DEFAULT_FREQUENCY,
   isPaused: true,
   chargeOrigin: {
@@ -73,11 +70,6 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         amplitude: payload,
-      };
-    case SET_NUMBER_OF_LINES:
-      return {
-        ...state,
-        numberOfLines: payload,
       };
     case SET_FREQUENCY: {
       return {

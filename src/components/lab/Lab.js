@@ -23,6 +23,7 @@ import {
   LINE_STEP_SIZE,
   generateAngles,
   MAX_POINTS_FOR_LINES,
+  DEFAULT_NUMBER_OF_LINES,
 } from '../../config/constants';
 import {
   calculateYPositionHarmonically,
@@ -51,7 +52,6 @@ class Lab extends Component {
     measuringArrow: PropTypes.bool.isRequired,
     shouldOscillate: PropTypes.bool.isRequired,
     amplitude: PropTypes.number.isRequired,
-    numberOfLines: PropTypes.number.isRequired,
     frequency: PropTypes.number.isRequired,
     isPaused: PropTypes.bool.isRequired,
     timerCount: PropTypes.number.isRequired,
@@ -179,7 +179,6 @@ class Lab extends Component {
       stageDimensions,
       gridLines,
       measuringArrow,
-      numberOfLines,
       classes,
       isPaused,
       chargeOrigin,
@@ -206,7 +205,7 @@ class Lab extends Component {
           height={stageDimensions.height}
         >
           <Layer>
-            {generateAngles(numberOfLines).map((angle, index) => (
+            {generateAngles(DEFAULT_NUMBER_OF_LINES).map((angle, index) => (
               <EmittedLine
                 charge={chargeOrigin}
                 chargeOscillation={chargeOscillation}
@@ -217,7 +216,6 @@ class Lab extends Component {
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 isPaused={isPaused}
-                numberOfLines={numberOfLines}
                 oscillation={oscillation}
                 timerCount={timerCount}
               />
@@ -265,7 +263,6 @@ const mapStateToProps = ({ layout, lab }) => ({
   measuringArrowWidth: lab.measuringArrowWidth,
   shouldOscillate: lab.oscillation,
   amplitude: lab.amplitude,
-  numberOfLines: parseInt(lab.numberOfLines, 10),
   frequency: lab.frequency,
   isPaused: lab.isPaused,
   stageDimensions: layout.stageDimensions,

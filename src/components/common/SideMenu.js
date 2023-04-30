@@ -9,7 +9,6 @@ import {
   toggleMeasuringArrow,
   toggleSpectrumBar,
 } from '../../actions';
-import LineSelector from './LineSelector';
 import CustomSwitch from './CustomSwitch';
 import AmplitudeSlider from './AmplitudeSlider';
 import FrequencySlider from './FrequencySlider';
@@ -65,7 +64,6 @@ const SideMenu = () => {
         <div className={classes.contentWrapper}>
           <AnimationControls />
           <Divider className={classes.divider} />
-          <LineSelector />
           <div className={classes.switchContainer}>
             <CustomSwitch
               switchLabel={t('Grid')}
