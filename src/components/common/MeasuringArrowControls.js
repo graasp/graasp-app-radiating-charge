@@ -17,43 +17,14 @@ const MeasuringArrowControls = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  // todo: adapt for new graasp
-  // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
-
   const increaseWidth = () => {
     const newWidth = measuringArrowWidth + MEASURING_ARROW_STEP;
     dispatch(setMeasuringArrowWidth(newWidth));
-
-    // todo: adapt for new graasp
-    // dispatch(
-    //   postAction({
-    //     verb: INCREASED_MEASURING_ARROW_WIDTH,
-    //     data: {
-    //       newWidth: `${
-    //         newWidth * MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR
-    //       }nm`,
-    //       applicationState,
-    //     },
-    //   }),
-    // );
   };
 
   const decreaseWidth = () => {
     const newWidth = measuringArrowWidth - MEASURING_ARROW_STEP;
     dispatch(setMeasuringArrowWidth(newWidth));
-
-    // todo: adapt for new graasp
-    // dispatch(
-    //   postAction({
-    //     verb: DECREASED_MEASURING_ARROW_WIDTH,
-    //     data: {
-    //       newWidth: `${
-    //         newWidth * MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR
-    //       }nm`,
-    //       applicationState,
-    //     },
-    //   }),
-    // );
   };
 
   return (

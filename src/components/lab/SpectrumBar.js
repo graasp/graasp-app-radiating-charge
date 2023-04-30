@@ -161,35 +161,6 @@ const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
         }
       />
       <Text
-        text="700"
-        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
-        x={
-          spectrumBarInitialXPosition +
-          INFRARED_BAR_WIDTH -
-          WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR
-        }
-        y={
-          spectrumBarInitialYPosition +
-          SPECTRUM_BAR_HEIGHT +
-          WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR
-        }
-      />
-      <Text
-        text="400"
-        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
-        x={
-          spectrumBarInitialXPosition +
-          INFRARED_BAR_WIDTH +
-          VISIBLE_LIGHT_BAR_WIDTH -
-          WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR
-        }
-        y={
-          spectrumBarInitialYPosition +
-          SPECTRUM_BAR_HEIGHT +
-          WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR
-        }
-      />
-      <Text
         text="100"
         fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
         x={

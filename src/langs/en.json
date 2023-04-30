@@ -1,6 +1,5 @@
 {
   "translations": {
-    "Observe": "Observe",
     "Language": "Language",
     "Show Header": "Show Header",
     "Settings": "Settings",
@@ -10,7 +9,6 @@
     "Grid": "Grid",
     "Measuring arrow": "Measuring arrow",
     "Spectrum bar": "Spectrum bar",
-    "Number of lines": "Number of lines",
     "Play": "Play",
     "Pause": "Pause",
     "Reset": "Reset",
@@ -21,6 +19,8 @@
     " Hz)": " Hz)",
     "Infrared [IR]": "Infrared [IR]",
     "Ultraviolet [UV]": "Ultraviolet [UV]",
-    "Wavelength (nm)": "Wavelength (nm)"
+    "Wavelength (nm)": "Wavelength (nm)",
+    "Close side menu": "Close side menu",
+    "Open side menu": "Open side menu"
   }
 }

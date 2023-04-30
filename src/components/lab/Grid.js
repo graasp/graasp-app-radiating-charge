@@ -51,9 +51,10 @@ const Grid = ({ gridWidth, gridHeight }) => {
 
   return (
     <>
-      {xTicksArray.map((tick) => (
+      {xTicksArray.map((tick, index) => (
         <Line
-          key={tick}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
           x={tick}
           y={0}
           points={[0, 0, 0, gridHeight]}
@@ -62,8 +63,10 @@ const Grid = ({ gridWidth, gridHeight }) => {
         />
       ))}
 
-      {yTicksArray.map((tick) => (
+      {yTicksArray.map((tick, index) => (
         <Line
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
           x={0}
           y={tick}
           points={[0, 0, gridWidth, 0]}

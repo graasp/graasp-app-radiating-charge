@@ -56,29 +56,6 @@ class Settings extends Component {
     },
   };
 
-  saveSettings = (settingsToChange) => {
-    const { settings } = this.props;
-    const newSettings = {
-      ...settings,
-      ...settingsToChange,
-    };
-    // todo: adapt for new graasp
-    console.log(newSettings);
-    // dispatchPatchAppInstance({
-    //   data: newSettings,
-    // });
-  };
-
-  handleChangeHeaderVisibility = () => {
-    const {
-      settings: { headerVisible },
-    } = this.props;
-    const settingsToChange = {
-      headerVisible: !headerVisible,
-    };
-    this.saveSettings(settingsToChange);
-  };
-
   handleClose = () => {
     const { dispatchToggleSettings } = this.props;
     dispatchToggleSettings(false);
@@ -96,7 +73,7 @@ class Settings extends Component {
       <Switch
         color="primary"
         checked={headerVisible}
-        onChange={this.handleChangeHeaderVisibility}
+        onChange={() => {}}
         value="headerVisibility"
       />
     );

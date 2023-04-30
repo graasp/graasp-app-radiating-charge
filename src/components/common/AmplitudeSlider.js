@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { makeStyles } from '@material-ui/core/styles';
+import { setAmplitude } from '../../actions';
 import {
-  DEFAULT_AMPLITUDE,
   MIN_AMPLITUDE,
   MAX_AMPLITUDE,
   AMPLITUDE_STEP,
@@ -21,12 +21,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     margin: theme.spacing(2, 0),
   },
-  unit: {
-    marginLeft: theme.spacing(1),
-  },
-  button: {
-    borderRadius: '50%',
-  },
   sliderContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -37,77 +31,27 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  superscript: { fontSize: '0.6em' },
 }));
 
-const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
+const AmplitudeSlider = () => {
   const classes = useStyles();
-
-  // todo: adapt for new graasp
-  // const isPaused = useSelector(({ lab }) => lab.isPaused);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [amplitude, setAmplitude] = useState(DEFAULT_AMPLITUDE);
+  const { amplitude } = useSelector(({ lab }) => lab);
 
-  // todo: adapt for new graasp
-  // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
-
-  // callback used in the + ('increase') IconButton (slider doesn't natively come with such a button)
   const increaseAmplitude = () => {
-    setAmplitude((prevValue) => {
-      const newAmplitude = Math.min(prevValue + AMPLITUDE_STEP, MAX_AMPLITUDE);
-
-      // todo: adapt for new graasp
-      // dispatch(
-      //   postAction({
-      //     verb: INCREASED_AMPLITUDE,
-      //     data: { newAmplitude, applicationState },
-      //   }),
-      // );
-      return newAmplitude;
-    });
+    const newAmplitude = Math.min(amplitude + AMPLITUDE_STEP, MAX_AMPLITUDE);
+    dispatch(setAmplitude(newAmplitude));
   };
 
-  // callback used in the - ('decrease') IconButton (slider doesn't natively come with such a button)
   const decreaseAmplitude = () => {
-    setAmplitude((prevValue) => {
-      const newAmplitude = Math.max(prevValue - AMPLITUDE_STEP, MIN_AMPLITUDE);
-
-      // todo: adapt for new graasp
-      // dispatch(
-      //   postAction({
-      //     verb: DECREASED_AMPLITUDE,
-      //     data: { newAmplitude, applicationState },
-      //   }),
-      // );
-      return newAmplitude;
-    });
+    const newAmplitude = Math.max(amplitude - AMPLITUDE_STEP, MIN_AMPLITUDE);
+    dispatch(setAmplitude(newAmplitude));
   };
 
-  // callback used in slider's default onChange handler
   const adjustAmplitude = (event, newValue) => {
-    if (newValue > amplitude) {
-      // todo: adapt for new graasp
-      // dispatch(
-      //   postAction({
-      //     verb: INCREASED_AMPLITUDE,
-      //     data: { newAmplitude: newValue, applicationState },
-      //   }),
-      // );
-    } else if (newValue < amplitude) {
-      // todo: adapt for new graasp
-      // dispatch(
-      //   postAction({
-      //     verb: DECREASED_AMPLITUDE,
-      //     data: { newAmplitude: newValue, applicationState },
-      //   }),
-      // );
-    }
-    setAmplitude(newValue);
+    dispatch(setAmplitude(newValue));
   };
-
-  useEffect(() => {
-    dispatchSetAmplitude(amplitude);
-  }, [amplitude]);
 
   return (
     <div className={classes.container}>
@@ -132,10 +76,6 @@ const AmplitudeSlider = ({ dispatchSetAmplitude }) => {
       </div>
     </div>
   );
-};
-
-AmplitudeSlider.propTypes = {
-  dispatchSetAmplitude: PropTypes.func.isRequired,
 };
 
 export default AmplitudeSlider;
