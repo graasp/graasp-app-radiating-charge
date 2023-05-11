@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { ReactReduxContext, connect, Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Stage, Layer, Circle } from 'react-konva';
 import { withStyles } from '@material-ui/core/styles';
@@ -199,59 +199,61 @@ class Lab extends Component {
           this.container = node;
         }}
       >
-        <Stage
-          className={classes.stage}
-          width={stageDimensions.width}
-          height={stageDimensions.height}
-        >
-          <Layer>
-            {generateAngles(DEFAULT_NUMBER_OF_LINES).map((angle, index) => (
-              <EmittedLine
-                charge={chargeOrigin}
-                chargeOscillation={chargeOscillation}
-                angle={angle}
-                emittedLineStepSize={emittedLineStepSize}
-                maxPointsForLines={maxPointsForLines}
-                // key={index} is necessary to ensure that all lines refresh when # of lines changes
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                isPaused={isPaused}
-                oscillation={oscillation}
-                timerCount={timerCount}
-              />
-            ))}
-            {gridLines && (
-              <Grid
-                gridWidth={stageDimensions.width}
-                gridHeight={stageDimensions.height}
-              />
-            )}
-            {measuringArrow && (
-              <MeasuringArrow
-                measuringArrowWidth={measuringArrowWidth}
-                stageWidth={stageDimensions.width}
-                stageHeight={stageDimensions.height}
-              />
-            )}
-            {spectrumBar && (
-              <SpectrumBar
-                frequency={frequency}
-                stageWidth={stageDimensions.width}
-                stageHeight={stageDimensions.height}
-              />
-            )}
-            <Circle
-              x={chargeOrigin.x + chargeOscillation.x}
-              y={chargeOrigin.y + chargeOscillation.y}
-              radius={CHARGE_RADIUS}
-              fill={CHARGE_COLOR}
-            />
-            <ChargeSymbol
-              x={chargeOrigin.x + chargeOscillation.x}
-              y={chargeOrigin.y + chargeOscillation.y}
-            />
-          </Layer>
-        </Stage>
+        <ReactReduxContext.Consumer>
+          {({ store }) => (
+            <Stage
+              className={classes.stage}
+              width={stageDimensions.width}
+              height={stageDimensions.height}
+            >
+              <Provider store={store}>
+                <Layer>
+                  {generateAngles(DEFAULT_NUMBER_OF_LINES).map(
+                    (angle, index) => (
+                      <EmittedLine
+                        charge={chargeOrigin}
+                        chargeOscillation={chargeOscillation}
+                        angle={angle}
+                        emittedLineStepSize={emittedLineStepSize}
+                        maxPointsForLines={maxPointsForLines}
+                        // key={index} is necessary to ensure that all lines refresh when # of lines changes
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={index}
+                        isPaused={isPaused}
+                        oscillation={oscillation}
+                        timerCount={timerCount}
+                      />
+                    ),
+                  )}
+                  {gridLines && (
+                    <Grid
+                      gridWidth={stageDimensions.width}
+                      gridHeight={stageDimensions.height}
+                    />
+                  )}
+                  {measuringArrow && (
+                    <MeasuringArrow
+                      measuringArrowWidth={measuringArrowWidth}
+                      stageWidth={stageDimensions.width}
+                      stageHeight={stageDimensions.height}
+                    />
+                  )}
+                  {spectrumBar && <SpectrumBar frequency={frequency} />}
+                  <Circle
+                    x={chargeOrigin.x + chargeOscillation.x}
+                    y={chargeOrigin.y + chargeOscillation.y}
+                    radius={CHARGE_RADIUS}
+                    fill={CHARGE_COLOR}
+                  />
+                  <ChargeSymbol
+                    x={chargeOrigin.x + chargeOscillation.x}
+                    y={chargeOrigin.y + chargeOscillation.y}
+                  />
+                </Layer>
+              </Provider>
+            </Stage>
+          )}
+        </ReactReduxContext.Consumer>
       </div>
     );
   }
