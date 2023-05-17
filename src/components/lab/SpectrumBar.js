@@ -1,190 +1,71 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Group, Text, Rect } from 'react-konva';
-import SpectrumBarMarker from './SpectrumBarMarker';
+import { useSelector } from 'react-redux';
+import { Group } from 'react-konva';
+import { useTranslation } from 'react-i18next';
 import {
-  SPECTRUM_BAR_HEIGHT,
-  INFRARED_BAR_WIDTH,
-  VISIBLE_LIGHT_BAR_WIDTH,
-  ULTRAVIOLET_BAR_WIDTH,
-  TOTAL_SPECTRUM_BAR_WIDTH,
-  VISIBLE_LIGHT_COLOR_RANGE,
-  SPECTRUM_BAR_LABELS_FONT_SIZE,
-  INFRARED_BAR_LABEL_COLOR,
-  ULTRAVIOLET_BAR_LABEL_COLOR,
-  WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR,
-  WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR,
-  MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR,
+  CENTER_STRING,
+  INFRARED_COLOR_RANGE,
   MAX_DISPLAYED_WAVELENGTH,
   MIN_DISPLAYED_WAVELENGTH,
-  APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
-  SPECTRUM_BAR_PADDING,
+  RIGHT_STRING,
+  SPECTRUM_BAR_Y,
+  TOTAL_SPECTRUM_BAR_WIDTH,
   ULTRAVIOLET_COLOR_RANGE,
-  INFRARED_COLOR_RANGE,
+  VISIBLE_LIGHT_COLOR_RANGE,
 } from '../../config/constants';
+import BarSection from './spectrum-bar/BarSection';
+import BarMarker from './spectrum-bar/BarMarker';
 import { calculateWavelength } from '../../utils/physics';
 
-const SpectrumBar = ({ stageWidth, stageHeight, frequency }) => {
-  // ref attached to wavelength label (used to detect its width and position it)
-  // initialized to APPROXIMATE_WAVELENGTH_LABEL_WIDTH to minimize adjustment/jump after element has been rendered
-  const wavelengthLabel = useRef(null);
-  const [wavelengthLabelWidth, setWavelengthLabelWidth] = useState(
-    APPROXIMATE_WAVELENGTH_LABEL_WIDTH,
-  );
+const SpectrumBar = ({ frequency }) => {
   const { t } = useTranslation();
+  const { width: stageWidth, height: stageHeight } = useSelector(
+    ({ layout }) => layout.stageDimensions,
+  );
 
-  // on component mount, measure width of wavelength label, update state
-  useEffect(() => {
-    setWavelengthLabelWidth(wavelengthLabel.current.textWidth);
-  }, []);
+  const x = stageWidth / 2 - TOTAL_SPECTRUM_BAR_WIDTH / 2;
+  const y = SPECTRUM_BAR_Y * stageHeight;
+  const sectionWidth = TOTAL_SPECTRUM_BAR_WIDTH / 3;
 
-  // centers spectrum bar horizontally
-  const spectrumBarInitialXPosition =
-    stageWidth / 2 - TOTAL_SPECTRUM_BAR_WIDTH / 2;
-  const spectrumBarInitialYPosition = 0.85 * stageHeight;
-
-  // used to determine x position of SpectrumBarMarker; if wavelength > 1000 or < 100, return 0 (no spectrum bar marker shown)
   const wavelength = calculateWavelength(frequency);
-  const spectrumBarMarkerXPosition =
+  const markerX =
     wavelength > MAX_DISPLAYED_WAVELENGTH ||
     wavelength < MIN_DISPLAYED_WAVELENGTH
-      ? 0
-      : spectrumBarInitialXPosition +
-        (MAX_DISPLAYED_WAVELENGTH - wavelength) /
-          (MEASURING_ARROW_UNITS_TO_NANOMETER_CONVERSION_FACTOR / 2);
+      ? -1
+      : TOTAL_SPECTRUM_BAR_WIDTH -
+        ((MAX_DISPLAYED_WAVELENGTH - wavelength) * TOTAL_SPECTRUM_BAR_WIDTH) /
+          (MAX_DISPLAYED_WAVELENGTH - MIN_DISPLAYED_WAVELENGTH);
 
   return (
-    <Group>
-      {/* three rectangles, one for each portion of the spectrum bar */}
-      <Rect
-        x={spectrumBarInitialXPosition}
-        y={spectrumBarInitialYPosition}
-        width={INFRARED_BAR_WIDTH}
-        height={SPECTRUM_BAR_HEIGHT}
-        fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-        fillLinearGradientEndPoint={{
-          x: INFRARED_BAR_WIDTH,
-          y: 0,
-        }}
-        fillLinearGradientColorStops={INFRARED_COLOR_RANGE}
+    <Group x={x} y={y}>
+      <BarSection
+        gradientFill={ULTRAVIOLET_COLOR_RANGE}
+        sectionWidth={sectionWidth}
+        mainLabel={t('Ultraviolet [UV]')}
+        bottomLabel="100"
       />
-      <Rect
-        x={spectrumBarInitialXPosition + INFRARED_BAR_WIDTH}
-        y={spectrumBarInitialYPosition}
-        width={VISIBLE_LIGHT_BAR_WIDTH}
-        height={SPECTRUM_BAR_HEIGHT}
-        fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-        fillLinearGradientEndPoint={{
-          x: VISIBLE_LIGHT_BAR_WIDTH,
-          y: 0,
-        }}
-        fillLinearGradientColorStops={VISIBLE_LIGHT_COLOR_RANGE}
+      <BarSection
+        gradientFill={VISIBLE_LIGHT_COLOR_RANGE}
+        sectionWidth={sectionWidth}
+        x={sectionWidth}
+        bottomLabel={t('Wavelength (nm)')}
+        labelAlign={CENTER_STRING}
       />
-      <Rect
-        x={
-          spectrumBarInitialXPosition +
-          INFRARED_BAR_WIDTH +
-          VISIBLE_LIGHT_BAR_WIDTH
-        }
-        y={spectrumBarInitialYPosition}
-        width={ULTRAVIOLET_BAR_WIDTH}
-        height={SPECTRUM_BAR_HEIGHT}
-        fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-        fillLinearGradientEndPoint={{
-          x: ULTRAVIOLET_BAR_WIDTH,
-          y: 0,
-        }}
-        fillLinearGradientColorStops={ULTRAVIOLET_COLOR_RANGE}
+      <BarSection
+        gradientFill={INFRARED_COLOR_RANGE}
+        sectionWidth={sectionWidth}
+        x={2 * sectionWidth}
+        mainLabel={t('Infrared [IR]')}
+        labelAlign={RIGHT_STRING}
+        bottomLabel="1000"
       />
-      {/* two text labels for labels inside the spectrum bar */}
-      <Text
-        text={t('Infrared [IR]')}
-        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
-        // on x-axis, place text slightly to the right of the start of the spectrum bar
-        x={spectrumBarInitialXPosition + SPECTRUM_BAR_PADDING}
-        // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
-        y={
-          spectrumBarInitialYPosition +
-          (SPECTRUM_BAR_HEIGHT - SPECTRUM_BAR_LABELS_FONT_SIZE) / 2
-        }
-        fill={INFRARED_BAR_LABEL_COLOR}
-      />
-      <Text
-        text={t('Ultraviolet [UV]')}
-        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
-        // on x-axis, place text slightly to the left of the end of the spectrum bar
-        x={
-          spectrumBarInitialXPosition +
-          INFRARED_BAR_WIDTH +
-          VISIBLE_LIGHT_BAR_WIDTH -
-          SPECTRUM_BAR_PADDING
-        }
-        // on y-axis, center vertically, given spectrum bar height and this text element's fontSize
-        y={
-          spectrumBarInitialYPosition +
-          (SPECTRUM_BAR_HEIGHT - SPECTRUM_BAR_LABELS_FONT_SIZE) / 2
-        }
-        fill={ULTRAVIOLET_BAR_LABEL_COLOR}
-        align="right"
-        width={ULTRAVIOLET_BAR_WIDTH}
-      />
-      {/* wavelength labels */}
-      <Text
-        text={t('Wavelength (nm)')}
-        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
-        ref={wavelengthLabel}
-        // this positions the label in the middle of the spectrum bar
-        x={
-          spectrumBarInitialXPosition +
-          TOTAL_SPECTRUM_BAR_WIDTH / 2 -
-          wavelengthLabelWidth / 2
-        }
-        // vertically, position it manually
-        y={
-          spectrumBarInitialYPosition +
-          SPECTRUM_BAR_HEIGHT +
-          WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR * 5
-        }
-      />
-      <Text
-        text="1000"
-        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
-        x={
-          spectrumBarInitialXPosition -
-          WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR
-        }
-        y={
-          spectrumBarInitialYPosition +
-          SPECTRUM_BAR_HEIGHT +
-          WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR
-        }
-      />
-      <Text
-        text="100"
-        fontSize={SPECTRUM_BAR_LABELS_FONT_SIZE}
-        x={
-          spectrumBarInitialXPosition +
-          TOTAL_SPECTRUM_BAR_WIDTH -
-          WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR
-        }
-        y={
-          spectrumBarInitialYPosition +
-          SPECTRUM_BAR_HEIGHT +
-          WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR
-        }
-      />
-      <SpectrumBarMarker
-        xPosition={spectrumBarMarkerXPosition}
-        yPosition={spectrumBarInitialYPosition}
-      />
+      <BarMarker x={markerX} />
     </Group>
   );
 };
 
 SpectrumBar.propTypes = {
-  stageWidth: PropTypes.number.isRequired,
-  stageHeight: PropTypes.number.isRequired,
   frequency: PropTypes.number.isRequired,
 };
 

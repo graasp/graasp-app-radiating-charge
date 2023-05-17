@@ -102,47 +102,40 @@ export const MAX_DISPLAYED_WAVELENGTH = 1000;
 export const MIN_DISPLAYED_WAVELENGTH = 100;
 
 // spectrum bar constants
-// note: infrared range: 1000-700nm; visible light: 700-400nm; ultraviolet: 400-100nm
-export const INFRARED_BAR_WIDTH = MEASURING_ARROW_STEP * 12;
-export const VISIBLE_LIGHT_BAR_WIDTH = MEASURING_ARROW_STEP * 12;
-export const ULTRAVIOLET_BAR_WIDTH = MEASURING_ARROW_STEP * 12;
-export const TOTAL_SPECTRUM_BAR_WIDTH =
-  INFRARED_BAR_WIDTH + VISIBLE_LIGHT_BAR_WIDTH + ULTRAVIOLET_BAR_WIDTH;
+export const TOTAL_SPECTRUM_BAR_WIDTH = MEASURING_ARROW_STEP * 36;
 export const SPECTRUM_BAR_HEIGHT = 50;
 // css gradient, values from 0 to 1
-export const INFRARED_COLOR_RANGE = [0, 'black', 0.9, 'black', 1, 'red'];
+export const INFRARED_COLOR_RANGE = [0, 'red', 0.1, 'black'];
 export const VISIBLE_LIGHT_COLOR_RANGE = [
   0,
-  'red',
+  'violet',
   1 / 6,
-  'orange',
+  'indigo',
   2 / 6,
-  'yellow',
+  'blue',
   3 / 6,
   'green',
   4 / 6,
-  'blue',
+  'yellow',
   5 / 6,
-  'indigo',
+  'orange',
   1,
-  'violet',
+  'red',
 ];
-export const ULTRAVIOLET_COLOR_RANGE = [0, 'violet', 0.1, 'black'];
+export const ULTRAVIOLET_COLOR_RANGE = [0, 'black', 0.9, 'black', 1, 'violet'];
 export const SPECTRUM_BAR_LABELS_FONT_SIZE = 16;
-export const INFRARED_BAR_LABEL_COLOR = 'white';
-export const ULTRAVIOLET_BAR_LABEL_COLOR = 'white';
-export const SPECTRUM_BAR_PADDING = 8;
-export const WAVELENGTH_LABELS_X_AXIS_ADJUSTMENT_FACTOR = 10;
-export const WAVELENGTH_LABELS_Y_AXIS_ADJUSTMENT_FACTOR = 5;
-export const APPROXIMATE_WAVELENGTH_LABEL_WIDTH = 120;
+export const SPECTRUM_BAR_LABEL_COLOR = 'white';
+export const SPECTRUM_BAR_Y = 0.85;
+export const MAIN_LABEL_PADDING = 0.05;
+export const BOTTOM_LABEL_PADDING = 0.075;
+export const BOTTOM_LABEL_INDENT = 5;
 
 // spectrum bar marker constants
-export const SPECTRUM_BAR_MARKER_FILL = 'white';
-export const SPECTRUM_BAR_MARKER_BORDER = 'red';
-export const SPECTRUM_BAR_MARKER_TRIANGLE_STROKE_WIDTH = 1;
-export const SPECTRUM_BAR_MARKER_LINE_STROKE_WIDTH = 1;
-export const SPECTRUM_BAR_MARKER_TRIANGLE_BASE = 16;
-export const SPECTRUM_BAR_MARKER_TRIANGLE_HEIGHT = 8;
+export const MARKER_FILL = 'white';
+export const MARKER_BORDER = 'red';
+export const MARKER_STROKE_WIDTH = 1;
+export const MARKER_POINTER_WIDTH = 16;
+export const MARKER_POINTER_HEIGHT = 8;
 
 // numOfLines should be >= 2
 export const generateAngles = (numOfLines) => {
@@ -176,3 +169,7 @@ export const generateAngles = (numOfLines) => {
 // other constants
 export const PAUSED_STRING = 'paused';
 export const PLAYING_STRING = 'playing';
+export const LEFT_STRING = 'left';
+export const RIGHT_STRING = 'right';
+export const MIDDLE_STRING = 'middle';
+export const CENTER_STRING = 'center';
