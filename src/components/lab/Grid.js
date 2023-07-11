@@ -4,16 +4,12 @@ import { Line } from 'react-konva';
 import {
   GRID_AXES_COLOR,
   GRID_AXES_STROKE_WIDTH,
-  MEASURING_ARROW_STEP,
+  ONE_HUNDRED_NANOMETERS_IN_PX,
 } from '../../config/constants';
 import GridScale from './GridScale';
 
 const Grid = ({ gridWidth, gridHeight }) => {
-  // MEASURING_ARROW_STEP is the increment with which the measuring arrow's width is increased
-  // each MEASURING_ARROW_STEP is '100nm'
-  // we want the squares in our grid to have 100nm x 100nm dimensions
-  // for clarity, re-assign MEASURING_ARROW_STEP to another variable
-  const GRID_SQUARE_WIDTH_AND_HEIGHT = MEASURING_ARROW_STEP * 2;
+  const GRID_SQUARE_WIDTH_AND_HEIGHT = ONE_HUNDRED_NANOMETERS_IN_PX;
 
   // in return statement below, a VERTICAL line is drawn at each of the points in xTicksArray
   // for alignment purposes, ensure xTicksArray includes the point startingXTick

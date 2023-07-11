@@ -59,8 +59,13 @@ const AmplitudeSlider = () => {
         <Typography variant="body2">{t('Amplitude')}</Typography>
       </div>
       <div className={classes.sliderContainer}>
-        <IconButton onClick={decreaseAmplitude}>
-          <RemoveCircleOutlineIcon color="secondary" />
+        <IconButton
+          onClick={decreaseAmplitude}
+          disabled={amplitude <= MIN_AMPLITUDE}
+        >
+          <RemoveCircleOutlineIcon
+            color={amplitude > MIN_AMPLITUDE ? 'secondary' : 'disabled'}
+          />
         </IconButton>
         <Slider
           onChange={adjustAmplitude}
@@ -70,8 +75,13 @@ const AmplitudeSlider = () => {
           max={MAX_AMPLITUDE}
           value={amplitude}
         />
-        <IconButton onClick={increaseAmplitude}>
-          <AddCircleOutlineIcon color="primary" />
+        <IconButton
+          onClick={increaseAmplitude}
+          disabled={amplitude >= MAX_AMPLITUDE}
+        >
+          <AddCircleOutlineIcon
+            color={amplitude < MAX_AMPLITUDE ? 'primary' : 'disabled'}
+          />
         </IconButton>
       </div>
     </div>

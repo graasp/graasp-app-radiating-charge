@@ -1,107 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Line } from 'react-konva';
-import {
-  DEFAULT_TENSION,
-  DEFAULT_TIMER_COUNT,
-  SET_INTERVAL_TIME,
-  STROKE_COLOR,
-} from '../../config/constants';
+import { DEFAULT_TENSION, STROKE_COLOR } from '../../config/constants';
+import { generateOscillationCurve } from '../../utils/physics';
 
-export default class EmittedLine extends Component {
-  static initialPoints = [0, 0];
+const EmittedLine = ({ intervalCount, angle, x, y, frequency, amplitude }) => {
+  const { stageDimensions } = useSelector(({ layout }) => layout);
+  const { width, height } = stageDimensions;
 
-  state = {
-    points: EmittedLine.initialPoints,
-  };
+  const linePoints = generateOscillationCurve(
+    intervalCount,
+    angle,
+    frequency,
+    amplitude,
+    width,
+    height,
+  );
 
-  static propTypes = {
-    isPaused: PropTypes.bool.isRequired,
-    chargeOscillation: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired,
-    }).isRequired,
-    angle: PropTypes.number.isRequired,
-    emittedLineStepSize: PropTypes.number.isRequired,
-    charge: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired,
-    }).isRequired,
-    maxPointsForLines: PropTypes.number.isRequired,
-    oscillation: PropTypes.bool.isRequired,
-    timerCount: PropTypes.number.isRequired,
-  };
+  return (
+    <Line
+      tension={DEFAULT_TENSION}
+      stroke={STROKE_COLOR}
+      points={linePoints}
+      x={x}
+      y={y}
+    />
+  );
+};
 
-  componentDidMount() {
-    this.beginLineInterval();
-  }
+EmittedLine.propTypes = {
+  intervalCount: PropTypes.number.isRequired,
+  angle: PropTypes.number.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  frequency: PropTypes.number.isRequired,
+  amplitude: PropTypes.number.isRequired,
+};
 
-  componentDidUpdate(prevProps) {
-    const { isPaused, oscillation, timerCount } = this.props;
-    if (isPaused !== prevProps.isPaused) {
-      if (isPaused && !oscillation) {
-        clearInterval(this.emittedLineInterval);
-      }
-      if (!isPaused && oscillation) {
-        clearInterval(this.emittedLineInterval);
-        this.beginLineInterval();
-      }
-    }
-
-    if (
-      timerCount !== prevProps.timerCount &&
-      timerCount === DEFAULT_TIMER_COUNT
-    ) {
-      this.beginLineInterval();
-    }
-  }
-
-  resetLine = () => {
-    this.setState({ points: EmittedLine.initialPoints });
-  };
-
-  beginLineInterval = () => {
-    this.emittedLineInterval = setInterval(() => {
-      const { points } = this.state;
-      const {
-        chargeOscillation: { x, y },
-        angle,
-        emittedLineStepSize,
-        maxPointsForLines,
-      } = this.props;
-
-      // add points in respective direction
-      let newPoints = points
-        .slice(2)
-        .map((value, i) =>
-          i % 2 === 0
-            ? value + Math.cos(-angle) * emittedLineStepSize
-            : value + Math.sin(-angle) * emittedLineStepSize,
-        );
-
-      // the first point is where the charge is
-      // add second point where the new point should be
-      // keeps only the maxPointsForLine first points, sufficient to fill screen
-      newPoints = [0, 0, x, y, ...newPoints].slice(0, maxPointsForLines);
-      this.setState({
-        points: newPoints,
-      });
-    }, SET_INTERVAL_TIME);
-  };
-
-  render() {
-    const {
-      charge: { x, y },
-    } = this.props;
-    const { points } = this.state;
-    return (
-      <Line
-        x={x}
-        y={y}
-        points={points}
-        tension={DEFAULT_TENSION}
-        stroke={STROKE_COLOR}
-      />
-    );
-  }
-}
+export default EmittedLine;
