@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Drawer from '@material-ui/core/Drawer';
@@ -14,7 +14,7 @@ import AmplitudeSlider from './AmplitudeSlider';
 import FrequencySlider from './FrequencySlider';
 import AnimationControls from './AnimationControls';
 import MeasuringArrowControls from './MeasuringArrowControls';
-import { DRAWER_WIDTH } from '../../config/constants';
+import { DEFAULT_FREQUENCY, DRAWER_WIDTH } from '../../config/constants';
 import {
   TOGGLED_MEASURING_ARROW_OFF,
   TOGGLED_GRID_OFF,
@@ -49,6 +49,7 @@ const SideMenu = () => {
     ({ lab }) => lab,
   );
   const { showSideMenu } = useSelector(({ layout }) => layout);
+  const [sliderFrequency, setSliderFrequency] = useState(DEFAULT_FREQUENCY);
 
   return (
     <>
@@ -62,7 +63,10 @@ const SideMenu = () => {
         }}
       >
         <div className={classes.contentWrapper}>
-          <AnimationControls />
+          <AnimationControls
+            sliderFrequency={sliderFrequency}
+            setSliderFrequency={setSliderFrequency}
+          />
           <Divider className={classes.divider} />
           <div className={classes.switchContainer}>
             <CustomSwitch
@@ -93,7 +97,10 @@ const SideMenu = () => {
             />
           </div>
           <AmplitudeSlider />
-          <FrequencySlider />
+          <FrequencySlider
+            sliderFrequency={sliderFrequency}
+            setSliderFrequency={setSliderFrequency}
+          />
         </div>
       </Drawer>
     </>

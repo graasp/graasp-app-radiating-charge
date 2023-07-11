@@ -35,13 +35,13 @@ const MeasuringArrowControls = () => {
             onClick={decreaseWidth}
             disabled={
               !measuringArrow ||
-              measuringArrowWidth === MIN_MEASURING_ARROW_WIDTH
+              measuringArrowWidth <= MIN_MEASURING_ARROW_WIDTH
             }
           >
             <RemoveCircleOutlineIcon
               color={
                 measuringArrow &&
-                measuringArrowWidth !== MIN_MEASURING_ARROW_WIDTH
+                measuringArrowWidth > MIN_MEASURING_ARROW_WIDTH
                   ? 'secondary'
                   : 'disabled'
               }
@@ -55,13 +55,13 @@ const MeasuringArrowControls = () => {
             onClick={increaseWidth}
             disabled={
               !measuringArrow ||
-              measuringArrowWidth === MAX_MEASURING_ARROW_WIDTH
+              measuringArrowWidth >= MAX_MEASURING_ARROW_WIDTH
             }
           >
             <AddCircleOutlineIcon
               color={
                 measuringArrow &&
-                measuringArrowWidth !== MAX_MEASURING_ARROW_WIDTH
+                measuringArrowWidth < MAX_MEASURING_ARROW_WIDTH
                   ? 'primary'
                   : 'disabled'
               }

@@ -2,18 +2,13 @@ import {
   SPEED_OF_LIGHT_IN_METERS_PER_SECOND,
   ONE_NANOMETER_IN_METERS,
   FREQUENCY_UNITS,
-  FREQUENCY_CONVERSION_FACTOR,
+  INTERVAL_ADJUSTMENT_FACTOR,
+  LINE_STEP_SIZE,
 } from '../config/constants';
 
-// equation to calculate position of y based on sinusoidal oscillation (y(t) = A * sin(2 * PI * freq * t))
-export const calculateYPositionHarmonically = (
-  frequency,
-  amplitude,
-  timeInMilliseconds,
-) => {
-  const MILLISECONDS_PER_SECOND = 1000;
-  const timeInSeconds = timeInMilliseconds / MILLISECONDS_PER_SECOND;
-  return amplitude * Math.sin(2 * Math.PI * frequency * timeInSeconds);
+export const calculateChargeY = (frequency, amplitude, intervalCount) => {
+  const adjustedIntervalCount = intervalCount / INTERVAL_ADJUSTMENT_FACTOR;
+  return amplitude * Math.sin(2 * Math.PI * frequency * adjustedIntervalCount);
 };
 
 export const calculateWavelength = (frequency) => {
@@ -23,13 +18,54 @@ export const calculateWavelength = (frequency) => {
   }
   const wavelength =
     SPEED_OF_LIGHT_IN_METERS_PER_SECOND /
-    (frequency *
-      FREQUENCY_CONVERSION_FACTOR *
-      FREQUENCY_UNITS *
-      ONE_NANOMETER_IN_METERS);
+    (frequency * FREQUENCY_UNITS * ONE_NANOMETER_IN_METERS);
   return wavelength;
 };
 
-export const calculateDiagonalLength = (width, height) => {
-  return Math.sqrt(width ** 2 + height ** 2);
+const calculateDiagonal = (base, height) => {
+  return Math.sqrt(base ** 2 + height ** 2);
+};
+
+const generateStraightLinePoints = (angle, diagonal) => {
+  const points = [];
+  for (let i = 0; i <= Math.ceil(diagonal / LINE_STEP_SIZE); i += 1) {
+    points.push(i * Math.cos(angle) * LINE_STEP_SIZE);
+    points.push(i * Math.sin(angle) * LINE_STEP_SIZE);
+  }
+  return points;
+};
+
+export const generateOscillationCurve = (
+  intervalCount,
+  angle,
+  frequency,
+  amplitude,
+  stageWidth,
+  stageHeight,
+) => {
+  const diagonal = calculateDiagonal(stageWidth / 2, stageHeight / 2);
+  const upperLimit = Math.min(
+    intervalCount,
+    Math.ceil(diagonal / LINE_STEP_SIZE),
+  );
+
+  const straightLinePoints = generateStraightLinePoints(angle, diagonal);
+
+  if (intervalCount === 0) {
+    return straightLinePoints;
+  }
+
+  const points = [];
+  for (let i = 0; i < upperLimit; i += 1) {
+    points.push(i * Math.cos(angle) * LINE_STEP_SIZE);
+    points.push(
+      calculateChargeY(frequency, amplitude, intervalCount - i) +
+        i * Math.sin(angle) * LINE_STEP_SIZE,
+    );
+  }
+
+  return [
+    ...points,
+    ...straightLinePoints.slice(straightLinePoints.length - 2),
+  ];
 };

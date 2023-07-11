@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -13,20 +14,15 @@ import { green, orange, yellow } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import {
   togglePause,
-  toggleOscillation,
-  toggleMeasuringArrow,
-  toggleSpectrumBar,
   setChargeOrigin,
-  setChargeOscillation,
-  setTimerCount,
-  setElapsedTime,
   toggleSideMenu,
+  incrementIntervalCount,
+  setFrequency,
+  reset,
 } from '../../actions';
 import {
-  DEFAULT_CHARGE_OSCILLATION_X_POSITION,
-  DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
-  DEFAULT_TIMER_COUNT,
-  DEFAULT_ELAPSED_TIME,
+  APPLICATION_TIMER_INTERVAL,
+  DEFAULT_FREQUENCY,
   DEFAULT_THEME_DIRECTION,
 } from '../../config/constants';
 
@@ -55,43 +51,47 @@ const useStyles = makeStyles(() => ({
   resetButton: { color: orange[800] },
 }));
 
-const AnimationControls = () => {
+const AnimationControls = ({ sliderFrequency, setSliderFrequency }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { stageDimensions } = useSelector(({ layout }) => layout);
   const { isPaused } = useSelector(({ lab }) => lab);
   const dispatch = useDispatch();
   const theme = useTheme();
+  const applicationInterval = useRef();
+
+  const startInterval = () => {
+    applicationInterval.current = setInterval(() => {
+      dispatch(incrementIntervalCount());
+    }, APPLICATION_TIMER_INTERVAL);
+  };
+
+  useEffect(() => {
+    if (isPaused) {
+      clearInterval(applicationInterval.current);
+    } else if (!isPaused) {
+      startInterval();
+    }
+  }, [isPaused]);
 
   const onClickPlay = () => {
+    dispatch(setFrequency(sliderFrequency));
     dispatch(togglePause(false));
-    dispatch(toggleOscillation(true));
   };
 
   const onClickPause = () => {
     dispatch(togglePause(true));
-    dispatch(toggleOscillation(false));
   };
 
   const onClickReset = () => {
+    dispatch(reset());
     dispatch(
       setChargeOrigin({
         x: stageDimensions.width / 2,
         y: stageDimensions.height / 2,
       }),
     );
-    dispatch(
-      setChargeOscillation({
-        x: DEFAULT_CHARGE_OSCILLATION_X_POSITION,
-        y: DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
-      }),
-    );
-    dispatch(setTimerCount(DEFAULT_TIMER_COUNT));
-    dispatch(setElapsedTime(DEFAULT_ELAPSED_TIME));
-    dispatch(toggleOscillation(false));
-    dispatch(togglePause(true));
-    dispatch(toggleMeasuringArrow(false));
-    dispatch(toggleSpectrumBar(false));
+    setSliderFrequency(DEFAULT_FREQUENCY);
   };
 
   return (
@@ -137,6 +137,11 @@ const AnimationControls = () => {
       <div className={classes.sideContainer} />
     </div>
   );
+};
+
+AnimationControls.propTypes = {
+  sliderFrequency: PropTypes.number.isRequired,
+  setSliderFrequency: PropTypes.func.isRequired,
 };
 
 export default AnimationControls;

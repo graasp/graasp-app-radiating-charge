@@ -3,29 +3,22 @@ import {
   DEFAULT_FREQUENCY,
   DEFAULT_CHARGE_X_POSITION,
   DEFAULT_CHARGE_Y_POSITION,
-  DEFAULT_CHARGE_OSCILLATION_X_POSITION,
-  DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
-  DEFAULT_TIMER_COUNT,
-  DEFAULT_ELAPSED_TIME,
   DEFAULT_MEASURING_ARROW_WIDTH,
 } from '../config/constants';
 import {
   TOGGLE_GRID_LINES,
   TOGGLE_MEASURING_ARROW,
-  TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
   TOGGLE_SPECTRUM_BAR,
   SET_AMPLITUDE,
   SET_FREQUENCY,
   SET_MEASURING_ARROW_WIDTH,
   SET_CHARGE_ORIGIN,
-  SET_CHARGE_OSCILLATION,
-  SET_TIMER_COUNT,
-  SET_ELAPSED_TIME,
+  INCREMENT_INTERVAL_COUNT,
+  RESET,
 } from '../types';
 
 const INITIAL_STATE = {
-  oscillation: false,
   gridLines: true,
   measuringArrow: false,
   spectrumBar: false,
@@ -37,12 +30,7 @@ const INITIAL_STATE = {
     x: DEFAULT_CHARGE_X_POSITION,
     y: DEFAULT_CHARGE_Y_POSITION,
   },
-  chargeOscillation: {
-    x: DEFAULT_CHARGE_OSCILLATION_X_POSITION,
-    y: DEFAULT_CHARGE_OSCILLATION_Y_POSITION,
-  },
-  timerCount: DEFAULT_TIMER_COUNT,
-  elapsedTime: DEFAULT_ELAPSED_TIME,
+  intervalCount: 0,
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -56,11 +44,6 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         measuringArrow: payload,
-      };
-    case TOGGLE_OSCILLATION:
-      return {
-        ...state,
-        oscillation: payload,
       };
     case TOGGLE_PAUSE:
       return { ...state, isPaused: payload };
@@ -86,24 +69,10 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case SET_MEASURING_ARROW_WIDTH: {
       return { ...state, measuringArrowWidth: payload };
     }
-    case SET_CHARGE_OSCILLATION: {
-      return {
-        ...state,
-        chargeOscillation: payload,
-      };
-    }
-    case SET_TIMER_COUNT: {
-      return {
-        ...state,
-        timerCount: payload,
-      };
-    }
-    case SET_ELAPSED_TIME: {
-      return {
-        ...state,
-        elapsedTime: payload,
-      };
-    }
+    case INCREMENT_INTERVAL_COUNT:
+      return { ...state, intervalCount: state.intervalCount + 1 };
+    case RESET:
+      return INITIAL_STATE;
     default:
       return state;
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,7 +12,6 @@ import {
   MIN_FREQUENCY,
   MAX_FREQUENCY,
   FREQUENCY_MARKS,
-  FREQUENCY_CONVERSION_FACTOR,
 } from '../../config/constants';
 import { setFrequency } from '../../actions';
 
@@ -38,31 +38,39 @@ const useStyles = makeStyles((theme) => ({
   superscript: { fontSize: '0.6em' },
 }));
 
-const FrequencySlider = () => {
+const FrequencySlider = ({ sliderFrequency, setSliderFrequency }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { frequency } = useSelector(({ lab }) => lab);
-  const adjustedFrequency = frequency * FREQUENCY_CONVERSION_FACTOR;
+  const { frequency, isPaused } = useSelector(({ lab }) => lab);
 
   const increaseFrequency = () => {
     const newFrequency =
-      adjustedFrequency === MAX_FREQUENCY
-        ? adjustedFrequency
-        : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(adjustedFrequency) + 1];
-    dispatch(setFrequency(newFrequency / FREQUENCY_CONVERSION_FACTOR));
+      sliderFrequency === MAX_FREQUENCY
+        ? sliderFrequency
+        : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(sliderFrequency) + 1];
+    if (!isPaused) {
+      dispatch(setFrequency(newFrequency));
+    }
+    setSliderFrequency(newFrequency);
   };
 
   const decreaseFrequency = () => {
     const newFrequency =
-      adjustedFrequency === MIN_FREQUENCY
-        ? adjustedFrequency
-        : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(adjustedFrequency) - 1];
-    dispatch(setFrequency(newFrequency / FREQUENCY_CONVERSION_FACTOR));
+      sliderFrequency === MIN_FREQUENCY
+        ? sliderFrequency
+        : FREQUENCY_MARKS[FREQUENCY_MARKS.indexOf(sliderFrequency) - 1];
+    if (!isPaused) {
+      dispatch(setFrequency(newFrequency));
+    }
+    setSliderFrequency(newFrequency);
   };
 
-  const adjustFrequency = (event, newValue) => {
-    dispatch(setFrequency(newValue / FREQUENCY_CONVERSION_FACTOR));
+  const adjustFrequency = (event, newFrequency) => {
+    if (!isPaused) {
+      dispatch(setFrequency(newFrequency));
+    }
+    setSliderFrequency(newFrequency);
   };
 
   return (
@@ -77,8 +85,13 @@ const FrequencySlider = () => {
         </Typography>
       </div>
       <div className={classes.sliderContainer}>
-        <IconButton onClick={decreaseFrequency}>
-          <RemoveCircleOutlineIcon color="secondary" />
+        <IconButton
+          onClick={decreaseFrequency}
+          disabled={frequency <= MIN_FREQUENCY}
+        >
+          <RemoveCircleOutlineIcon
+            color={frequency > MIN_FREQUENCY ? 'secondary' : 'disabled'}
+          />
         </IconButton>
         <Slider
           onChange={adjustFrequency}
@@ -89,14 +102,24 @@ const FrequencySlider = () => {
           min={MIN_FREQUENCY}
           max={MAX_FREQUENCY}
           valueLabelDisplay="on"
-          value={adjustedFrequency}
+          value={sliderFrequency}
         />
-        <IconButton onClick={increaseFrequency}>
-          <AddCircleOutlineIcon color="primary" />
+        <IconButton
+          onClick={increaseFrequency}
+          disabled={frequency >= MAX_FREQUENCY}
+        >
+          <AddCircleOutlineIcon
+            color={frequency < MAX_FREQUENCY ? 'primary' : 'disabled'}
+          />
         </IconButton>
       </div>
     </div>
   );
+};
+
+FrequencySlider.propTypes = {
+  sliderFrequency: PropTypes.number.isRequired,
+  setSliderFrequency: PropTypes.func.isRequired,
 };
 
 export default FrequencySlider;

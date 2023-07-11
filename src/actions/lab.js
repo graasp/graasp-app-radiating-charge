@@ -2,15 +2,13 @@ import {
   SET_AMPLITUDE,
   TOGGLE_GRID_LINES,
   TOGGLE_MEASURING_ARROW,
-  TOGGLE_OSCILLATION,
   TOGGLE_PAUSE,
   TOGGLE_SPECTRUM_BAR,
   SET_FREQUENCY,
   SET_MEASURING_ARROW_WIDTH,
   SET_CHARGE_ORIGIN,
-  SET_CHARGE_OSCILLATION,
-  SET_TIMER_COUNT,
-  SET_ELAPSED_TIME,
+  INCREMENT_INTERVAL_COUNT,
+  RESET,
 } from '../types';
 
 const toggleGridLines = (payload) => (dispatch) => {
@@ -23,13 +21,6 @@ const toggleGridLines = (payload) => (dispatch) => {
 const toggleMeasuringArrow = (payload) => (dispatch) => {
   dispatch({
     type: TOGGLE_MEASURING_ARROW,
-    payload,
-  });
-};
-
-const toggleOscillation = (payload) => (dispatch) => {
-  dispatch({
-    type: TOGGLE_OSCILLATION,
     payload,
   });
 };
@@ -73,38 +64,20 @@ const setChargeOrigin = (payload) => (dispatch) => {
   });
 };
 
-const setChargeOscillation = (payload) => (dispatch) => {
-  dispatch({
-    type: SET_CHARGE_OSCILLATION,
-    payload,
-  });
-};
+const incrementIntervalCount = () => (dispatch) =>
+  dispatch({ type: INCREMENT_INTERVAL_COUNT });
 
-const setTimerCount = (payload) => (dispatch) => {
-  dispatch({
-    type: SET_TIMER_COUNT,
-    payload,
-  });
-};
-
-const setElapsedTime = (payload) => (dispatch) => {
-  dispatch({
-    type: SET_ELAPSED_TIME,
-    payload,
-  });
-};
+const reset = () => (dispatch) => dispatch({ type: RESET });
 
 export {
   toggleGridLines,
   toggleMeasuringArrow,
-  toggleOscillation,
   togglePause,
   toggleSpectrumBar,
   setAmplitude,
   setFrequency,
   setMeasuringArrowWidth,
   setChargeOrigin,
-  setChargeOscillation,
-  setTimerCount,
-  setElapsedTime,
+  incrementIntervalCount,
+  reset,
 };
