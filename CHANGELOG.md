@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.9...v0.2.0) (2023-07-11)
+
+
+### Features
+
+* adjust wave fluctuation setup ([9d9fa89](https://github.com/graasp/graasp-app-radiating-charge/commit/9d9fa89ec4d1cd1809856691facb81369366afe3)), closes [#95](https://github.com/graasp/graasp-app-radiating-charge/issues/95)
+* flip spectrum bar ([9d2e9bf](https://github.com/graasp/graasp-app-radiating-charge/commit/9d2e9bf91cce62e61fa8c919dffed02440ac27c4)), closes [#94](https://github.com/graasp/graasp-app-radiating-charge/issues/94)
+* remove 400 and 700nm labels ([d439cff](https://github.com/graasp/graasp-app-radiating-charge/commit/d439cff53c96cad4ee11295039dbe2ee04c1533e)), closes [#91](https://github.com/graasp/graasp-app-radiating-charge/issues/91)
+* remove number of lines selector ([1028bf5](https://github.com/graasp/graasp-app-radiating-charge/commit/1028bf547f224e9c5ad5c4bae96d2d3d197707de)), closes [#91](https://github.com/graasp/graasp-app-radiating-charge/issues/91)
+* remove Observe header ([6598f70](https://github.com/graasp/graasp-app-radiating-charge/commit/6598f706cdece8ffec34e1804a1d065349ebfcd3))
+
 ## [0.1.9](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.8...v0.1.9) (2023-04-27)
 
 
