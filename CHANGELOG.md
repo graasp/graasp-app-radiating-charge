@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.1](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.2.0...v0.2.1) (2023-08-21)
+
+
+### Bug Fixes
+
+* read query string to load french translation ([#99](https://github.com/graasp/graasp-app-radiating-charge/issues/99)) ([966a55e](https://github.com/graasp/graasp-app-radiating-charge/commit/966a55e726f5f38e07432ef8cda3e347aab9eaed)), closes [#86](https://github.com/graasp/graasp-app-radiating-charge/issues/86)
+
 ## [0.2.0](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.1.9...v0.2.0) (2023-07-11)
 
 
