@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.2.1...v0.3.0) (2023-10-10)
+
+
+### Features
+
+* add ticker on 4.25 x 10^14 hz on frequency slider ([#103](https://github.com/graasp/graasp-app-radiating-charge/issues/103)) ([4b04a91](https://github.com/graasp/graasp-app-radiating-charge/commit/4b04a91be89a1cfedb8e81f2fbf57bbab38fac50)), closes [#102](https://github.com/graasp/graasp-app-radiating-charge/issues/102)
+
 ## [0.2.1](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.2.0...v0.2.1) (2023-08-21)
 
 
