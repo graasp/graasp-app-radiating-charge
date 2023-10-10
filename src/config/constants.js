@@ -37,6 +37,7 @@ export const FREQUENCY_MARKS = [
   3.5,
   3.75,
   4,
+  4.25,
   4.5,
   5,
   5.5,
