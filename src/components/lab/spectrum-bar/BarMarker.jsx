@@ -28,7 +28,6 @@ const BarMarker = ({ x }) => {
       fill={MARKER_FILL}
       stroke={MARKER_BORDER}
       strokeWidth={MARKER_STROKE_WIDTH}
-      draggable
     />
   );
 };
