@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.2](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.4.1...v0.4.2) (2025-07-14)
+
+
+### Bug Fixes
+
+* prevent spectrum bar from being moveable ([#109](https://github.com/graasp/graasp-app-radiating-charge/issues/109)) ([b3355c4](https://github.com/graasp/graasp-app-radiating-charge/commit/b3355c46be430627baf33306163da96a1d6f409e)), closes [#108](https://github.com/graasp/graasp-app-radiating-charge/issues/108)
+
 ## [0.4.1](https://github.com/graasp/graasp-app-radiating-charge/compare/v0.4.0...v0.4.1) (2024-12-05)
 
 
